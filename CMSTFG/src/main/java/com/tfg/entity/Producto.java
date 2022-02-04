@@ -10,6 +10,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -22,23 +23,25 @@ public class Producto {
 	@NotEmpty(message= "El campo nombre no puede ser nulo") @Size(min = 3, max = 40, message = "Nombre debe tener entre 3 y 40 caracteres")
 	private String nombre;
 	
-	@NotEmpty(message= "El campo cantidad no puede ser nulo")
+	@NotNull( message= "El campo cantidad no puede ser nulo")
 	@Min( value = 0, message = "El campo cantidad debe ser mayor o igual a 0" )
 	private int cantidad;
 	
-	@NotEmpty(message= "El campo precio no puede ser nulo")
+	@NotNull( message= "El campo precio no puede ser nulo")
+	//@NotEmpty(message= "El campo precio no puede ser nulo")
 	@Min( value = 0, message = "El campo precio debe ser mayo o igual a 0" )
 	private float precio;
 
 	@Lob
 	private Byte[] image;
 	
-	@NotEmpty(message= "El campo oferta no puede ser nulo")
+	@NotNull(message= "El campo oferta no puede ser nulo")
 	private boolean oferta = false;
 	
 	private int precio_anterior;
 	
-	@NotEmpty(message= "El campo nuestros_productos no puede ser nulo")
+	//@NotEmpty(message= "El campo nuestros_productos no puede ser nulo")
+	@NotNull(message= "El campo nuestros_productos no puede ser nulo")
 	private boolean nuestros_productos = false;
 	
 	public long getId() {
