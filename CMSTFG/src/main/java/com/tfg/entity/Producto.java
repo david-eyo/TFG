@@ -36,13 +36,13 @@ public class Producto {
 	private Byte[] image;
 	
 	@NotNull(message= "El campo oferta no puede ser nulo")
-	private boolean oferta = false;
+	private boolean oferta;
 	
 	private int precio_anterior;
 	
 	//@NotEmpty(message= "El campo nuestros_productos no puede ser nulo")
 	@NotNull(message= "El campo nuestros_productos no puede ser nulo")
-	private boolean nuestros_productos = false;
+	private boolean nuestros_productos;
 	
 	public long getId() {
 		return id;
