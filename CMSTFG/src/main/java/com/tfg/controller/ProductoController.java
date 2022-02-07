@@ -149,16 +149,25 @@ public class ProductoController {
 
 	try {
 
-	    Producto productoFromDB = productoService.saveProduct(producto);
-
-	    if (productoFromDB != null) {
-		// responseAsMap.put("producto", producto);
-		// responseAsMap.put("mensaje", "el producto con id "+ producto.getId() + " se
-		// ha actualizado correctamente");
-		responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NO_CONTENT);
-	    } else {
-		responseAsMap.put("mensaje", "el producto no se ha actualizado correctamente");
+	    if (id != producto.getId()) {
 		responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+		responseAsMap.put("mensaje", " El id de la URI (" + id + ") :"
+			+ "no corresponde con el id proporcionado en el body (" + producto.getId() + ").");
+	    } else {
+		Producto productoBusca = productoService.findById(id);
+
+		if (productoBusca == null) {
+		    responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NOT_FOUND);
+		    responseAsMap.put("mensaje", " Producto con id: " + id + " no encontrado");
+		} else {
+		    Producto productoFromDB = productoService.saveProduct(producto);
+		    if (productoFromDB != null) {
+			responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NO_CONTENT);
+		    } else {
+			responseAsMap.put("mensaje", "el producto no se ha actualizado correctamente");
+			responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+		    }
+		}
 	    }
 
 	} catch (DataAccessException e) {
@@ -170,32 +179,30 @@ public class ProductoController {
 	return responseEntity;
     }
 
+    
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Map<String, Object>> delete(@PathVariable long id, BindingResult result) {
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable Long id) {
 
 	Map<String, Object> responseAsMap = new HashMap<String, Object>();
 	ResponseEntity<Map<String, Object>> responseEntity = null;
-	List<String> errores = null;
-
-	if (result.hasErrors()) {
-	    errores = new ArrayList<String>();
-	    for (ObjectError error : result.getAllErrors()) {
-		errores.add(error.getDefaultMessage());
-	    }
-	    responseAsMap.put("errors", errores);
-	    responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
-	    return responseEntity;
-	}
+	
 
 	try {
-	    productoService.deleteProduct(id);
-	    responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NO_CONTENT);
+	    Producto producto = productoService.findById(id);
+	    if (producto == null) {
+		responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NOT_FOUND); 
+		responseAsMap.put("mensaje", "el producto con id " + id + " no existe");
+	    } else {
+		productoService.deleteProduct(id);
+		responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NO_CONTENT);
+	    }
+
 
 	} catch (DataAccessException e) {
 	    responseAsMap.put("mensaje",
 		    "el producto no se ha podido eliminar correctamente: " + e.getMostSpecificCause().getMessage());
 	    responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
-	}
+	} 
 
 	return responseEntity;
     }
