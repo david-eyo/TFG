@@ -18,11 +18,11 @@ public interface IProductoService {
 	
 	public Producto findById(long id);
 	
-	//public Producto findByName(String nombre);
+	public List<Producto> findByName(String nombre);
 	
-	//public Producto findByOferta(String nombre);
+	public List<Producto> findByOferta();
 	
-//	public Producto findByNuestrosProductos();
+	public List<Producto> findByNuestrosProductos();
 	
 	public void deleteProduct(long id);
 	

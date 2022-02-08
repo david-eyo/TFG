@@ -28,14 +28,16 @@ public interface IProductoDao extends JpaRepository<Producto, Long> {
 	@Query (value= "select p from Producto p where p.id = :id" )
 	public Producto findById(long id);
 	
-//	@Query (value = "select p from producto p where p.nombre LIKE  ':name%' ")
-//	public Producto findByName(String nombre);
+	@Query (value = "select p from Producto p where p.nombre LIKE %:name% ")
+	public List<Producto> findByName(String name);
 	
-//	@Query (value = "select p from producto p where p.oferta = 'true' ")
-//	public Producto findByOferta(String nombre);
+	@Query (value = "select p from Producto p where p.oferta = 1 ")
+	public List<Producto> findByOferta();
 	
-//	@Query (value = "select p from producto p where p.nuestros_productos = 'true' ")
-//	public Producto findByNuestrosProductos();
+	@Query (value = "select p from Producto p where p.nuestros_productos = 1 ")
+	public List<Producto> findByNuestrosProductos();
+	
+
 	
 
 }

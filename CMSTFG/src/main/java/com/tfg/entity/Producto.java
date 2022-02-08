@@ -2,11 +2,14 @@ package com.tfg.entity;
 
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -40,7 +43,9 @@ public class Producto {
 	
 	private int precio_anterior;
 	
-	//@NotEmpty(message= "El campo nuestros_productos no puede ser nulo")
+	@OneToOne( fetch = FetchType.EAGER, cascade = CascadeType.PERSIST  )
+	private Historico_precios precios_anteriores;
+	
 	@NotNull(message= "El campo nuestros_productos no puede ser nulo")
 	private boolean nuestros_productos;
 	
@@ -107,6 +112,16 @@ public class Producto {
 	public void setNuestros_productos(boolean nuestros_productos) {
 		this.nuestros_productos = nuestros_productos;
 	}
+
+	public Historico_precios getPrecios_anteriores() {
+	    return precios_anteriores;
+	}
+
+	public void setPrecios_anteriores(Historico_precios precios_anteriores) {
+	    this.precios_anteriores = precios_anteriores;
+	}
+	
+	
 	
 
 }

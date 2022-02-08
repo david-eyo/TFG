@@ -40,23 +40,23 @@ public class ProductoServiceImpl implements IProductoService {
 		return productoDao.findById(id);
 	}
 
-//	@Override
-//	@Transactional( readOnly = true )
-//	public Producto findByName(String nombre) {
-//		return productoDao.findByName(nombre);
-//	}
+	@Override
+	@Transactional( readOnly = true )
+	public List<Producto> findByName(String nombre) {
+		return productoDao.findByName(nombre);
+	}
 
-//	@Override
-//	@Transactional( readOnly = true )
-//	public Producto findByOferta(String nombre) {
-//		return productoDao.findByName(nombre);
-//	}
+	@Override
+	@Transactional( readOnly = true )
+	public List<Producto> findByOferta() {
+		return productoDao.findByOferta();
+	}
 
-//	@Override
-//	@Transactional( readOnly = true )
-//	public Producto findByNuestrosProductos() {
-//		return productoDao.findByNuestrosProductos();
-//	}
+	@Override
+	@Transactional( readOnly = true )
+	public List<Producto> findByNuestrosProductos() {
+		return productoDao.findByNuestrosProductos();
+	}
 
 	@Override
 	@Transactional
@@ -69,5 +69,6 @@ public class ProductoServiceImpl implements IProductoService {
 	public Producto saveProduct(Producto producto) {
 		return productoDao.save(producto);
 	}
+	
 
 }

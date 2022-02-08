@@ -38,43 +38,81 @@ public class ProductoController {
 
     @GetMapping
     public ResponseEntity<List<Producto>> findAll(@RequestParam(required = false) Integer page,
-	    @RequestParam(required = false) Integer size) {
+	    @RequestParam(required = false) Integer size,
+	    @RequestParam(required = false) String nombre,
+	    @RequestParam(required = false) Boolean oferta,
+	    @RequestParam(required = false) Boolean nuestros_productos) {
 
 	Sort sortByName = Sort.by("nombre");
 	List<Producto> productos = null;
-
-	if (page != null && size != null) {
-
+	
+	if(nombre == null && oferta != null && nuestros_productos == null){
+	    productos = productoService.findByOferta();
+	    return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+    	}
+	else if(nombre == null && oferta == null && nuestros_productos != null){
+	    productos = productoService.findByNuestrosProductos();
+	    return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+    	
+	}else if(nombre == null && oferta != null && nuestros_productos != null){
+	    productos = productoService.findByNuestrosProductos();
+	    for (Producto productoiter : productos) {
+		if (!productoiter.isOferta()) {
+		    productos.remove(productoiter);
+		}		
+	    }
+	    return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+	    
+    	}else if (nombre != null && page == null && size == null && oferta != null && nuestros_productos == null) {
+	    productos = productoService.findByName(nombre);
+	    for (Producto productoiter : productos) {
+		if (!productoiter.isOferta()) {
+		    productos.remove(productoiter);
+		}		
+	    }
+	    return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+	    
+	}else if (nombre != null && page == null && size == null && oferta == null && nuestros_productos != null) {
+	    productos = productoService.findByName(nombre);
+	    for (Producto productoiter : productos) {
+		if (!productoiter.isNuestros_productos()) {
+		    productos.remove(productoiter);
+		}		
+	    }
+	    return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+	    
+	}else if (nombre != null && page == null && size == null && oferta != null && nuestros_productos != null) {
+	    productos = productoService.findByName(nombre);
+	    for (Producto productoiter : productos) {
+		if (!productoiter.isNuestros_productos() || !productoiter.isOferta()) {
+		    productos.remove(productoiter);
+		}		
+	    }
+	    return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+	    
+	}else if (nombre != null && page == null && size == null && oferta == null && nuestros_productos == null) {
+	    productos = productoService.findByName(nombre);
+	    return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
+	    
+	} else if (page != null && size != null) {
 	    Pageable pageable = PageRequest.of(page, size, sortByName);
 	    productos = productoService.findAll(pageable).getContent();
-
 	    if (productos.size() > 0) {
-
 		return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
-
 	    } else {
-
 		return new ResponseEntity<List<Producto>>(HttpStatus.NO_CONTENT);
-
 	    }
-
 	} else {
 	    productos = productoService.findAll(sortByName);
-
 	    if (productos.size() > 0) {
-
 		return new ResponseEntity<List<Producto>>(productos, HttpStatus.OK);
-
 	    } else {
-
 		return new ResponseEntity<List<Producto>>(HttpStatus.NO_CONTENT);
-
 	    }
-
 	}
-
     }
-
+    
+    
     @GetMapping(value = "/{id}")
     public ResponseEntity<Producto> findById(@PathVariable int id) {
 
