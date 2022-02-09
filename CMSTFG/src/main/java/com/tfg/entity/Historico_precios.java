@@ -1,31 +1,30 @@
 package com.tfg.entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table
 public class Historico_precios {
     
+
+
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;    
+	private long id;
 	
-	@NotNull( message= "El campo fechaIni no puede ser nulo")
+	//@NotNull( message= "El campo fechaIni no puede ser nulo")
 	private LocalDateTime fechaIni;
 	
 	private LocalDateTime fechaFin;
-	
-	@OneToOne( fetch = FetchType.EAGER, cascade = CascadeType.PERSIST  )
+
+	@ManyToOne( fetch = FetchType.EAGER, cascade = CascadeType.MERGE  )
 	private Producto producto;
+
+	@NotNull( message= "El campo precio no puede ser nulo")
+	private float precio;
 
 	public long getId() {
 	    return id;
@@ -58,7 +57,47 @@ public class Historico_precios {
 	public void setProducto(Producto producto) {
 	    this.producto = producto;
 	}
+
+	public float getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(float precio) {
+		this.precio = precio;
+	}
+	
+	public Historico_precios() {
+	    super();
+	}
+	
+	public Historico_precios(LocalDateTime fechaIni, Producto producto,
+		    @NotNull(message = "El campo precio no puede ser nulo") float precio) {
+		super();
+		this.fechaIni = fechaIni;
+		this.producto = producto;
+		this.precio = precio;
+	}
+
+	@Override
+	public int hashCode() {
+	    return Objects.hash(fechaFin, fechaIni, id, precio, producto);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj)
+		return true;
+	    if (obj == null)
+		return false;
+	    if (getClass() != obj.getClass())
+		return false;
+	    Historico_precios other = (Historico_precios) obj;
+	    return Objects.equals(fechaFin, other.fechaFin) && Objects.equals(fechaIni, other.fechaIni)
+		    && id == other.id && Float.floatToIntBits(precio) == Float.floatToIntBits(other.precio)
+		    && Objects.equals(producto, other.producto);
+	}
 	
 	
-	
+
+
 }

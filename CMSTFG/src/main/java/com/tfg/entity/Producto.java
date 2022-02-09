@@ -2,19 +2,15 @@ package com.tfg.entity;
 
 
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -41,10 +37,8 @@ public class Producto {
 	@NotNull(message= "El campo oferta no puede ser nulo")
 	private boolean oferta;
 	
-	private int precio_anterior;
-	
-	@OneToOne( fetch = FetchType.EAGER, cascade = CascadeType.PERSIST  )
-	private Historico_precios precios_anteriores;
+	@OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.MERGE  )
+	private List<Historico_precios> precios_anteriores;
 	
 	@NotNull(message= "El campo nuestros_productos no puede ser nulo")
 	private boolean nuestros_productos;
@@ -97,14 +91,6 @@ public class Producto {
 		this.oferta = oferta;
 	}
 
-	public int getPrecio_anterior() {
-		return precio_anterior;
-	}
-
-	public void setPrecio_anterior(int precio_anterior) {
-		this.precio_anterior = precio_anterior;
-	}
-
 	public boolean isNuestros_productos() {
 		return nuestros_productos;
 	}
@@ -113,15 +99,38 @@ public class Producto {
 		this.nuestros_productos = nuestros_productos;
 	}
 
-	public Historico_precios getPrecios_anteriores() {
-	    return precios_anteriores;
+	public List<Historico_precios> getPrecios_anteriores() {
+		return precios_anteriores;
 	}
 
-	public void setPrecios_anteriores(Historico_precios precios_anteriores) {
-	    this.precios_anteriores = precios_anteriores;
+	public void setPrecios_anteriores(List<Historico_precios> precios_anteriores) {
+		this.precios_anteriores = precios_anteriores;
+	}
+
+	@Override
+	public int hashCode() {
+	    final int prime = 31;
+	    int result = 1;
+	    result = prime * result + Arrays.hashCode(image);
+	    result = prime * result
+		    + Objects.hash(cantidad, id, nombre, nuestros_productos, oferta, precio, precios_anteriores);
+	    return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj)
+		return true;
+	    if (obj == null)
+		return false;
+	    if (getClass() != obj.getClass())
+		return false;
+	    Producto other = (Producto) obj;
+	    return cantidad == other.cantidad && id == other.id && Arrays.equals(image, other.image)
+		    && Objects.equals(nombre, other.nombre) && nuestros_productos == other.nuestros_productos
+		    && oferta == other.oferta && Float.floatToIntBits(precio) == Float.floatToIntBits(other.precio)
+		    && Objects.equals(precios_anteriores, other.precios_anteriores);
 	}
 	
 	
-	
-
 }
