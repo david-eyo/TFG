@@ -113,7 +113,7 @@ public class Producto {
 	    int result = 1;
 	    result = prime * result + Arrays.hashCode(image);
 	    result = prime * result
-		    + Objects.hash(cantidad, id, nombre, nuestros_productos, oferta, precio, precios_anteriores);
+		    + Objects.hash(cantidad, id, nombre, nuestros_productos, oferta, precio);
 	    return result;
 	}
 
@@ -126,10 +126,9 @@ public class Producto {
 	    if (getClass() != obj.getClass())
 		return false;
 	    Producto other = (Producto) obj;
-	    return cantidad == other.cantidad && id == other.id && Arrays.equals(image, other.image)
+	    return cantidad == other.cantidad  && Arrays.equals(image, other.image)
 		    && Objects.equals(nombre, other.nombre) && nuestros_productos == other.nuestros_productos
-		    && oferta == other.oferta && Float.floatToIntBits(precio) == Float.floatToIntBits(other.precio)
-		    && Objects.equals(precios_anteriores, other.precios_anteriores);
+		    && oferta == other.oferta && Float.floatToIntBits(precio) == Float.floatToIntBits(other.precio);
 	}
 	
 	
