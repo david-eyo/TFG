@@ -16,6 +16,6 @@ public interface IHistoricoDao extends JpaRepository<Historico_precios, Long> {
 	@Query (value= "select h from Historico_precios h where (h.fechaFin is null) and (h.producto.id = :idProducto)" )
 	public Historico_precios findCurrentPrice(long idProducto);
 
-	@Query (value= "select h from Historico_precios h where (h.producto=:id)" )
+	@Query (value= "select h from Historico_precios h where (h.producto.id=:id)" )
 	public List<Historico_precios> findByProductId(long id);
 }
