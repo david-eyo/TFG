@@ -3,6 +3,7 @@ package com.tfg.service;
 
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,6 +69,17 @@ public class ProductoServiceImpl implements IProductoService {
 	@Transactional
 	public Producto saveProduct(Producto producto) {
 		return productoDao.save(producto);
+	}
+	
+	@Override
+	@Transactional
+	public void rateProduct(int nota, long idProducto) {
+		if ((nota >=0) &&(nota <=5)) {
+			productoDao.rateProducto(nota, idProducto);
+		}else {
+			throw new ConstraintViolationException("La nota debe estar entre 0 y 5", null);
+		}
+		 
 	}
 	
 

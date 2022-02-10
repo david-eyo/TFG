@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.tfg.entity.Producto;
@@ -37,7 +38,12 @@ public interface IProductoDao extends JpaRepository<Producto, Long> {
 	@Query (value = "select p from Producto p where p.nuestros_productos = 1 ")
 	public List<Producto> findByNuestrosProductos();
 	
-
+	@Modifying(flushAutomatically = true)
+	@Query (value = "update Producto p set "			
+			+ "p.valoracion = (((p.valoracion*p.numero_valoraciones)+ :nota)/(p.numero_valoraciones+1)), "
+			+ "p.numero_valoraciones = p.numero_valoraciones +1"
+			+ " WHERE p.id = :idProducto", nativeQuery = true)
+	public void rateProducto(int nota, long idProducto);
 	
 
 }
