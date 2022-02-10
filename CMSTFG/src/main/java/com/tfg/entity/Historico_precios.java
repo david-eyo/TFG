@@ -80,7 +80,7 @@ public class Historico_precios {
 
 	@Override
 	public int hashCode() {
-	    return Objects.hash(fechaFin, fechaIni, id, precio, producto);
+	    return Objects.hash(fechaFin, fechaIni, precio, producto);
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class Historico_precios {
 		return false;
 	    Historico_precios other = (Historico_precios) obj;
 	    return Objects.equals(fechaFin, other.fechaFin) && Objects.equals(fechaIni, other.fechaIni)
-		    && id == other.id && Float.floatToIntBits(precio) == Float.floatToIntBits(other.precio)
+		    && Float.floatToIntBits(precio) == Float.floatToIntBits(other.precio)
 		    && Objects.equals(producto, other.producto);
 	}
 	

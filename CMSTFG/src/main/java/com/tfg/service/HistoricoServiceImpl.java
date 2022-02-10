@@ -37,5 +37,10 @@ public class HistoricoServiceImpl implements IHistoricoService {
     public Historico_precios save(Historico_precios precio) {
         return historicoDao.save(precio);
     }
+    
+    @Override
+    public void delete(long id) {
+	historicoDao.deleteById(id);
+    }
 
 }

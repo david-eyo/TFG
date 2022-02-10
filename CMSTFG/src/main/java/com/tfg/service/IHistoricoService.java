@@ -13,4 +13,6 @@ public interface IHistoricoService {
 	public List<Historico_precios> findByProductId(long id);
 
 	public Historico_precios findCurrentPrice(long id);
+	
+	public void delete(long id);
 }
