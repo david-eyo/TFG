@@ -43,6 +43,10 @@ public class Producto {
 	@NotNull(message= "El campo nuestros_productos no puede ser nulo")
 	private boolean nuestros_productos;
 	
+	private float valoracion = 0;
+	
+	private long numero_valoraciones = 0;
+	
 	public long getId() {
 		return id;
 	}
@@ -105,6 +109,22 @@ public class Producto {
 
 	public void setPrecios_anteriores(List<Historico_precios> precios_anteriores) {
 		this.precios_anteriores = precios_anteriores;
+	}
+	
+	public float getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(float valoracion) {
+		this.valoracion = valoracion;
+	}
+
+	public long getNumero_valoraciones() {
+		return numero_valoraciones;
+	}
+
+	public void setNumero_valoraciones(long numero_valoraciones) {
+		this.numero_valoraciones = numero_valoraciones;
 	}
 
 	@Override

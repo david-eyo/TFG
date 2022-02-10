@@ -499,5 +499,40 @@ class CmstfgApplicationTests {
 		creaLineas();
 	}
 	
+	@Test
+	void testPuntuaProducto() {
+		List<Producto> productosDevueltos = crearYGuardarProductos();
+		
+		
+		productoService.rateProduct(5, productosDevueltos.get(2).getId());
+		productoService.rateProduct(0, productosDevueltos.get(2).getId());
+		
+		Producto productoPrueba=productoService.findById(productosDevueltos.get(2).getId());
+		
+		assertEquals(2,productoPrueba.getNumero_valoraciones());
+		assertEquals(2.5F,productoPrueba.getValoracion());
+
+		productoService.deleteProduct(productosDevueltos.get(0).getId());
+		productoService.deleteProduct(productosDevueltos.get(1).getId());
+		productoService.deleteProduct(productosDevueltos.get(2).getId());
+		productoService.deleteProduct(productosDevueltos.get(3).getId());
+
+		creaLineas();
+	}
+	
+	@Test
+	void testPuntuaMalProducto() {
+		List<Producto> productosDevueltos = crearYGuardarProductos();		
+		try {
+			productoService.rateProduct(-5, productosDevueltos.get(2).getId());
+			fail();
+		} catch (ConstraintViolationException e) {
+			final String expected = "La nota debe estar entre 0 y 5";
+			assertEquals(expected, e.getMessage());
+		}
+
+	}
+	
+	
 
 }

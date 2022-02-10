@@ -30,4 +30,6 @@ public interface IProductoService {
 	//detecta él sólo
 	public Producto saveProduct(Producto producto);
 	
+	public void rateProduct(int nota, long idProducto);
+	
 }
