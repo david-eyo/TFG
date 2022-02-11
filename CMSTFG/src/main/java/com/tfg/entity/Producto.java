@@ -38,7 +38,7 @@ public class Producto {
 	private boolean oferta;
 	
 	@OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.MERGE  )
-	private List<Historico_precios> precios_anteriores;
+	private List<Historico_precios> historico_precios;
 	
 	@NotNull(message= "El campo nuestros_productos no puede ser nulo")
 	private boolean nuestros_productos;
@@ -103,14 +103,14 @@ public class Producto {
 		this.nuestros_productos = nuestros_productos;
 	}
 
-	public List<Historico_precios> getPrecios_anteriores() {
-		return precios_anteriores;
+	public List<Historico_precios> getHistorico_precios() {
+		return historico_precios;
 	}
 
-	public void setPrecios_anteriores(List<Historico_precios> precios_anteriores) {
-		this.precios_anteriores = precios_anteriores;
+	public void setHistorico_precios(List<Historico_precios> historico_precios) {
+		this.historico_precios = historico_precios;
 	}
-	
+
 	public float getValoracion() {
 		return valoracion;
 	}

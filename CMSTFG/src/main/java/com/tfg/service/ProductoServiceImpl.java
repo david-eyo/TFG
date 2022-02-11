@@ -36,7 +36,7 @@ public class ProductoServiceImpl implements IProductoService {
 	}
 
 	@Override
-	@Transactional( readOnly = true )
+	//@Transactional( readOnly = true )
 	public Producto findById(long id) {
 		return productoDao.findById(id);
 	}
