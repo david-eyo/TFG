@@ -44,6 +44,21 @@ public class Historico_Controller {
         return responseEntity;
     }
 
+    @GetMapping
+    public ResponseEntity<List<Historico_precios>> findByHistoricoProductId(@RequestParam(required = false) Long idProducto) {
+
+        List<Historico_precios> historico = historicoService.findByProductId(idProducto);
+        ResponseEntity<List<Historico_precios>> responseEntity = null;
+
+        if (historico != null) {
+            responseEntity = new ResponseEntity<List<Historico_precios>>(historico, HttpStatus.OK);
+        } else {
+            responseEntity = new ResponseEntity<List<Historico_precios>>(historico, HttpStatus.NO_CONTENT);
+        }
+
+        return responseEntity;
+    }
+
     @PostMapping
     public ResponseEntity<Map<String, Object>> insert(
             @RequestParam (required = false) long idProducto,

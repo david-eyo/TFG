@@ -26,9 +26,9 @@ public class Producto {
 	@Min( value = 0, message = "El campo cantidad debe ser mayor o igual a 0" )
 	private int cantidad;
 	
-	@NotNull( message= "El campo precio no puede ser nulo")
+	//@NotNull( message= "El campo precio no puede ser nulo")
 	//@NotEmpty(message= "El campo precio no puede ser nulo")
-	@Min( value = 0, message = "El campo precio debe ser mayo o igual a 0" )
+	@Min( value = 0, message = "El campo precio debe ser mayor o igual a 0" )
 	private float precio;
 
 	@Lob
