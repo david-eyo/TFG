@@ -113,4 +113,29 @@ public class Historico_Controller {
         return responseEntity;
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable Long id) {
+
+        Map<String, Object> responseAsMap = new HashMap<String, Object>();
+        ResponseEntity<Map<String, Object>> responseEntity = null;
+
+        try {
+            Historico_precios historico = historicoService.findById(id);
+            if (historico == null) {
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NOT_FOUND);
+                responseAsMap.put("mensaje", "el historico con id " + id + " no existe");
+            } else {
+                productoService.deleteProduct(id);
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NO_CONTENT);
+            }
+
+        } catch (DataAccessException e) {
+            responseAsMap.put("mensaje",
+                    "el historico no se ha podido eliminar correctamente: " + e.getMostSpecificCause().getMessage());
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+        }
+
+        return responseEntity;
+    }
+
 }

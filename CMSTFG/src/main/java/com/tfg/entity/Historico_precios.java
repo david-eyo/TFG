@@ -20,7 +20,7 @@ public class Historico_precios {
 	
 	private LocalDateTime fechaFin;
 
-	@ManyToOne( fetch = FetchType.EAGER, cascade = CascadeType.MERGE  )
+	@ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.MERGE  )
 	private Producto producto;
 
 	@NotNull( message= "El campo precio no puede ser nulo")

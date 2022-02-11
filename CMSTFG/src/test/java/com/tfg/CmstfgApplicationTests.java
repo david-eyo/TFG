@@ -366,10 +366,10 @@ class CmstfgApplicationTests {
 			productoService.saveProduct(productoAActualizar);
 			fail();
 		} catch (ConstraintViolationException e) {
-			final String expected = "Validation failed for classes [com.tfg.entity.Producto] during persist time for groups [javax.validation.groups.Default, ]\n"
-					+ "List of constraint violations:[\n"
-					+ "	ConstraintViolationImpl{interpolatedMessage='El campo precio debe ser mayo o igual a 0', propertyPath=precio, rootBeanClass=class com.tfg.entity.Producto, messageTemplate='El campo precio debe ser mayo o igual a 0'}\n"
-					+ "]";
+			final String expected = "Validation failed for classes [com.tfg.entity.Producto] during persist time for groups [javax.validation.groups.Default, ]\n" +
+					"List of constraint violations:[\n" +
+					"\tConstraintViolationImpl{interpolatedMessage='El campo precio debe ser mayor o igual a 0', propertyPath=precio, rootBeanClass=class com.tfg.entity.Producto, messageTemplate='El campo precio debe ser mayor o igual a 0'}\n" +
+					"]";
 			assertEquals(expected, e.getMessage());
 		}
 

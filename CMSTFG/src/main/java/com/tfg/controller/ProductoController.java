@@ -205,18 +205,19 @@ public class ProductoController {
                 } else {
 					if(producto.getValoracion() != 0.0f){
 						productoService.rateProduct((int) producto.getValoracion(),id);
+                        return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NO_CONTENT);
 					}
 					if(producto.getNumero_valoraciones() != 0.0f){
-						responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
-						responseAsMap.put("mensaje", " Producto con id: " + id + " , se ha intentado cambiar el" +
-								"numero de valoraciones de forma no valida(no incluir en el cuerpo de la petición)");
+                        responseAsMap.put("mensaje", " Producto con id: " + id + " , se ha intentado cambiar el" +
+                                "numero de valoraciones de forma no valida(no incluir en el cuerpo de la petición)");
+						return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
 					}
                     //Si cambia el precio, tenemos que crear una nueva entrada en nuestra tabla del histórico de precios.
                     //Pensé en que lanzara una excepción pero llegué a la conclusión de que es una tontería. Habrá
                     //2 formas de realizarlo diferentes. Una en el controlados del historico donde le indicaremos solo
                     //el id del producto del cual queremos cambiar el precio con el id correspondiente dle producto, y
                     //otro éste donde si cambian más cosas podamso también cambiar el historico.
-                    if (productoBusca.getPrecio() != producto.getPrecio()) {
+                    if ((productoBusca.getPrecio() != producto.getPrecio())&&(producto.getPrecio()!=0f)) {
                         Historico_precios historicoAnt = historicoService.findCurrentPrice(producto.getId());
                         historicoAnt.setFechaFin(LocalDateTime.now());
                         Historico_precios historicoDevueltoAnt = historicoService.save(historicoAnt);
@@ -227,11 +228,15 @@ public class ProductoController {
                         historico.setFechaIni(LocalDateTime.now());
                         Historico_precios historicoNuevo = historicoService.save(historico);
 
+                        Producto productoNuevo= productoService.findById(producto.getId());
+                        productoNuevo.setPrecio(producto.getPrecio());
+                        productoService.saveProduct(productoNuevo);
+
                         if (historicoDevueltoAnt != null) {
-                            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NO_CONTENT);
+                            return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NO_CONTENT);
                         } else {
                             responseAsMap.put("mensaje", "el historico no se ha actualizado correctamente al actualizar todo el producto");
-                            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+                            return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
                         }
                     }
 					Producto productoActualizado = new Producto();
@@ -241,17 +246,17 @@ public class ProductoController {
 					productoActualizado.setId(producto.getId());
 					productoActualizado.setImage(producto.getImage());
 					productoActualizado.setCantidad(producto.getCantidad());
-					productoActualizado.setPrecio(producto.getPrecio());
                     Producto productoBusca2 = productoService.findById(producto.getId());
+                    productoActualizado.setPrecio(productoBusca2.getPrecio());
                     productoActualizado.setValoracion(productoBusca2.getValoracion());
                     productoActualizado.setNumero_valoraciones(productoBusca2.getNumero_valoraciones());
                     Producto productoFromDB = productoService.saveProduct(productoActualizado);
 
                     if (productoFromDB != null) {
-                        responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NO_CONTENT);
+                        return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.NO_CONTENT);
                     } else {
                         responseAsMap.put("mensaje", "el producto no se ha actualizado correctamente");
-                        responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+                        return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
                     }
                 }
             }
