@@ -23,6 +23,7 @@ import java.util.Map;
 @RequestMapping(value = "/historico")
 public class Historico_Controller {
 
+
     @Autowired
     private IHistoricoService historicoService;
 
