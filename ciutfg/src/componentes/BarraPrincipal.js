@@ -10,7 +10,7 @@ export default function BarraPrincipal() {
                 <Navbar bg="green" expand="lg" variant='dark'>
                     <Container>
                         <Navbar.Brand href="#home" className="nombre_empresa">
-                            <img src={require('../imagenes/logo.png')} className="logo"/>
+                            <img alt='logo' src={require('../imagenes/logo.png')} className="logo"/>
                             Frutas Río Ulla  
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />

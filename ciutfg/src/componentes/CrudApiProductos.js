@@ -12,7 +12,7 @@ const CrudApi = () => {
   const [loading, setLoading] = useState(false);
 
   let api = helpHttp();
-  let url = "http://localhost:8080/productos";
+  let url = "http://localhost:5000/productos";
 
   useEffect(() => {
     setLoading(true);
@@ -32,8 +32,6 @@ const CrudApi = () => {
   }, [url]);
 
   const createData = (data) => {
-    data.id = Date.now();
-    //console.log(data);
 
     let options = {
       body: data,
@@ -97,7 +95,6 @@ const CrudApi = () => {
 
   return (
     <div>
-      <h2>CRUD API PRODUCTOS</h2>
       <article className="grid-1-2">
         <CrudForm
           createData={createData}
