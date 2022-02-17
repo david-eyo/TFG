@@ -1,0 +1,12 @@
+.bg-green{
+    background-color: rgb(1, 199, 11);
+}
+.logo{
+    height: 2rem;
+    width: 2rem;
+    margin-right: 1rem;
+    margin-left: 0%;
+}
+.nombre_empresa{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
