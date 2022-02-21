@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import './CrudForm.css';
+import './CrudTableRow.css';
 
 const initailForm = {
   nombre: "",
   precio: "",
   cantidad: "",
-  nuestros_productos: "",
-  oferta: "",
+  nuestros_productos: false,
+  oferta: false,
   id: null,
 
 };
 
 const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
   const [form, setForm] = useState(initailForm);
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
 
   useEffect(() => {
     if (dataToEdit) {
@@ -29,8 +32,18 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
     });
   };
 
+  const handleChange1 = () => {
+    setChecked1(!form.oferta);
+  };
+
+  const handleChange2 = () => {
+    setChecked2(!form.nuestros_productos);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+
 
     if (!form.cantidad || !form.nombre || !form.precio) {
       alert("Datos incompletos");
@@ -94,28 +107,30 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label for="exampleInputEmail1">Nuestros productos:</label>
+          <label for="exampleInputEmail1" className="etiqueta-check">Nuestros productos:</label>
           <input
             type="checkbox"
+            checked={checked1}
             name="nuestros_productos"
             placeholder="Nuestros productos"
-            onChange={handleChange}
+            onChange={handleChange1}
             value={form.nuestros_productos}
           />
         </div>
         <br />
         <div>
-          <label for="exampleInputEmail1">Oferta:</label>
+          <label for="exampleInputEmail1" className="etiqueta-check">Oferta:</label>
           <input
             type="checkbox"
             name="Oferta"
+            checked={checked2}
             placeholder="oferta"
-            onChange={handleChange}
+            onChange={handleChange2}
             value={!!form.oferta}
           /></div>
         <br />
-        <input type="submit" value="Enviar" />
-        <input type="reset" value="Limpiar" onClick={handleReset} />
+        <input type="submit" className="btn btn-success marginright" value="Enviar" />
+        <input type="reset"  className="btn btn-secondary" value="Limpiar" onClick={handleReset} />
       </form>
     </div>
   );

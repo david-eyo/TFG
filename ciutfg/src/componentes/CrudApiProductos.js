@@ -4,6 +4,7 @@ import CrudForm from "./CrudForm";
 import CrudTable from "./CrudTable";
 import Loader from "./Loader";
 import Message from "./Message";
+import MuestraTodosProductosNormales from "./MuestraTodosProductosNormales";
 
 const CrudApi = () => {
   const [db, setDb] = useState(null);
@@ -96,6 +97,13 @@ const CrudApi = () => {
   return (
     <div>
       <article className="grid-1-2">
+        {db && (
+          <MuestraTodosProductosNormales
+            data={db}
+            updateData={updateData}
+            dataToEdit={dataToEdit}
+          />
+        )}
         <CrudForm
           createData={createData}
           updateData={updateData}
