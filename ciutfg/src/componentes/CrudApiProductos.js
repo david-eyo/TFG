@@ -6,6 +6,7 @@ import Loader from "./Loader";
 import Message from "./Message";
 import MuestraTodosProductosNormales from "./MuestraTodosProductosNormales";
 import BuscadorProductos from "./BuscadorProductos";
+import BuscadorProductosNormales from "./BuscadorProductosNormales";
 
 const CrudApi = () => {
   const [db, setDb] = useState(null);
@@ -119,7 +120,11 @@ const CrudApi = () => {
   return (
     <div>
       <article className="grid-1-2">
-
+      <BuscadorProductosNormales
+        findDataByName={findDataByName}
+        updateData={updateData}
+        setDataToEdit={setDataToEdit}
+      />
       <BuscadorProductos
         findDataByName={findDataByName}
         setDataToEdit={setDataToEdit}
