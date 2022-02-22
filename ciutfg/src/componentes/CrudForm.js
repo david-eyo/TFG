@@ -26,10 +26,12 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
   }, [dataToEdit]);
 
   const handleChange = (e) => {
+
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
+
   };
 
   const handleChange1 = () => {
@@ -71,7 +73,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
       <form onSubmit={handleSubmit}>
         <br />
         <div>
-          <label for="exampleInputEmail1" className="input-label">Nombre del producto:</label>
+          <label htmlFor="exampleInputEmail1" className="input-label">Nombre del producto:</label>
           <input
             type="text"
             name="nombre"
@@ -83,7 +85,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label for="exampleInputEmail1" className="input-label">Precio del producto:</label>
+          <label htmlFor="exampleInputEmail1" className="input-label">Precio del producto:</label>
           <input
             type="number"
             name="precio"
@@ -96,7 +98,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label for="exampleInputEmail1" className="input-label">Cantidad del producto:</label>
+          <label htmlFor="exampleInputEmail1" className="input-label">Cantidad del producto:</label>
           <input
             type="number"
             name="cantidad"
@@ -107,7 +109,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label for="exampleInputEmail1" className="etiqueta-check">Nuestros productos:</label>
+          <label htmlFor="exampleInputEmail1" className="etiqueta-check">Nuestros productos:</label>
           <input
             type="checkbox"
             checked={checked1}
@@ -119,7 +121,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label for="exampleInputEmail1" className="etiqueta-check">Oferta:</label>
+          <label htmlFor="exampleInputEmail1" className="etiqueta-check">Oferta:</label>
           <input
             type="checkbox"
             name="Oferta"

@@ -5,9 +5,11 @@ import CrudTable from "./CrudTable";
 import Loader from "./Loader";
 import Message from "./Message";
 import MuestraTodosProductosNormales from "./MuestraTodosProductosNormales";
+import BuscadorProductos from "./BuscadorProductos";
 
 const CrudApi = () => {
   const [db, setDb] = useState(null);
+  const [db2, setDb2] = useState(null);
   const [dataToEdit, setDataToEdit] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -49,9 +51,29 @@ const CrudApi = () => {
     });
   };
 
+
+  const findDataByName = (nombre) => {
+
+    let options = {
+      headers: { "content-type": "application/json" },
+    };
+
+    let url2=url+"?nombre="+nombre;
+    api.get(url2, options).then((res) => {
+      if (!res.err) {
+        setDb2(res);
+        setError(null);
+      } else {
+        setDb2([]);
+        setError(res);
+      }
+    });
+
+    return db2;
+  };
+
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;
-    //console.log(endpoint);
 
     let options = {
       body: data,
@@ -97,6 +119,12 @@ const CrudApi = () => {
   return (
     <div>
       <article className="grid-1-2">
+
+      <BuscadorProductos
+        findDataByName={findDataByName}
+        setDataToEdit={setDataToEdit}
+      />
+        {loading && <Loader />}
         {db && (
           <MuestraTodosProductosNormales
             data={db}

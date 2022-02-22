@@ -19,7 +19,7 @@ const initailForm = {
 const MuestraProductoNormal = ({el, updateData, dataToEdit }) => {
   const [form, setForm] = useState(initailForm);
 
-  let { nombre, precio, valoracion, numero_valoraciones } = el;
+  let { nombre, precio, valoracion} = el;
   const estiloBoton = {
     marginBottom: '-4rem',
     marginLeft: '9rem'
@@ -34,14 +34,11 @@ const MuestraProductoNormal = ({el, updateData, dataToEdit }) => {
     }, [dataToEdit]);
 
 
-  const handleValoracion = (e) => {
-    console.log(form);
+  const handleValoracion = (valoracion) => {
+    form.id=el.id;
+    form.valoracion=valoracion;
     updateData(form);
-
   };
-
-
-
 
   return (
     <div className="Tarjeta">
@@ -56,7 +53,7 @@ const MuestraProductoNormal = ({el, updateData, dataToEdit }) => {
             <Button variant="primary" className="btn btn-warning" style={estiloBoton}>Carrito</Button>
             <ReactStars
               size={27}
-              value = {form.valoracion}
+              value = {valoracion}
               onChange= {handleValoracion}        
             />
           </div>
