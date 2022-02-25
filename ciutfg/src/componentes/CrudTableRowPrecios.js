@@ -2,8 +2,9 @@ import React from "react";
 import './CrudTableRow.css';
 
 const CrudTableRowPrecios = ({ el }) => {
-  console.log(el);
+  
   let {id, fechaIni, fechaFin, nombreProducto, precio } = el;
+  console.log(el);
 
   return (
     <tr>

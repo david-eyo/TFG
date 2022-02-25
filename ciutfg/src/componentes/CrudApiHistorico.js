@@ -20,7 +20,7 @@ const CrudApiHistorico = () => {
     let url2 = url + "?idProducto=" + idProducto;
     api.get(url2, options).then((res) => {  
       if (!res.err) {
-        setDb({res});
+        setDb(res);
         setError(null);
       } else {
         setDb([]);
@@ -30,6 +30,7 @@ const CrudApiHistorico = () => {
   };
 
   console.log(db);
+
 
 
   return (

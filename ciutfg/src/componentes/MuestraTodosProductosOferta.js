@@ -5,7 +5,6 @@ const MuestraTodosProductosOferta = ({ data, getAllProductsOferta, rateProduct, 
 
     useEffect(() => {
         data=getAllProductsOferta();
-        console.log(data);
       }, [data]);
     return (
         <div>
