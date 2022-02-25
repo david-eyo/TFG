@@ -16,7 +16,7 @@ const initailForm = {
 
 };
 
-const MuestraProductoNormal = ({el, updateData, dataToEdit }) => {
+const MuestraProductoNormal = ({el, rateProduct, dataToEdit, setDataToEdit }) => {
   const [form, setForm] = useState(initailForm);
 
   let { nombre, precio, valoracion} = el;
@@ -36,8 +36,12 @@ const MuestraProductoNormal = ({el, updateData, dataToEdit }) => {
 
   const handleValoracion = (valoracion) => {
     form.id=el.id;
+    form.nombre= el.nombre;
+    form.precio= el.precio;
+    form.cantidad= el.cantidad;
     form.valoracion=valoracion;
-    updateData(form);
+    rateProduct(form);
+
   };
 
   return (

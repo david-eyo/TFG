@@ -1,11 +1,17 @@
-import React from "react";
+import {React, useEffect, useState} from "react";
 import MuestraProductoNormal from "./MuestraProductoNormal";
 
-const MuestraTodosProductosNormales = ({ data, rateProduct, dataToEdit, setDataToEdit  }) => {
+const MuestraTodosProductosOferta = ({ data, getAllProductsOferta, rateProduct, dataToEdit, setDataToEdit  }) => {
+
+    useEffect(() => {
+        data=getAllProductsOferta();
+        console.log(data);
+      }, [data]);
     return (
         <div>
             <hr/>
-            <h3>Productos(Normal)</h3>
+            <br/>
+            <h3>Productos Oferta(Normal)</h3>
             {data.length > 0 ? (
                 data.map((el) => (
                     <MuestraProductoNormal
@@ -26,4 +32,4 @@ const MuestraTodosProductosNormales = ({ data, rateProduct, dataToEdit, setDataT
     );
 };
 
-export default MuestraTodosProductosNormales;
+export default MuestraTodosProductosOferta;

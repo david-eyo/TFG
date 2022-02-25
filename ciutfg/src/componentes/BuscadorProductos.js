@@ -31,6 +31,7 @@ export default function BuscadorProductos({ findDataByName, setDataToEdit }) {
     
     return (
         <div>
+            <hr/>
             <h3>Buscador productos(Administración)</h3>
             <div style={style}>
                 <Form className="d-flex">

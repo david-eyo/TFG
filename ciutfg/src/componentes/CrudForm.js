@@ -34,12 +34,14 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
 
   };
 
-  const handleChange1 = () => {
-    setChecked1(!form.oferta);
+  const handleChange1=e=> {
+    setChecked1(e.target.checked);
+    form.nuestros_productos=e.target.checked;
   };
 
-  const handleChange2 = () => {
-    setChecked2(!form.nuestros_productos);
+  const handleChange2=e=> {
+    setChecked2(e.target.checked);
+    form.oferta=e.target.checked;
   };
 
   const handleSubmit = (e) => {
@@ -68,6 +70,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
 
   return (
     <div>
+      <hr/>
       <br />
       <h3>{dataToEdit ? "Editar producto" : "Añadir Producto"}</h3>
       <form onSubmit={handleSubmit}>
@@ -109,30 +112,27 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label htmlFor="exampleInputEmail1" className="etiqueta-check">Nuestros productos:</label>
+          <label htmlFor="checkedNuesstrosProductos" className="etiqueta-check">Nuestros productos:</label>
           <input
             type="checkbox"
-            checked={checked1}
             name="nuestros_productos"
             placeholder="Nuestros productos"
             onChange={handleChange1}
-            value={form.nuestros_productos}
           />
         </div>
         <br />
         <div>
-          <label htmlFor="exampleInputEmail1" className="etiqueta-check">Oferta:</label>
+          <label htmlFor="checkedOferta" className="etiqueta-check">Oferta:</label>
           <input
             type="checkbox"
             name="Oferta"
-            checked={checked2}
-            placeholder="oferta"
+            placeholder="Oferta"
             onChange={handleChange2}
-            value={!!form.oferta}
-          /></div>
+          />
+        </div>
         <br />
         <input type="submit" className="btn btn-success marginright" value="Enviar" />
-        <input type="reset"  className="btn btn-secondary" value="Limpiar" onClick={handleReset} />
+        <input type="reset" className="btn btn-secondary" value="Limpiar" onClick={handleReset} />
       </form>
     </div>
   );
