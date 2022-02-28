@@ -8,11 +8,13 @@ import MuestraTodosProductosNormales from "./MuestraTodosProductosNormales";
 import BuscadorProductos from "./BuscadorProductos";
 import BuscadorProductosNormales from "./BuscadorProductosNormales";
 import MuestraTodosProductosOferta from "./MuestraTodosProductosOferta";
+import MuestraTodosProductosNuestrosProductos from "./MuestraTodosProductosNuestrosProductos"
 
 const CrudApi = () => {
   const [db, setDb] = useState(null);
   const [db2, setDb2] = useState(null);
   const [db3, setDb3] = useState([]);
+  const [db4, setDb4] = useState([]);
   const [dataToEdit, setDataToEdit] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -89,6 +91,26 @@ const CrudApi = () => {
         setError(null);
       } else {
         setDb3([]);
+        setError(res);
+      }
+    });
+
+    return db3;
+  };
+
+  const getAllProductsNuestrosProductos = () => {
+
+    let options = {
+      headers: { "content-type": "application/json" },
+    };
+
+    let urlOferta = "http://localhost:5000/productos?nuestros_productos=true";
+    api.get(urlOferta, options).then((res) => {
+      if (!res.err) {
+        setDb4(res);
+        setError(null);
+      } else {
+        setDb4([]);
         setError(res);
       }
     });
@@ -189,6 +211,13 @@ const CrudApi = () => {
         <MuestraTodosProductosOferta
           data={db3}
           getAllProductsOferta={getAllProductsOferta}
+          rateProduct={rateProduct}
+          dataToEdit={dataToEdit}
+          setDataToEdit={setDataToEdit}
+        />
+        <MuestraTodosProductosNuestrosProductos
+          data={db4}
+          getAllProductsNuestrosProductos={getAllProductsNuestrosProductos}
           rateProduct={rateProduct}
           dataToEdit={dataToEdit}
           setDataToEdit={setDataToEdit}

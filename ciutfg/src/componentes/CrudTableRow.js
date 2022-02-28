@@ -2,14 +2,14 @@ import React from "react";
 import './CrudTableRow.css';
 
 const CrudTableRow = ({ el, setDataToEdit, deleteData }) => {
-  let {id, nombre, precio, nuestros_productos, oferta, valoracion, numero_valoraciones } = el;
+  let {id, nombre, precio, cantidad, nuestros_productos, oferta, valoracion, numero_valoraciones } = el;
 
   return (
-    <tr>
-      
+    <tr>    
       <td>{id}</td>
       <td>{nombre}</td>
       <td>{precio}</td>
+      <td>{cantidad}</td>
       <td>{nuestros_productos.toString()}</td>
       <td>{oferta.toString()}</td>
       <td>{valoracion}</td>

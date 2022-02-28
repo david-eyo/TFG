@@ -14,7 +14,6 @@ const style = {
 
 const CrudTablePrecios = ({ findHistoricoPreciosByIdProducto, data }) => {
     const [busqueda, setBusqueda] = useState("");
-    const [data2, setData2] = useState([]);
 
 
     const handleChange=e=>{
@@ -27,7 +26,7 @@ const CrudTablePrecios = ({ findHistoricoPreciosByIdProducto, data }) => {
   return (
     <div>
       <br/><br/><br/><br/><hr></hr>
-      <h3>Productos(Adminsitración)</h3>
+      <h3>Histórico de precios(Administración)</h3>
       <div style={style}>
                 <Form className="d-flex">
                     <FormControl
@@ -45,8 +44,10 @@ const CrudTablePrecios = ({ findHistoricoPreciosByIdProducto, data }) => {
         <thead>
           <tr>
             <th>Id</th>
-            <th>Fecha Ini</th>
+            <th>Fecha Inicio</th>
+            <th>Hora Inicio</th>
             <th>Fecha Fin</th>
+            <th>Hora Fin</th>
             <th>Nombre producto</th>
             <th>Precio</th>
           </tr>

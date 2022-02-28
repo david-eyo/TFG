@@ -5,10 +5,11 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
   return (
     <div>
       <br/><br/><br/><br/><hr></hr>
-      <h3>Productos(Adminsitración)</h3>
+      <h3>Productos(Administración)</h3>
       <table className="table">
         <thead>
           <tr>
+            <th>Id</th>
             <th>Nombre</th>
             <th>Precio</th>
             <th>Cantidad</th>

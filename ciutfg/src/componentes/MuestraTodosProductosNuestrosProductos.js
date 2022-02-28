@@ -1,16 +1,16 @@
 import {React, useEffect} from "react";
 import MuestraProductoNormal from "./MuestraProductoNormal";
 
-const MuestraTodosProductosOferta = ({ data, getAllProductsOferta, rateProduct, dataToEdit, setDataToEdit  }) => {
+const MuestraTodosProductosNuestrosProductos = ({ data, getAllProductsNuestrosProductos, rateProduct, dataToEdit, setDataToEdit  }) => {
 
     useEffect(() => {
-        data=getAllProductsOferta();
+        data=getAllProductsNuestrosProductos();
       }, [data]);
     return (
         <div>
             <hr/>
             <br/>
-            <h3>Productos Oferta(Normal)</h3>
+            <h3>Nuestros Productos(Normal)</h3>
             {data.length > 0 ? (
                 data.map((el) => (
                     <MuestraProductoNormal
@@ -31,4 +31,4 @@ const MuestraTodosProductosOferta = ({ data, getAllProductsOferta, rateProduct, 
     );
 };
 
-export default MuestraTodosProductosOferta;
+export default MuestraTodosProductosNuestrosProductos;
