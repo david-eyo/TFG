@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -131,6 +132,7 @@ public class ProductoController {
 
         return responseEntity;
     }
+
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> insert(@Valid @RequestBody Producto producto, BindingResult result) {
