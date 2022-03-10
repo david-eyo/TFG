@@ -127,7 +127,7 @@ public class ProductoController {
         if (producto != null) {
             responseEntity = new ResponseEntity<Producto>(producto, HttpStatus.OK);
         } else {
-            responseEntity = new ResponseEntity<Producto>(producto, HttpStatus.NO_CONTENT);
+            responseEntity = new ResponseEntity<Producto>(producto, HttpStatus.NOT_FOUND);
         }
 
         return responseEntity;

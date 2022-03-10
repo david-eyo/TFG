@@ -5,13 +5,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Objects;
 
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User {
 
-    enum Rol {
+    public enum Rol {
 
         ROLE_ADMIN,
         ROLE_USER,
@@ -21,36 +22,33 @@ public class User {
 
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     @NotEmpty(message= "El campo username no puede ser nulo")
     private String username;
-    @NotEmpty(message= "El campo contraseña no puede ser nulo")
     private String password;
-    @NotEmpty(message= "El campo nombre no puede ser nulo") @Size(min = 2, max = 40, message = "Nombre debe tener entre 2 y 40 caracteres")
+    @Size(min = 2, max = 40, message = "Nombre debe tener entre 2 y 40 caracteres")
     private String nombre;
-    @NotEmpty(message= "El campo apellidos no puede ser nulo") @Size(min = 2, max = 100, message = "Apellidos debe tener entre 2 y 100 caracteres")
+    @Size(min = 2, max = 100, message = "Apellidos debe tener entre 2 y 100 caracteres")
     private String apellidos;
-    @NotEmpty(message= "El campo email no puede ser nulo")
     private String email;
     //@NotNull(message= "El campo rol no puede ser nulo")
     private Rol rol;
-    @NotEmpty(message= "El campo ciudad no puede ser nulo") @Size(min = 2, max = 40, message = "Nombre debe tener entre 2 y 40 caracteres")
+    @Size(min = 2, max = 40, message = "Nombre debe tener entre 2 y 40 caracteres")
     private String ciudad;
-    @NotEmpty(message= "El campo cp no puede ser nulo") @Size(min = 4, max = 6, message = "CP debe tener entre 3 y 5 caracteres")
+    @Size(min = 4, max = 6, message = "CP debe tener entre 3 y 5 caracteres")
     private String cp;
-    @NotEmpty(message= "El campo direccion no puede ser nulo") @Size(min = 2, max = 40, message = "Nombre debe tener entre 2 y 40 caracteres")
+    @Size(min = 2, max = 40, message = "Nombre debe tener entre 2 y 40 caracteres")
     private String direccion;
-    @NotNull(message= "El campo fecha Nacimiento no puede ser nulo")
     private Date fechaNacimiento;
-    @NotEmpty(message= "El campo direccion no puede ser nulo") @Size(min = 9, message = "Teléfono debe tener más de 9 caracteres")
+    @Size(min = 9, message = "Teléfono debe tener más de 9 caracteres")
     private String tlf;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -145,8 +143,8 @@ public class User {
     public User() {
     }
 
-    public User(int id, String username, String password, String nombre, String apellidos, String email, Rol rol,
-                String ciudad, String cp, String direccion, Date fechaNacimiento, String tlf, String nss) {
+    public User(long id, String username, String password, String nombre, String apellidos, String email, Rol rol,
+                String ciudad, String cp, String direccion, Date fechaNacimiento, String tlf) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -164,5 +162,24 @@ public class User {
 
     public String toStringRol() {
         return ""+rol;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId() == user.getId() && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(
+                getPassword(), user.getPassword()) && Objects.equals(getNombre(), user.getNombre()) &&
+                Objects.equals(getApellidos(), user.getApellidos()) && Objects.equals(getEmail(), user.getEmail())
+                && getRol() == user.getRol() && Objects.equals(getCiudad(), user.getCiudad()) && Objects.equals(getCp(),
+                user.getCp()) && Objects.equals(getDireccion(), user.getDireccion()) && Objects.equals(getFechaNacimiento(),
+                user.getFechaNacimiento()) && Objects.equals(getTlf(), user.getTlf());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUsername(), getPassword(), getNombre(), getApellidos(), getEmail(), getRol(),
+                getCiudad(), getCp(), getDireccion(), getFechaNacimiento(), getTlf());
     }
 }

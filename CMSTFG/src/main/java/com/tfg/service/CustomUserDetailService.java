@@ -3,12 +3,14 @@ package com.tfg.service;
 import com.tfg.dao.IAdminDao;
 import com.tfg.dao.ITrabajadorDao;
 import com.tfg.dao.IUser_generalDao;
+import com.tfg.dao.IUsuarioDao;
 import com.tfg.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
@@ -22,6 +24,9 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Autowired
     private IUser_generalDao user_generalRepository;
+
+    @Autowired
+    private IUsuarioDao usuarioDao;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -40,9 +45,27 @@ public class CustomUserDetailService implements UserDetailsService {
         }else if(userUser_general != null) {
             userDetails = new CustomUserDetails();
             userDetails.setUser(userUser_general);
-        }else{
-            throw new UsernameNotFoundException("User not exists with the name: "+username);
         }
         return userDetails;
+    }
+
+
+    public UserDetails loadUserById(long id){
+
+        User user= usuarioDao.findUserById(id);
+        CustomUserDetails userDetails = null;
+
+        if (user != null){
+            userDetails = new CustomUserDetails();
+            userDetails.setUser(user);
+        }
+
+        return userDetails;
+
+    }
+
+
+    public void delete(Long id){
+        usuarioDao.deleteById(id);
     }
 }

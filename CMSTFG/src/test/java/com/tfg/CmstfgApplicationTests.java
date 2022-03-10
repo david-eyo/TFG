@@ -23,6 +23,7 @@ import com.tfg.entity.Historico_precios;
 import com.tfg.entity.Producto;
 import com.tfg.service.IHistoricoService;
 import com.tfg.service.IProductoService;
+import org.springframework.security.test.context.support.WithMockUser;
 
 @SpringBootTest
 class CmstfgApplicationTests {
@@ -109,6 +110,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testCreaYEliminaProducto() {
 
 		creaLineas();
@@ -142,6 +144,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testBuscaPorIdProducto() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 		long id = productosDevueltos.get(2).getId();
@@ -159,6 +162,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testBuscaTodoProducto() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 
@@ -177,6 +181,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testBuscaTodoProductoPageable() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 
@@ -196,6 +201,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testBuscaProductoPorNombre() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 
@@ -212,6 +218,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testBuscaProductoPorOferta() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 
@@ -230,6 +237,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testBuscaProductoPorNuestros_productos() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 
@@ -248,6 +256,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testActualizaProducto() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 
@@ -277,6 +286,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testProductoExceptionSinNombre() {
 
 		Producto productoAActualizar = new Producto();
@@ -302,6 +312,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testProductoExceptionNombreNoValido() {
 
 		Producto productoAActualizar = new Producto();
@@ -327,6 +338,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testProductoExceptionCantidadNegativa() {
 
 		Producto productoAActualizar = new Producto();
@@ -352,6 +364,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testProductoExceptionPrecioNoValido() {
 
 		Producto productoAActualizar = new Producto();
@@ -382,6 +395,7 @@ class CmstfgApplicationTests {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testCreaYEliminaHistorico() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 
@@ -404,6 +418,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testbuscaHistoricoPorId() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 
@@ -434,6 +449,7 @@ class CmstfgApplicationTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testbuscaHistoricoPorPrecioActual() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 
@@ -466,6 +482,7 @@ class CmstfgApplicationTests {
 	}
 	
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testBuscaHistoricoPorIdDeProducto() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 
@@ -500,6 +517,7 @@ class CmstfgApplicationTests {
 	}
 	
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testPuntuaProducto() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();
 		
@@ -521,6 +539,7 @@ class CmstfgApplicationTests {
 	}
 	
 	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testPuntuaMalProducto() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();		
 		try {
