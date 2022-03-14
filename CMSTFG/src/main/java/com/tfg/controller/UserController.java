@@ -93,6 +93,10 @@ public class UserController {
                 responseAsMap.put("mensaje", "Username no puede ser nulo");
                 return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
             }
+            if (userService.loadUserByUsername(admin.getUsername()) != null){
+                responseAsMap.put("mensaje", "El username ya existe");
+                return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+            }
             if (admin.getPassword() == null){
                 responseAsMap.put("mensaje", "Password no puede ser nulo");
                 return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
@@ -179,6 +183,10 @@ public class UserController {
                 responseAsMap.put("mensaje", "Username no puede ser nulo");
                 return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
             }
+            if (userService.loadUserByUsername(trabajador.getUsername()) != null){
+                responseAsMap.put("mensaje", "El username ya existe");
+                return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+            }
             if (trabajador.getPassword() == null){
                 responseAsMap.put("mensaje", "Password no puede ser nulo");
                 return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
@@ -257,10 +265,15 @@ public class UserController {
                 responseAsMap.put("mensaje", "Username no puede ser nulo");
                 return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
             }
+            if (userService.loadUserByUsername(user_general.getUsername()) != null){
+                responseAsMap.put("mensaje", "El username ya existe");
+                return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+            }
             if (user_general.getPassword() == null){
                 responseAsMap.put("mensaje", "Password no puede ser nulo");
                 return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
             }
+
 
             String pwd = user_general.getPassword();
             String encryptedPwd = passwordEncoder.encode(pwd);
