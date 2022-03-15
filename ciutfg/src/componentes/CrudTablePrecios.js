@@ -25,7 +25,6 @@ const CrudTablePrecios = ({ findHistoricoPreciosByIdProducto, data }) => {
 
   return (
     <div>
-      <br/><br/><br/><br/><hr></hr>
       <h3>Histórico de precios(Administración)</h3>
       <div style={style}>
                 <Form className="d-flex">

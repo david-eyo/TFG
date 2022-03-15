@@ -26,7 +26,6 @@ const CrudApiHistorico = () => {
     });
   };
 
-  console.log(db);
 
 
 

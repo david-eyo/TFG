@@ -2,11 +2,20 @@
     background-color: rgb(1, 199, 11);
 }
 .logo{
-    height: 2rem;
-    width: 2rem;
+    height: 3rem;
+    width: 3rem;
     margin-right: 1rem;
-    margin-left: 0%;
+    margin-left: auto;
 }
 .nombre_empresa{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:x-large;
+}
+.Nav Link{
+    border-bottom:2px solid rgb(0,0,0);
+}
+.navbar,
+.navbar-default {
+    background-image: linear-gradient(to bottom,#003304 0,#04a011 100%) !important;
+    padding-bottom:10px
 }

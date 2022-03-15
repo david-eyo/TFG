@@ -8,8 +8,6 @@ const MuestraTodosProductosNuestrosProductos = ({ data, getAllProductsNuestrosPr
       }, [data]);
     return (
         <div>
-            <hr/>
-            <br/>
             <h3>Nuestros Productos(Normal)</h3>
             {data.length > 0 ? (
                 data.map((el) => (

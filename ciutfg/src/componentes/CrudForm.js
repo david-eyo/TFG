@@ -70,8 +70,6 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
 
   return (
     <div>
-      <hr/>
-      <br />
       <h3>{dataToEdit ? "Editar producto" : "Añadir Producto"}</h3>
       <form onSubmit={handleSubmit}>
         <br />

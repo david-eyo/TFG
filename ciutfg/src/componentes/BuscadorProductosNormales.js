@@ -32,7 +32,6 @@ export default function BuscadorProductosNormales({ findDataByName, setDataToEdi
 
     return (
         <div>
-            <hr/>
             <h3>Buscador Productos(Normal)</h3>
             <div style={style}>
                 <Form className="d-flex">
