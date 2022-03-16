@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
+import com.tfg.entity.User;
+import com.tfg.service.CustomUserDetails;
 import com.tfg.service.IHistoricoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -18,6 +20,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -141,6 +145,16 @@ public class ProductoController {
         ResponseEntity<Map<String, Object>> responseEntity = null;
         List<String> errores = null;
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
+        User usuario =currentPrincipalName.getUser();
+
+        if ((usuario.getRol() != User.Rol.ROLE_ADMIN)){
+            responseAsMap.put("mensaje",
+                    "Sólo el administrador puede crear un producto" );
+            return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+        }
+
         if (result.hasErrors()) {
             errores = new ArrayList<String>();
             for (ObjectError error : result.getAllErrors()) {
@@ -182,6 +196,16 @@ public class ProductoController {
         Map<String, Object> responseAsMap = new HashMap<String, Object>();
         ResponseEntity<Map<String, Object>> responseEntity = null;
         List<String> errores = null;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
+        User usuario =currentPrincipalName.getUser();
+
+        if ((usuario.getRol() != User.Rol.ROLE_ADMIN)){
+            responseAsMap.put("mensaje",
+                    "Sólo el administrador puede actualizar un producto" );
+            return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+        }
 
         if (result.hasErrors()) {
             errores = new ArrayList<String>();
@@ -278,6 +302,16 @@ public class ProductoController {
 
         Map<String, Object> responseAsMap = new HashMap<String, Object>();
         ResponseEntity<Map<String, Object>> responseEntity = null;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
+        User usuario =currentPrincipalName.getUser();
+
+        if ((usuario.getRol() != User.Rol.ROLE_ADMIN)){
+            responseAsMap.put("mensaje",
+                    "Sólo el administrador puede eliminar un producto" );
+            return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+        }
 
         try {
             Producto producto = productoService.findById(id);

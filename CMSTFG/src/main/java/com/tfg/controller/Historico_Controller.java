@@ -2,6 +2,8 @@ package com.tfg.controller;
 
 import com.tfg.entity.Historico_precios;
 import com.tfg.entity.Producto;
+import com.tfg.entity.User;
+import com.tfg.service.CustomUserDetails;
 import com.tfg.service.IHistoricoService;
 import com.tfg.service.IProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -71,6 +75,16 @@ public class Historico_Controller {
         ResponseEntity<Map<String, Object>> responseEntity = null;
         List<String> errores = null;
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
+        User usuario =currentPrincipalName.getUser();
+
+        if ((usuario.getRol() != User.Rol.ROLE_ADMIN)){
+            responseAsMap.put("mensaje",
+                    "Sólo el administrador puede cambiar el precio de un producto" );
+            return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+        }
+
         if (result.hasErrors()) {
             errores = new ArrayList<String>();
             for (ObjectError error : result.getAllErrors()) {
@@ -120,6 +134,16 @@ public class Historico_Controller {
 
         Map<String, Object> responseAsMap = new HashMap<String, Object>();
         ResponseEntity<Map<String, Object>> responseEntity = null;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
+        User usuario =currentPrincipalName.getUser();
+
+        if ((usuario.getRol() != User.Rol.ROLE_ADMIN)){
+            responseAsMap.put("mensaje",
+                    "Sólo el administrador puede eliminar el precio de un producto" );
+            return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+        }
 
         try {
             Historico_precios historico = historicoService.findById(id);

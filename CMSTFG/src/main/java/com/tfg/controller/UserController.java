@@ -1,18 +1,25 @@
 package com.tfg.controller;
 
+import com.tfg.config.JWTTokenHelper;
 import com.tfg.dao.IAdminDao;
 import com.tfg.dao.ITrabajadorDao;
 import com.tfg.dao.IUser_generalDao;
 import com.tfg.entity.*;
+import com.tfg.requests.AuthenticationRequest;
+import com.tfg.responses.LoginResponse;
+import com.tfg.responses.UserInfo;
 import com.tfg.service.CustomUserDetailService;
 import com.tfg.service.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -20,6 +27,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +53,15 @@ public class UserController {
 
     @Autowired
     private CustomUserDetailService userService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    JWTTokenHelper jWTTokenHelper;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @PostMapping("/admin/add")
     public ResponseEntity<Map<String, Object>> addAdmin(@RequestBody Admin admin){
@@ -301,19 +320,22 @@ public class UserController {
     public ResponseEntity<UserDetails> findUserByUsername(@RequestParam(required = false) String username)
     {
 
+
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
         User usuario =currentPrincipalName.getUser();
 
         UserDetails usuario1 =  userService.loadUserByUsername(username);
 
-
+        Map<String, Object> responseAsMap = new HashMap<String, Object>();
         ResponseEntity<UserDetails> responseEntity = null;
 
 
-        if((usuario.getRol() != User.Rol.ROLE_ADMIN)){
-            responseEntity = new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
-            return responseEntity;
+        if ((usuario.getUsername() != usuario1.getUsername())&&(usuario.getRol() != User.Rol.ROLE_ADMIN)){
+            responseAsMap.put("mensaje",
+                    "Sólo el propio usuario puede modificar el carrito propio." );
+            return responseEntity = new ResponseEntity<UserDetails>((UserDetails) null, HttpStatus.UNAUTHORIZED);
         }
 
 
@@ -406,7 +428,7 @@ public class UserController {
         return responseEntity;
     }
 
-    @PutMapping(value = "admin/{id}")
+    @PutMapping(value = "/admin/{id}")
     public ResponseEntity<Map<String, Object>> updateAdmin(@PathVariable long id, @Valid @RequestBody Admin admin,
                                                                      BindingResult result) {
 
@@ -498,7 +520,7 @@ public class UserController {
         return responseEntity;
     }
 
-    @PutMapping(value = "trabajador/{id}")
+    @PutMapping(value = "/trabajador/{id}")
     public ResponseEntity<Map<String, Object>> updateTrabajador(@PathVariable long id, @Valid @RequestBody Trabajador trabajador,
                                                                      BindingResult result) {
 
@@ -526,7 +548,7 @@ public class UserController {
         try {
             if (trabajador.getId() != id){
                 responseAsMap.put("mensaje",
-                        "el producto no se ha actualizado correctamente: No coinciden los ids");
+                        "el trabajador no se ha actualizado correctamente: No coinciden los ids");
                 responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
             }
 
@@ -537,7 +559,7 @@ public class UserController {
             }
             if ((usuario.getId() != trabajadoraux.getId())&&(usuario.getRol() != User.Rol.ROLE_ADMIN)){
                 responseAsMap.put("mensaje",
-                        "el producto no se ha actualizado correctamente: Solo el propio usuario puede actualizar sus datos" );
+                        "el trabajador no se ha actualizado correctamente: Solo el propio usuario puede actualizar sus datos" );
                 responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
             }
             if ((trabajador.getNombre() != null)&&(!trabajador.getNombre().equals(trabajadoraux.getNombre()) )){
@@ -599,7 +621,7 @@ public class UserController {
         return responseEntity;
     }
 
-    @PutMapping(value = "user/{id}")
+    @PutMapping(value = "/user/{id}")
     public ResponseEntity<Map<String, Object>> updateUser_general(@PathVariable long id, @Valid @RequestBody User_general user,
                                                                   BindingResult result) {
 
@@ -632,7 +654,7 @@ public class UserController {
                         "el producto no se ha actualizado correctamente: No coinciden los ids");
                 responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
             }
-            if (usuario.getRol() != User.Rol.ROLE_ADMIN){
+            if ((usuario.getId() != user.getId())&&(usuario.getRol() != User.Rol.ROLE_ADMIN)){
                 responseAsMap.put("mensaje",
                         "el producto no se ha actualizado correctamente: Solo los users pueden actualizarse entre sí" );
                 responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
@@ -695,6 +717,36 @@ public class UserController {
 
         return responseEntity;
     }
+
+    /*AUTENTICACION*/
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) throws InvalidKeySpecException, NoSuchAlgorithmException {
+
+        final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                authenticationRequest.getUserName(), authenticationRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication1.getPrincipal();
+        User usuario =currentPrincipalName.getUser();
+
+        //User user=(User)authentication.getPrincipal();
+        String jwtToken=jWTTokenHelper.generateToken(usuario.getUsername());
+
+        LoginResponse response=new LoginResponse();
+        response.setToken(jwtToken);
+
+
+        return ResponseEntity.ok(response);
+    }
+
+
+
+
+
+
 
 
 
