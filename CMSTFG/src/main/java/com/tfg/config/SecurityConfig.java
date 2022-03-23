@@ -36,6 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(encodePwd());
     }
 
+
+
+
 /*    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -71,7 +74,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JWTAuthenticationFilter(userDetailsService, jWTTokenHelper),
                         UsernamePasswordAuthenticationFilter.class);
 
-        http.csrf().disable().cors().and().headers().frameOptions().disable();
+        http.csrf().disable().headers().frameOptions().disable();
+
+        http.cors().disable();
+
+        //http.csrf().disable().cors().and().headers().frameOptions().disable();
 
     }
 

@@ -1,0 +1,10 @@
+.footer {
+    background-image: linear-gradient(to bottom,#003304 0,#04a011 100%) !important;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    color: white;
+    font-size: 25px;
+    padding-top: 2rem;
+    margin-top: 40rem;
+   }

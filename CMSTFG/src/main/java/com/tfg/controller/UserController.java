@@ -286,7 +286,7 @@ public class UserController {
             }
             if (userService.loadUserByUsername(user_general.getUsername()) != null){
                 responseAsMap.put("mensaje", "El username ya existe");
-                return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+                return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.CONFLICT);
             }
             if (user_general.getPassword() == null){
                 responseAsMap.put("mensaje", "Password no puede ser nulo");

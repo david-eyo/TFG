@@ -8,7 +8,7 @@ import Message from "../componentes/Message";
 
 
 
-function BuscadorProductosAdministracion() {
+function BuscadorProductosAdministracion({token}) {
 
   const [db, setDb] = useState(null);
   const [db2, setDb2] = useState(null);
@@ -20,17 +20,18 @@ function BuscadorProductosAdministracion() {
   let api = helpHttp();
   let url = "http://localhost:5000/productos";
 
-
   const createData = (data) => {
 
     let options = {
       body: data,
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json",
+                "Authorization": "Bearer "+token },
     };
 
     api.post(url, options).then((res) => {
       //console.log(res);
       if (!res.err) {
+        console.log(res);
         setDb([...db, res]);
       } else {
         setError(res);
@@ -62,7 +63,8 @@ function BuscadorProductosAdministracion() {
     let endpoint = `${url}/${data.id}`;
     let options = {
       body: data,
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json",
+      "Authorization": "Bearer "+token},
     };
 
     api.put(endpoint, options).then((res) => {
