@@ -14,7 +14,7 @@ const style = {
 
 
 
-export default function BuscadorProductosNormales({ findDataByName, setDataToEdit }) {
+export default function BuscadorProductosNormales({ findDataByName, setDataToEdit, token }) {
     const [busqueda, setBusqueda] = useState("");
     const [data, setData] = useState([]);
     const [data2, setData2] = useState([]);
@@ -52,6 +52,7 @@ export default function BuscadorProductosNormales({ findDataByName, setDataToEdi
                         key={el.id}
                         precio={el.precio}
                         el={el}
+                        token={token}
                     />
                 ))
             ) : (

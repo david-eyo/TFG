@@ -10,7 +10,7 @@ import Loader from '../../componentes/Loader';
 
 
 
-function Login({setToken, token}) {
+function Login({setToken, setRol}) {
 
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
@@ -29,6 +29,7 @@ function Login({setToken, token}) {
         e.preventDefault();
         setLoading(true);
         var token1 = null;
+        var user1 = null;
 
         let resp= await fetch('http://localhost:5000/secure/auth/login', {
             method: 'POST',
@@ -47,7 +48,6 @@ function Login({setToken, token}) {
                 })
         ).catch((err) => setError(err));
 
-        
         if (resp){
             token1 = resp.token;
             setError(undefined);
@@ -56,12 +56,31 @@ function Login({setToken, token}) {
             setProblemaTexto("Usuario y/o contraseña incorrectos."); 
             setLoading(false);
         }
+        
         setToken(token1);
         setLoading(false);
+
+
+        var url = 'http://localhost:5000/secure/auth?username='+user;
+
+        let resp1= await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json',
+                        'Authorization': 'Bearer '+ token1 },
+        }).then((res) =>
+            res.ok
+                ?res.json()
+                : Promise.reject({
+                    err: true,
+                    status: res.status || "00",
+                    statusText: res.statusText || "Ocurrió un error",
+                })
+        ).catch((err) => setError(err));
+
+        setRol(resp1.authorities[0].authority);
         
 
     }
-    console.log("Login:"+token);
 
     return (
         <div className='login'>

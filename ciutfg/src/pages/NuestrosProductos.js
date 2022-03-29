@@ -6,7 +6,7 @@ import Message from "../componentes/Message";
 
 
 
-function NuestrosProductos() {
+function NuestrosProductos({token}) {
 
     const [db, setDb] = useState(null);
     const [db4, setDb4] = useState([]);
@@ -73,6 +73,7 @@ function NuestrosProductos() {
                     rateProduct={rateProduct}
                     dataToEdit={dataToEdit}
                     setDataToEdit={setDataToEdit}
+                    token={token}
                 />
             </article>
         </div>

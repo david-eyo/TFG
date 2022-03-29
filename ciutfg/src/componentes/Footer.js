@@ -4,7 +4,7 @@ import './Footer.css'
 function Footer() {
   return (
     <footer className = "footer">
-        <p>This is react sticky footer!!</p>
+        <p></p>
     </footer>
   );
 }

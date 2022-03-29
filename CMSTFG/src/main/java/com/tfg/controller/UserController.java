@@ -328,11 +328,12 @@ public class UserController {
 
         UserDetails usuario1 =  userService.loadUserByUsername(username);
 
+
         Map<String, Object> responseAsMap = new HashMap<String, Object>();
         ResponseEntity<UserDetails> responseEntity = null;
 
 
-        if ((usuario.getUsername() != usuario1.getUsername())&&(usuario.getRol() != User.Rol.ROLE_ADMIN)){
+        if (!(usuario.getUsername().equals(username) )&&(usuario.getRol() != User.Rol.ROLE_ADMIN)){
             responseAsMap.put("mensaje",
                     "Sólo el propio usuario puede modificar el carrito propio." );
             return responseEntity = new ResponseEntity<UserDetails>((UserDetails) null, HttpStatus.UNAUTHORIZED);
@@ -345,7 +346,7 @@ public class UserController {
 
 
         } else {
-            responseEntity = new ResponseEntity<UserDetails>(usuario1, HttpStatus.NO_CONTENT);
+            responseEntity = new ResponseEntity<UserDetails>((UserDetails)null, HttpStatus.NO_CONTENT);
         }
 
         return responseEntity;

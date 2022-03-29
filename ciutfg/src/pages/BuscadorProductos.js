@@ -6,7 +6,7 @@ import Message from "../componentes/Message";
 
 
 
-function BuscadorProductos() {
+function BuscadorProductos({token}) {
 
     const [db, setDb] = useState(null);
     const [db2, setDb2] = useState([]);
@@ -70,6 +70,7 @@ function BuscadorProductos() {
                     findDataByName={findDataByName}
                     updateData={updateData}
                     setDataToEdit={setDataToEdit}
+                    token={token}
                 />
 
             </article>

@@ -18,12 +18,20 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import Carrito from '../pages/Carrito';
+import CarritoAdmin from '../pages/CarritoAdmin';
+import BuscadorUsuarios from '../pages/BuscadorUsuarios';
 
 
 
 export default function BarraPrincipal() {
     const [token, setToken] = useState('');
-    console.log('Barra principal: ' + token);
+    const [rol, setRol] = useState('');
+
+    const logout = (e) => {
+        setToken(null);
+        setRol(null);
+    }
     return (
         <>
 
@@ -49,17 +57,35 @@ export default function BarraPrincipal() {
                                 "nav-link" + (!isActive ? " unselected" : "")
                             } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Buscar Productos</Nav.Link>
 
-                            <Nav.Link as={Link} to="/adminbuscadorproductos" className={isActive =>
-                                "nav-link" + (!isActive ? " unselected" : "")
-                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>(A)Buscar y Editar Productos</Nav.Link>
 
-                            <Nav.Link as={Link} to="/adminhistorico" className={isActive =>
-                                "nav-link" + (!isActive ? " unselected" : "")
-                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>(A)Historico Precios</Nav.Link>
+
+
+                            {rol === "ROLE_ADMIN" &&
+                                <NavDropdown title="Administración" id="navbarScrollingDropdown" style={{ marginLeft: '2rem', fontSize: 'larger' }}>
+                                    <NavDropdown.Item as={Link} to="/adminbuscadorproductos" className={isActive =>
+                                        "nav-link" + (!isActive ? " unselected" : "")
+                                    } >Buscar y Editar Productos</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/adminhistorico" className={isActive =>
+                                        "nav-link" + (!isActive ? " unselected" : "")
+                                    } >(A)Historico Precios</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/buscausuario" className={isActive =>
+                                        "nav-link" + (!isActive ? " unselected" : "")
+                                    } >Buscar Usuario</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/buscacarritodeusuario" className={isActive =>
+                                        "nav-link" + (!isActive ? " unselected" : "")
+                                    } >Buscar Carrito Usuario</NavDropdown.Item>
+                                </NavDropdown>
+                            }
+
                             <Nav.Link as={Link} to="/adminhistorico" className={isActive =>
                                 "nav-link" + (!isActive ? " unselected" : "")
                             } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Atención al Cliente</Nav.Link>
 
+                            {rol === "ROLE_USER" &&
+                                <Nav.Link as={Link} to="/carrito" className={isActive =>
+                                    "nav-link" + (!isActive ? " unselected" : "")
+                                } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Carrito</Nav.Link>
+                            }
                             {!token &&
                                 <Nav.Link as={Link} to="/login" className={isActive =>
                                     "nav-link" + (!isActive ? " unselected" : "")
@@ -69,7 +95,7 @@ export default function BarraPrincipal() {
                             {token &&
                                 <Nav.Link className={isActive =>
                                     "nav-link" + (!isActive ? " unselected" : "")
-                                } style={{ marginLeft: '2rem', fontSize: 'larger' }} onClick={e => setToken(null)}>Logout</Nav.Link>
+                                } style={{ marginLeft: '2rem', fontSize: 'larger' }} onClick={e => logout()}>Logout</Nav.Link>
                             }
 
 
@@ -78,17 +104,22 @@ export default function BarraPrincipal() {
                 </Navbar>
             </header>
 
+
+
             <Routes>
                 <Route path="/productos" element={<CrudApi />} />
                 <Route path="/historico" element={<CrudApiHistorico />} />
-                <Route path="/" element={<Inicio />} />
-                <Route path="/nuestrosproductos" element={<NuestrosProductos />} />
-                <Route path="/buscadorProductos" element={<BuscadorProductos />} />
+                <Route path="/" element={<Inicio token={token} />} />
+                <Route path="/nuestrosproductos" element={<NuestrosProductos token={token} />} />
+                <Route path="/buscadorProductos" element={<BuscadorProductos token={token} />} />
                 <Route path="/adminbuscadorproductos" element={<BuscadorProductosAdministracion
                     token={token} />} />
                 <Route path="/adminhistorico" element={<CrudApiHistorico />} />
-                <Route path="/login" element={<Login token={token} setToken={setToken} />} />
+                <Route path="/login" element={<Login token={token} setToken={setToken} setRol={setRol} />} />
                 <Route path="/reguser" element={<RegistroUsuarioNormal />} />
+                <Route path="/carrito" element={<Carrito token={token} />} />
+                <Route path="/buscacarritodeusuario" element={<CarritoAdmin token={token} />} />
+                <Route path="/buscausuario" element={<BuscadorUsuarios token={token} />} />
 
             </Routes>
 

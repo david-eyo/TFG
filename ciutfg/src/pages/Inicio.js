@@ -5,7 +5,7 @@ import Loader from '../componentes/Loader';
 import Message from "../componentes/Message";
 
 
-function Inicio() {
+function Inicio({token}) {
     const [db, setDb] = useState(null);
     const [db3, setDb3] = useState([]);
     const [dataToEdit, setDataToEdit] = useState(null);
@@ -69,6 +69,7 @@ function Inicio() {
                     rateProduct={rateProduct}
                     dataToEdit={dataToEdit}
                     setDataToEdit={setDataToEdit}
+                    token={token}
                 />
             </article>
         </div>

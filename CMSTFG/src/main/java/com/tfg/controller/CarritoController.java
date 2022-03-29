@@ -79,7 +79,7 @@ public class CarritoController {
             if(ya == true){
                 responseAsMap.put("mensaje",
                         "El producto ya ha sido añadido al carrito con anterioridad ");
-                return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+                return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.CONFLICT);
             }
             Carrito carritoNuevo= new Carrito();
             carritoNuevo.setUsuario(usergen);
@@ -139,13 +139,23 @@ public class CarritoController {
     public ResponseEntity<List<Carrito>> findCarritoByUsername(@RequestParam(required = false) String username
                                                                 ) {
 
+        ResponseEntity<List<Carrito>> responseEntity = null;
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getPrincipal().equals("anonymousUser")){
+            responseEntity = new ResponseEntity<List<Carrito>>((List<Carrito>) null, HttpStatus.UNAUTHORIZED);
+            return responseEntity;
+        }
         CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
         User usuario =currentPrincipalName.getUser();
 
+        if (username == null){
+            username = usuario.getUsername();
+        }
+
         List<Carrito> carrito = carritoService.findCarritoByUsername(username);
 
-        ResponseEntity<List<Carrito>> responseEntity = null;
+
 
 
         if((!usuario.getUsername().equals(username) && (usuario.getRol() != User.Rol.ROLE_ADMIN))){
@@ -165,6 +175,7 @@ public class CarritoController {
 
         return responseEntity;
     }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<Map<String, Object>> updateElementoCarrito(@PathVariable long id, @Valid @RequestBody ObjectNode objectNode,
                                                       BindingResult result) {

@@ -1,7 +1,7 @@
 import {React, useEffect} from "react";
 import MuestraProductoNormal from "./MuestraProductoNormal";
 
-const MuestraTodosProductosOferta = ({ data, getAllProductsOferta, rateProduct, dataToEdit, setDataToEdit  }) => {
+const MuestraTodosProductosOferta = ({ data, getAllProductsOferta, rateProduct, dataToEdit, setDataToEdit, token  }) => {
 
     useEffect(() => {
         data=getAllProductsOferta();
@@ -18,6 +18,7 @@ const MuestraTodosProductosOferta = ({ data, getAllProductsOferta, rateProduct, 
                         rateProduct={rateProduct}
                         dataToEdit={dataToEdit}
                         setDataToEdit={setDataToEdit}
+                        token={token}
                     />
                 ))
             ) : (

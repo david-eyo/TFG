@@ -3,6 +3,7 @@ import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import './MuestraProductoNormal.css';
 import ReactStars from 'react-rating-stars-component';
+import Message from "./Message";
 
 
 const initailForm = {
@@ -15,13 +16,18 @@ const initailForm = {
   valoracion: null,
 };
 
-const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit }) => {
+const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit, token }) => {
   const [form, setForm] = useState(initailForm);
+  const [cantidad, setCantidad] = useState(null);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [problemaTexto, setProblemaTexto] = useState('');
 
   let { nombre, precio, valoracion, numero_valoraciones } = el;
   const estiloBoton = {
-    marginBottom: '-6rem',
-    marginLeft: '10rem'
+    marginBottom: '-4rem',
+    marginLeft: '10rem',
+    marginTop: '0rem'
   }
 
   const estiloGrid = {
@@ -51,6 +57,44 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit }) =
 
   };
 
+  const anadirCarrito = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    let error1;
+
+
+    let resp= await fetch('http://localhost:5000/carrito', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+token },
+        body: JSON.stringify({    
+            productId: el.id,
+            cantidad
+        
+        })
+    }).then((res) =>
+        res.ok
+            ?res.json()
+            : Promise.reject({
+                err: true,
+                status: res.status || "00",
+                statusText: res.statusText || "Ocurrió un error",
+            })
+    ).catch((err) => setError(err));
+
+    console.log(resp);
+    if(error){
+      if (error.status === 409){
+        console.log("llega aqui")
+        setProblemaTexto("El producto ya ha sido añadido con anterioridad");
+      }else{
+        setProblemaTexto("La cantidad requerida excede a la cantidad existente del producto");
+      }
+    }
+}
+
+
   return (
     <div className="Tarjeta">
       <Card style={{ width: '16rem', borderRadius: '20px', backgroundColor: 'rgb(157, 255, 161)' }}>
@@ -62,7 +106,15 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit }) =
           <Card.Text>{precio}€</Card.Text>
           <div className="grid" style={estiloGrid}>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-            <Button variant="primary" className="btn btn-warning" style={estiloBoton}><i style={estiloCarrito} className="fa fa-cart-arrow-down" /></Button>
+            {token &&
+            <div className="grid">
+              <input style= {{width: '4rem', marginLeft: '10rem', marginBottom: '-2rem'}} type="number" Placeholder = "kgs"
+              onChange={(e) => {setCantidad(e.target.value)}}></input>
+
+              <Button variant="primary" className="btn btn-warning" style={estiloBoton}
+              onClick={anadirCarrito}><i style={estiloCarrito} className="fa fa-cart-arrow-down" /></Button>
+            </div>
+            }
             <div className="grid">
               <ReactStars
                 size={27}
@@ -72,6 +124,12 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit }) =
               <a style={estiloNumVal}>({numero_valoraciones})</a>
             </div>
           </div>
+          {error && (
+          <Message
+            msg={`Error: ${problemaTexto}`}
+            bgColor="#dc3545"
+          />
+        )}
         </Card.Body>
       </Card>
     </div>

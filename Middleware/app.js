@@ -28,4 +28,23 @@ app.use('/secure', createProxyMiddleware({
        proxyRes.headers['Access-Control-Allow-Origin'] = '*';
     }
 }));
+
+app.use('/secure/auth?username', createProxyMiddleware({ 
+    target: 'http://localhost:8080', //original url
+    changeOrigin: true, 
+    //secure: false,
+    onProxyRes: function (proxyRes, req, res) {
+       proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+    }
+}));
+
+app.use('/carrito', createProxyMiddleware({ 
+    target: 'http://localhost:8080', //original url
+    changeOrigin: true, 
+    //secure: false,
+    onProxyRes: function (proxyRes, req, res) {
+       proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+    }
+}));
+
 app.listen(5000);;

@@ -33,7 +33,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
     });
 
   };
-
+  console.log(form);
   const handleChange1=e=> {
     setChecked1(e.target.checked);
     form.nuestros_productos=e.target.checked;
