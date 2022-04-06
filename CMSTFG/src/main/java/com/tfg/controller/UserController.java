@@ -321,23 +321,29 @@ public class UserController {
     {
 
 
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
-        User usuario =currentPrincipalName.getUser();
-
-        UserDetails usuario1 =  userService.loadUserByUsername(username);
-
-
-        Map<String, Object> responseAsMap = new HashMap<String, Object>();
+        User usuario = null;
         ResponseEntity<UserDetails> responseEntity = null;
 
-
-        if (!(usuario.getUsername().equals(username) )&&(usuario.getRol() != User.Rol.ROLE_ADMIN)){
-            responseAsMap.put("mensaje",
-                    "Sólo el propio usuario puede modificar el carrito propio." );
-            return responseEntity = new ResponseEntity<UserDetails>((UserDetails) null, HttpStatus.UNAUTHORIZED);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!authentication.getPrincipal().equals("anonymousUser")){
+            CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
+            usuario =currentPrincipalName.getUser();
+        }else {
+            responseEntity = new ResponseEntity<UserDetails>((UserDetails) null, HttpStatus.UNAUTHORIZED);
+            return responseEntity;
         }
+
+        if (username.equals("")){
+            username = usuario.getUsername();
+        }
+
+
+        if ((usuario == null)||(!(usuario.getUsername().equals(username) )&&(usuario.getRol() != User.Rol.ROLE_ADMIN))){
+            responseEntity = new ResponseEntity<UserDetails>((UserDetails) null, HttpStatus.UNAUTHORIZED);
+            return responseEntity;
+        }
+
+        UserDetails usuario1 =  userService.loadUserByUsername(username);
 
 
         if (usuario1 != null) {

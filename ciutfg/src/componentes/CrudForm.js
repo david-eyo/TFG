@@ -69,12 +69,12 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
   };
 
   return (
-    <div>
+    <div className= "cuadro">
       <h3>{dataToEdit ? "Editar producto" : "Añadir Producto"}</h3>
       <form onSubmit={handleSubmit}>
         <br />
         <div>
-          <label htmlFor="exampleInputEmail1" className="input-label">Nombre del producto:</label>
+          <label htmlFor="exampleInputEmail1" className="input-label"><b>Nombre del producto:</b></label>
           <input
             type="text"
             name="nombre"
@@ -86,7 +86,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label htmlFor="exampleInputEmail1" className="input-label">Precio del producto:</label>
+          <label htmlFor="exampleInputEmail1" className="input-label"><b>Precio del producto:</b></label>
           <input
             type="number"
             name="precio"
@@ -99,7 +99,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label htmlFor="exampleInputEmail1" className="input-label">Cantidad del producto:</label>
+          <label htmlFor="exampleInputEmail1" className="input-label"><b>Cantidad del producto:</b></label>
           <input
             type="number"
             name="cantidad"
@@ -110,7 +110,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label htmlFor="checkedNuesstrosProductos" className="etiqueta-check">Nuestros productos:</label>
+          <label htmlFor="checkedNuesstrosProductos" className="etiqueta-check"><b>Nuestros productos:</b></label>
           <input
             type="checkbox"
             name="nuestros_productos"
@@ -120,7 +120,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label htmlFor="checkedOferta" className="etiqueta-check">Oferta:</label>
+          <label htmlFor="checkedOferta" className="etiqueta-check"><b>Oferta:</b></label>
           <input
             type="checkbox"
             name="Oferta"

@@ -9,3 +9,24 @@
 .etiqueta-check{
     margin-right: 1rem;
 }
+
+.cuadro{
+    background-image: linear-gradient(to bottom,#0eff22 0,#ff32c1 100%) !important;
+    margin-left: 30%;
+    margin-right: 30%;
+    padding-bottom: 2%;
+    padding-top: 1rem;
+    margin-top: 2rem;
+    border-radius: 50px;
+}
+
+.formul{
+    background-image: linear-gradient(to bottom,#0eff22 0,#5f2903 100%) !important;
+    margin-left: 30%;
+    margin-right: 30%;
+    padding-bottom: 2%;
+    padding-top: 1rem;
+    margin-top: 2rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+}

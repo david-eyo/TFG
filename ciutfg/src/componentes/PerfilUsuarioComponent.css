@@ -1,0 +1,23 @@
+.perfil-usuario{
+    background-image: linear-gradient(to bottom,#0eff22 0,#ff32c1 100%) !important;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+    padding-right: 6rem;
+    padding-left: 6rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 50px;
+}
+
+@media (max-width: 600px) {
+    .perfil-usuario{
+        background-image: linear-gradient(to bottom,#0eff22 0,#ff32c1 100%) !important;
+        margin-top: 2rem;
+        margin-bottom: 5rem;
+        padding-right: 6rem;
+        padding-left: 6rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        border-radius: 50px;
+    }
+}

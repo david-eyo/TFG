@@ -44,7 +44,7 @@ const CrudFormCarritoAdministracion = ({ updateCarrito, dataToEdit, setDataToEdi
   };
 
   return (
-    <div>
+    <div className= "formul">
       <h3>{"Formulario de edición de carrito"}</h3>
       <form onSubmit={handleSubmit}>
         <br />

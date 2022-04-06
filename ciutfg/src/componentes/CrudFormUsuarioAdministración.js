@@ -52,7 +52,7 @@ const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdi
 
     return (
         <div className="formulario">
-            <h3>{"Formulario de edición de usuario"}</h3>
+            <h3><b><i>Formulario de edición de usuario</i></b></h3>
             <form onSubmit={handleSubmit}>
                 <br></br>
                 <div>

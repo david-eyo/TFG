@@ -21,6 +21,7 @@ import {
 import Carrito from '../pages/Carrito';
 import CarritoAdmin from '../pages/CarritoAdmin';
 import BuscadorUsuarios from '../pages/BuscadorUsuarios';
+import PerfilUsuario from '../pages/PerfilUsuario';
 
 
 
@@ -91,6 +92,10 @@ export default function BarraPrincipal() {
                                     "nav-link" + (!isActive ? " unselected" : "")
                                 } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Login</Nav.Link>
                             }
+                            {token &&
+                            <Nav.Link as={Link} to="/miperfil" className={isActive =>
+                                "nav-link" + (!isActive ? " unselected" : "")
+                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Mi Perfil</Nav.Link>}
 
                             {token &&
                                 <Nav.Link className={isActive =>
@@ -120,6 +125,7 @@ export default function BarraPrincipal() {
                 <Route path="/carrito" element={<Carrito token={token} />} />
                 <Route path="/buscacarritodeusuario" element={<CarritoAdmin token={token} />} />
                 <Route path="/buscausuario" element={<BuscadorUsuarios token={token} />} />
+                <Route path="/miperfil" element={<PerfilUsuario token={token} />} />
 
             </Routes>
 
