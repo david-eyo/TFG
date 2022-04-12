@@ -83,7 +83,6 @@ public class PedidoController {
 
         LocalDateTime fechaIni2 = null;
         LocalDateTime fechaFin2 = null;
-
         if (fechaIni != null){
             fechaIni2 = fechaIni.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
@@ -152,20 +151,11 @@ public class PedidoController {
             }
         }
 
-
-
-
-
-
         if (pedido != null) {
-
             responseEntity = new ResponseEntity<List<Pedido>>(pedido, HttpStatus.OK);
-
-
         } else {
             responseEntity = new ResponseEntity<List<Pedido>>(pedido, HttpStatus.NO_CONTENT);
         }
-
         return responseEntity;
     }
 
