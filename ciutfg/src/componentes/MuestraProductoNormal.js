@@ -83,10 +83,8 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit, tok
             })
     ).catch((err) => setError(err));
 
-    console.log(resp);
     if(error){
       if (error.status === 409){
-        console.log("llega aqui")
         setProblemaTexto("El producto ya ha sido añadido con anterioridad");
       }else{
         setProblemaTexto("La cantidad requerida excede a la cantidad existente del producto");

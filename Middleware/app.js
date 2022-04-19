@@ -47,4 +47,13 @@ app.use('/carrito', createProxyMiddleware({
     }
 }));
 
+app.use('/', createProxyMiddleware({ 
+    target: 'http://localhost:8080', //original url
+    changeOrigin: true, 
+    //secure: false,
+    onProxyRes: function (proxyRes, req, res) {
+       proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+    }
+}));
+
 app.listen(5000);;

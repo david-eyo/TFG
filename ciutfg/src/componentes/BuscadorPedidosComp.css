@@ -1,0 +1,46 @@
+.formulario{
+    margin-left: 35%;
+    margin-right: 35%;
+    background-color: red;
+    border-radius: 50px;
+    margin-top: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-bottom: 1rem;
+
+}
+
+@media (max-width: 900px) {
+    .formulario{
+        margin-left: 5%;
+        margin-right: 5%;
+        background-color: red;
+        border-radius: 50px;
+        margin-top: 1rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem
+    }
+}
+
+.detalleProducto{
+    padding: 2rem 2rem 2rem 2rem;
+    margin-left: 15%;
+    margin-right: 15%;
+    border-radius: 50px;
+    border: 3px solid #000000;
+    background-image: linear-gradient(#f79a4e, #FFFFFF)
+}
+
+.detalleUsuario{
+    padding: 2rem 2rem 4rem 2rem;
+    margin-left: 15%;
+    margin-right: 15%;
+    border-radius: 50px;
+    border: 1px solid #000000;
+    margin-bottom: 2rem;
+    background-color: white;
+}

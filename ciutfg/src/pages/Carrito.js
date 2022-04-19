@@ -5,6 +5,12 @@ import Loader from '../componentes/Loader';
 import { helpHttp } from "../helpers/helpHttp";
 import Message from "../componentes/Message";
 
+
+import {
+  BrowserRouter as Router,
+  Link
+} from "react-router-dom";
+
 const initailForm = {
     cantidad: "",
     id: null,
@@ -19,6 +25,7 @@ const Carrito = ({token}) => {
     const [db, setDb] = useState(initailForm);
     const [dataToEdit, setDataToEdit] = useState(null);
     const [db2, setDb2] = useState(null);
+    const [cantidad, setCantidad] = useState(0);
 
 
     let api = helpHttp();
@@ -71,6 +78,29 @@ const Carrito = ({token}) => {
         
       };
 
+      const realizarPedido = () => {
+        let isPedido = window.confirm(
+          `¿Estás seguro de que quiere realizar este pedido? Se le cobrará: ${cantidad} €.`
+        );
+        if(isPedido){
+          let endpoint = `http://localhost:5000/pedidos`;
+    
+          let options = {
+            headers: { "content-type": "application/json",
+            "Authorization": "Bearer "+token},
+          };
+      
+          api.post(endpoint, options).then((res) => {
+            //console.log(res);
+            if (res.err) {
+              setError(res);
+            }
+          });
+        }else{
+          return;
+        }
+      };
+
     const handleResp = async () => {
         setLoading(true);
 
@@ -99,15 +129,34 @@ const Carrito = ({token}) => {
 
           handleResp().catch(console.error);
 
+
     },[])
 
 
+    const [pasado, setPasado]= useState(false);
+    var prueba = 0;
+
+    if(!pasado){
+      for (var i = 0; i < db.length; i++) {
+        prueba= (db[i].cantidad*db[i].productos.precio)+prueba;
+        setCantidad(prueba); 
+        if (i == db.length-1){
+          setPasado(true);
+        }       
+      }
+    }
 
     
 
 
+    
+
     return (
         <div>
+          <br></br>
+          <h3 style={{float: 'left', marginLeft: '2rem'}}><b><i>Mi Carrito de la compra</i></b></h3>
+          <br></br>
+          <br></br>
             <article className="grid-1-2">
                 {error && (
                     <Message
@@ -124,13 +173,25 @@ const Carrito = ({token}) => {
                                  />
                 }
 
-
                 <CrudTableCarrito 
                 data={db}
                 setDataToEdit={setDataToEdit}
                 deleteData={deleteData}
                 />
+              
+            <br></br>
+            <br></br>
 
+            <h4 style = {{float: 'right', marginRight: '5rem'}}><b>Total: </b>{cantidad}€</h4>
+
+            <br></br>
+            <br></br>
+
+            <Link to="/">
+            <button style = {{float: 'right', marginRight: '5rem'}} className="btn btn-warning" onClick={() => realizarPedido()}>
+              Realizar compra<i style={{marginLeft: '1rem'}} className="fa fa-exchange"/>
+            </button>
+            </Link>
             </article>
         </div>
     );

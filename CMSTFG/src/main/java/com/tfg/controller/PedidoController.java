@@ -200,9 +200,8 @@ public class PedidoController {
                 producto.setCantidad(producto.getCantidad()-cantidad);
                 productoService.save(producto);
                 listaitems.add(itemPersistido);
-                for (i=0; i<carritodelusuario.size(); i++){
-                    carritoService.delete(carritodelusuario.get(i).getId());
-                }
+                carritoService.delete(carritodelusuario.get(i).getId());
+
 
             }
 

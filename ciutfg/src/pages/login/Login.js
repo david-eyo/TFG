@@ -10,7 +10,7 @@ import Loader from '../../componentes/Loader';
 
 
 
-function Login({setToken, setRol}) {
+function Login({setToken, setRol, setUsername}) {
 
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
@@ -76,10 +76,8 @@ function Login({setToken, setRol}) {
                     statusText: res.statusText || "Ocurrió un error",
                 })
         ).catch((err) => setError(err));
-
-        setRol(resp1.authorities[0].authority);
-        
-
+        setRol(resp1.authorities[0].authority); 
+        setUsername(resp1.username)    
     }
 
     return (
@@ -88,6 +86,7 @@ function Login({setToken, setRol}) {
             <div style = {{marginLeft:'30%', marginRight: '30%', marginBottom: '1rem'}}>
 
             </div>
+            
             <Form onSubmit={Submit}>
             {error && (
                 <MessageAdvertencia
@@ -108,10 +107,10 @@ function Login({setToken, setRol}) {
                 </Form.Group>
                 {loading && <Loader />}
 
+                
                 <Button className="boton" variant="primary" type="submit">
                     Iniciar Sesión
                 </Button>
-
                 <br />
 
                 <Link to="/reguser">¿Todavía no se ha registrado? Pulse aquí</Link>

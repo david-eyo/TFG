@@ -22,16 +22,20 @@ import Carrito from '../pages/Carrito';
 import CarritoAdmin from '../pages/CarritoAdmin';
 import BuscadorUsuarios from '../pages/BuscadorUsuarios';
 import PerfilUsuario from '../pages/PerfilUsuario';
+import MisPedidos from '../pages/MisPedidos';
+import BuscadorPedidos from '../pages/BuscadorPedidos';
 
 
 
 export default function BarraPrincipal() {
     const [token, setToken] = useState('');
     const [rol, setRol] = useState('');
+    const [username, setUsername] = useState('');
 
     const logout = (e) => {
         setToken(null);
         setRol(null);
+        setUsername(null);
     }
     return (
         <>
@@ -62,7 +66,7 @@ export default function BarraPrincipal() {
 
 
                             {rol === "ROLE_ADMIN" &&
-                                <NavDropdown title="Administración" id="navbarScrollingDropdown" style={{ marginLeft: '2rem', fontSize: 'larger' }}>
+                             <NavDropdown title="Administración" id="navbarScrollingDropdown" style={{ marginLeft: '2rem', fontSize: 'larger' }}>
                                     <NavDropdown.Item as={Link} to="/adminbuscadorproductos" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
                                     } >Buscar y Editar Productos</NavDropdown.Item>
@@ -75,7 +79,7 @@ export default function BarraPrincipal() {
                                     <NavDropdown.Item as={Link} to="/buscacarritodeusuario" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
                                     } >Buscar Carrito Usuario</NavDropdown.Item>
-                                </NavDropdown>
+                                </NavDropdown>   
                             }
 
                             <Nav.Link as={Link} to="/adminhistorico" className={isActive =>
@@ -83,9 +87,28 @@ export default function BarraPrincipal() {
                             } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Atención al Cliente</Nav.Link>
 
                             {rol === "ROLE_USER" &&
+
                                 <Nav.Link as={Link} to="/carrito" className={isActive =>
                                     "nav-link" + (!isActive ? " unselected" : "")
                                 } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Carrito</Nav.Link>
+                            }
+
+                            {rol === "ROLE_USER" &&
+                            
+                            <NavDropdown title="Mis Pedidos" id="navbarScrollingDropdown" style={{ marginLeft: '2rem', fontSize: 'larger' }}>
+                                <NavDropdown.Item as={Link} to="/mispedidos" className={isActive =>
+                                    "nav-link" + (!isActive ? " unselected" : "")
+                                } >Mis Pedidos</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/adminhistorico" className={isActive =>
+                                    "nav-link" + (!isActive ? " unselected" : "")
+                                } >Buscar Pedidos Fechas</NavDropdown.Item>
+                            </NavDropdown>
+                            }
+
+                            {rol === "ROLE_ADMIN" &&
+                                <Nav.Link as={Link} to="/buscadorpedidos" className={isActive =>
+                                "nav-link" + (!isActive ? " unselected" : "")
+                                } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Pedidos</Nav.Link>
                             }
                             {!token &&
                                 <Nav.Link as={Link} to="/login" className={isActive =>
@@ -120,12 +143,14 @@ export default function BarraPrincipal() {
                 <Route path="/adminbuscadorproductos" element={<BuscadorProductosAdministracion
                     token={token} />} />
                 <Route path="/adminhistorico" element={<CrudApiHistorico />} />
-                <Route path="/login" element={<Login token={token} setToken={setToken} setRol={setRol} />} />
+                <Route path="/login" element={<Login token={token} setToken={setToken} setRol={setRol} setUsername= {setUsername} />} />
                 <Route path="/reguser" element={<RegistroUsuarioNormal />} />
                 <Route path="/carrito" element={<Carrito token={token} />} />
                 <Route path="/buscacarritodeusuario" element={<CarritoAdmin token={token} />} />
                 <Route path="/buscausuario" element={<BuscadorUsuarios token={token} />} />
                 <Route path="/miperfil" element={<PerfilUsuario token={token} />} />
+                <Route path="/mispedidos" element={<MisPedidos token={token} username={username} />} />
+                <Route path="/buscadorpedidos" element={<BuscadorPedidos token={token} username={username} />} />
 
             </Routes>
 

@@ -1,11 +1,11 @@
 import {React, useState} from "react";
-import CrudTableRowCarrito from "./CrudTableRowCarrito";
+import CrudTableRowItemPedido from "./CrudTableRowItemPedido";
 
 
 
-const CrudTableCarrito = ({ data, setDataToEdit, deleteData }) => {
-    const [busqueda, setBusqueda] = useState("");
+const CrudTableItemPedido = ({ data }) => {
 
+    
   return (
     <div>
       <table className="table">
@@ -20,10 +20,8 @@ const CrudTableCarrito = ({ data, setDataToEdit, deleteData }) => {
         <tbody>
           {data.length > 0 ? (
             data.map((el) => (
-              <CrudTableRowCarrito
+              <CrudTableRowItemPedido
                 el={el}
-                setDataToEdit={setDataToEdit}
-                deleteData={deleteData}
               />
             ))
           ) : (
@@ -37,4 +35,4 @@ const CrudTableCarrito = ({ data, setDataToEdit, deleteData }) => {
   );
 };
 
-export default CrudTableCarrito;
+export default CrudTableItemPedido;

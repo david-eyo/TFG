@@ -1,5 +1,5 @@
 .perfil-usuario{
-    background-image: linear-gradient(to bottom,#0eff22 0,#ff32c1 100%) !important;
+    background-image: linear-gradient(to bottom,#2cf4ea ,#008080  ) !important;
     margin-top: 2rem;
     margin-bottom: 5rem;
     padding-right: 6rem;
@@ -11,7 +11,7 @@
 
 @media (max-width: 600px) {
     .perfil-usuario{
-        background-image: linear-gradient(to bottom,#0eff22 0,#ff32c1 100%) !important;
+        background-image: linear-gradient(to bottom,#2cf4ea ,#008080  ) !important;
         margin-top: 2rem;
         margin-bottom: 5rem;
         padding-right: 6rem;
