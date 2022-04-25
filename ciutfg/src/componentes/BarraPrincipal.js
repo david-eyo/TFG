@@ -24,6 +24,7 @@ import BuscadorUsuarios from '../pages/BuscadorUsuarios';
 import PerfilUsuario from '../pages/PerfilUsuario';
 import MisPedidos from '../pages/MisPedidos';
 import BuscadorPedidos from '../pages/BuscadorPedidos';
+import BuscadorPedidosUsuario from '../pages/BuscadorPedidosUsuario';
 
 
 
@@ -99,7 +100,7 @@ export default function BarraPrincipal() {
                                 <NavDropdown.Item as={Link} to="/mispedidos" className={isActive =>
                                     "nav-link" + (!isActive ? " unselected" : "")
                                 } >Mis Pedidos</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/adminhistorico" className={isActive =>
+                                <NavDropdown.Item as={Link} to="/buscadorpedidosusuario" className={isActive =>
                                     "nav-link" + (!isActive ? " unselected" : "")
                                 } >Buscar Pedidos Fechas</NavDropdown.Item>
                             </NavDropdown>
@@ -151,6 +152,7 @@ export default function BarraPrincipal() {
                 <Route path="/miperfil" element={<PerfilUsuario token={token} />} />
                 <Route path="/mispedidos" element={<MisPedidos token={token} username={username} />} />
                 <Route path="/buscadorpedidos" element={<BuscadorPedidos token={token} username={username} />} />
+                <Route path="/buscadorpedidosusuario" element={<BuscadorPedidosUsuario token={token} username={username} />} />
 
             </Routes>
 
