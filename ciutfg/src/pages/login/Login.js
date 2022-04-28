@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "./Login.css"
 import { Form, Button } from 'react-bootstrap';
 import {
-    Link
+    Link, Navigate
 } from "react-router-dom";
 import MessageAdvertencia from '../../componentes/MessageAdvertencia';
 import Loader from '../../componentes/Loader';
@@ -15,6 +15,7 @@ function Login({setToken, setRol, setUsername}) {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [log, setLog]= useState(false);
     
     const [problemaTexto, setProblemaTexto] = useState ('');
     const [loading, setLoading] = useState(false);
@@ -51,6 +52,7 @@ function Login({setToken, setRol, setUsername}) {
         if (resp){
             token1 = resp.token;
             setError(undefined);
+            setLog(true);
             
         } else{
             setProblemaTexto("Usuario y/o contraseña incorrectos."); 
@@ -80,12 +82,18 @@ function Login({setToken, setRol, setUsername}) {
         setUsername(resp1.username)    
     }
 
+
     return (
         <div className='login'>
             <h1>Iniciar Sesión</h1>
             <div style = {{marginLeft:'30%', marginRight: '30%', marginBottom: '1rem'}}>
 
             </div>
+
+
+            {log &&
+                <Navigate to="/" username={user}></Navigate>
+            }
             
             <Form onSubmit={Submit}>
             {error && (

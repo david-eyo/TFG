@@ -5,7 +5,7 @@ import Loader from '../componentes/Loader';
 import Message from "../componentes/Message";
 
 
-function Inicio({token}) {
+function Inicio({token, username}) {
     const [db, setDb] = useState(null);
     const [db3, setDb3] = useState([]);
     const [dataToEdit, setDataToEdit] = useState(null);

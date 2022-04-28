@@ -18,7 +18,7 @@ public interface ITrabajoDao extends JpaRepository<Trabajo, Long> {
     public List<Trabajo> findTrabajoByUsername(String name);
 
     @Query(value = "select t from Trabajo t where (" +
-            "(t.inicioTrabajo > :fechaInicio) and (t.inicioTrabajo < :fechaFin) )")
+            "(t.inicioTrabajo >= :fechaInicio) and (t.inicioTrabajo <= :fechaFin) )")
     public List<Trabajo> findTrabajoByFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
     @Query(value = "select t from Trabajo t where t.localizacion = :localizacion ")
@@ -31,7 +31,7 @@ public interface ITrabajoDao extends JpaRepository<Trabajo, Long> {
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
     @Query(value = "select t from Trabajo t where ((t.trabajador.username= :username) AND " +
-            "(t.inicioTrabajo > :fechaInicio) and (t.inicioTrabajo < :fechaFin) )")
+            "(t.inicioTrabajo >= :fechaInicio) and (t.inicioTrabajo <= :fechaFin) )")
     public List<Trabajo> findTrabajoByUsuarioyFechas(String username, LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
     @Query(value = "select t from Trabajo t where ((t.trabajador.username= :username) AND " +
@@ -43,11 +43,11 @@ public interface ITrabajoDao extends JpaRepository<Trabajo, Long> {
     public List<Trabajo> findTrabajoByUsuarioyTipo_trabajo(String username, String tipo_trabajo);
 
     @Query(value = "select t from Trabajo t where ((t.localizacion = :localizacion) AND " +
-            "(t.inicioTrabajo > :fechaInicio) and (t.inicioTrabajo < :fechaFin) )")
+            "(t.inicioTrabajo >= :fechaInicio) and (t.inicioTrabajo <= :fechaFin) )")
     public List<Trabajo> findTrabajoByFechasYLocalizacion(LocalDateTime fechaInicio, LocalDateTime fechaFin,String localizacion );
 
     @Query(value = "select t from Trabajo t where ((t.tipo_trabajo = :tipo_trabajo) AND " +
-            "(t.inicioTrabajo > :fechaInicio) and (t.inicioTrabajo < :fechaFin) )")
+            "(t.inicioTrabajo >= :fechaInicio) and (t.inicioTrabajo <= :fechaFin) )")
     public List<Trabajo> findTrabajoByFechasYTipo_trabajo(LocalDateTime fechaInicio, LocalDateTime fechaFin, String tipo_trabajo);
 
     @Query(value = "select t from Trabajo t where ((t.tipo_trabajo = :tipo_trabajo) AND " +
@@ -59,11 +59,11 @@ public interface ITrabajoDao extends JpaRepository<Trabajo, Long> {
     /////////////////////////////////////////////////////////////////////////////////
 
     @Query(value = "select t from Trabajo t where ((t.trabajador.username= :username) AND " +
-            "(t.inicioTrabajo > :fechaInicio) and (t.inicioTrabajo < :fechaFin) AND (t.localizacion = :localizacion))")
+            "(t.inicioTrabajo >= :fechaInicio) and (t.inicioTrabajo <= :fechaFin) AND (t.localizacion = :localizacion))")
     public List<Trabajo> findTrabajoByUsuarioFechasyLocalizacion(String username, LocalDateTime fechaInicio, LocalDateTime fechaFin, String localizacion);
 
     @Query(value = "select t from Trabajo t where ((t.trabajador.username= :username) AND " +
-            "(t.inicioTrabajo > :fechaInicio) and (t.inicioTrabajo < :fechaFin) AND (t.tipo_trabajo = :tipo_trabajo))")
+            "(t.inicioTrabajo >= :fechaInicio) and (t.inicioTrabajo <= :fechaFin) AND (t.tipo_trabajo = :tipo_trabajo))")
     public List<Trabajo> findTrabajoByUsuarioFechasyTipo_trabajo(String username, LocalDateTime fechaInicio, LocalDateTime fechaFin, String tipo_trabajo);
 
     @Query(value = "select t from Trabajo t where ((t.trabajador.username= :username) AND " +
@@ -71,7 +71,7 @@ public interface ITrabajoDao extends JpaRepository<Trabajo, Long> {
     List<Trabajo> findTrabajoByUsuarioLocalizacionYTipo_trabajo(String username, String localizacion, String tipo_trabajo);
 
     @Query(value = "select t from Trabajo t where ((t.tipo_trabajo = :tipo_trabajo) AND " +
-            "(t.inicioTrabajo > :fechaInicio) and (t.inicioTrabajo < :fechaFin) AND (t.localizacion = :localizacion))")
+            "(t.inicioTrabajo >= :fechaInicio) and (t.inicioTrabajo <= :fechaFin) AND (t.localizacion = :localizacion))")
     public List<Trabajo> findTrabajoByFechasLocalizacionyTipo_trabajo(LocalDateTime fechaInicio, LocalDateTime fechaFin,String localizacion, String tipo_trabajo);
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +79,7 @@ public interface ITrabajoDao extends JpaRepository<Trabajo, Long> {
     /////////////////////////////////////////////////////////////////////////////////
 
     @Query(value = "select t from Trabajo t where ((t.trabajador.username= :username) AND " +
-            "(t.inicioTrabajo > :fechaInicio) and (t.inicioTrabajo < :fechaFin) AND (t.localizacion = :localizacion) AND (t.tipo_trabajo = :tipo_trabajo))")
+            "(t.inicioTrabajo >= :fechaInicio) and (t.inicioTrabajo <= :fechaFin) AND (t.localizacion = :localizacion) AND (t.tipo_trabajo = :tipo_trabajo))")
     public List<Trabajo> findTrabajoByUsuarioFechasLocalizacionyTipo_trabajo(String username, LocalDateTime fechaInicio, LocalDateTime fechaFin,String localizacion, String tipo_trabajo);
 
 

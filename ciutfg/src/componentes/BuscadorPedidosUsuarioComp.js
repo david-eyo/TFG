@@ -379,13 +379,13 @@ export default function BuscadorPedidosUsuarioComp({ token, user, setError}) {
                         el={el}
                         setDetalle={setDetalle}
                     />
-            ))
-          ) : (
-            <tr>
-              <td colSpan="3">Sin pedidos realizados</td>
-            </tr>
-          )}
-                </tbody>
+                    ))
+                  ) : (
+                <tr>
+                  <td colSpan="3">Sin pedidos realizados</td>
+                </tr>
+              )}
+              </tbody>
             </table>
         </div>
     );

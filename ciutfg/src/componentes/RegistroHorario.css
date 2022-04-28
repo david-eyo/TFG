@@ -1,0 +1,52 @@
+.registro{
+    background-image: linear-gradient(#ffb14b, #ffd28e);
+    margin-top: 2rem;
+    margin-left: 15rem;
+    margin-right: 15rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    border-radius: 50px;
+}
+
+.registro2{
+    background-image: linear-gradient(#4b99ff, #e6eef7);
+    margin-top: 2rem;
+    margin-left: 15rem;
+    margin-right: 15rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    border-radius: 50px;
+}
+
+@media (max-width: 1200px) {
+    .registro{
+        background-image: linear-gradient(#ffb14b, #ffd28e);
+        margin-top: 2rem;
+        margin-left: 5rem;
+        margin-right: 5rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+        border-radius: 50px;
+    }
+
+    .registro2{
+        background-image: linear-gradient(#4b99ff, #e6eef7);
+        margin-top: 4rem;
+        margin-left: 5rem;
+        margin-right: 5rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+        border-radius: 50px;
+    }
+}
+
+
+

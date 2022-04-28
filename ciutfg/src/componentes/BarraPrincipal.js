@@ -25,6 +25,10 @@ import PerfilUsuario from '../pages/PerfilUsuario';
 import MisPedidos from '../pages/MisPedidos';
 import BuscadorPedidos from '../pages/BuscadorPedidos';
 import BuscadorPedidosUsuario from '../pages/BuscadorPedidosUsuario';
+import RegistroTrabajador from '../pages/RegistroTrabajador';
+import RegistroHorario from '../pages/RegistroHorario';
+import MisHorarios from '../pages/MisHorarios';
+import BuscadorHorariosAdmin from '../pages/BuscadorHorariosAdmin';
 
 
 
@@ -70,16 +74,24 @@ export default function BarraPrincipal() {
                              <NavDropdown title="Administración" id="navbarScrollingDropdown" style={{ marginLeft: '2rem', fontSize: 'larger' }}>
                                     <NavDropdown.Item as={Link} to="/adminbuscadorproductos" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } >Buscar y Editar Productos</NavDropdown.Item>
+                                    } >Crear, buscar y editar Productos</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="/adminhistorico" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } >(A)Historico Precios</NavDropdown.Item>
+                                    } >Histórico Precios</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="/buscausuario" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
                                     } >Buscar Usuario</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="/buscacarritodeusuario" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
                                     } >Buscar Carrito Usuario</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/registrartrabajador" className={isActive =>
+                                        "nav-link" + (!isActive ? " unselected" : "")
+                                    } >Registrar trabajador</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/buscadorhorarios" className={isActive =>
+                                        "nav-link" + (!isActive ? " unselected" : "")
+                                    } >Búsqueda de horarios</NavDropdown.Item>
+
+                                    
                                 </NavDropdown>   
                             }
 
@@ -111,26 +123,39 @@ export default function BarraPrincipal() {
                                 "nav-link" + (!isActive ? " unselected" : "")
                                 } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Pedidos</Nav.Link>
                             }
-                            {!token &&
-                                <Nav.Link as={Link} to="/login" className={isActive =>
-                                    "nav-link" + (!isActive ? " unselected" : "")
-                                } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Login</Nav.Link>
+                            {rol === "ROLE_WORKER" &&
+                                <NavDropdown title="Horarios" id="navbarScrollingDropdown" style={{ marginLeft: '2rem', fontSize: 'larger' }}>
+                                    <NavDropdown.Item as={Link} to="/registrarhorario" className={isActive =>
+                                        "nav-link" + (!isActive ? " unselected" : "")
+                                    } >Registrar Horarios</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/mishorarios" className={isActive =>
+                                        "nav-link" + (!isActive ? " unselected" : "")
+                                    } >Buscar en mis horarios</NavDropdown.Item>
+                                </NavDropdown>
                             }
-                            {token &&
-                            <Nav.Link as={Link} to="/miperfil" className={isActive =>
-                                "nav-link" + (!isActive ? " unselected" : "")
-                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Mi Perfil</Nav.Link>}
-
-                            {token &&
-                                <Nav.Link className={isActive =>
-                                    "nav-link" + (!isActive ? " unselected" : "")
-                                } style={{ marginLeft: '2rem', fontSize: 'larger' }} onClick={e => logout()}>Logout</Nav.Link>
-                            }
-
-
                         </Nav>
                     </Navbar.Collapse>
+                    {token &&
+                    <Nav>
+                                <Nav.Link as={Link} to="/miperfil" className={isActive =>
+                                    "nav-link" + (!isActive ? " unselected" : "")
+                                } style={{ marginLeft: '2rem', fontSize: 'larger' }}><i style={{marginRight: '0.5rem'}} className="fa fa-user"/>{username}</Nav.Link>
+                                <Nav.Link className={isActive =>
+                                    "nav-link" + (!isActive ? " unselected" : "")
+                                } style={{ marginLeft: '2rem', fontSize: 'larger', marginRight: '3rem'}} onClick={e => logout()}><i style={{marginRight: '0.5rem'}} className="fa fa-sign-out"/> Logout</Nav.Link>
+                    </Nav>
+
+                    }
+
+                    {!token &&
+                        <Nav>
+                                <Nav.Link as={Link} to="/login" className={isActive =>
+                                    "nav-link" + (!isActive ? " unselected" : "")
+                                } style={{ marginRight: '2rem', fontSize: 'larger' }}><i style={{marginRight: '0.5rem'}} className="fa fa-sign-in"/> Login</Nav.Link>
+                        </Nav>
+                    }
                 </Navbar>
+                
             </header>
 
 
@@ -138,7 +163,7 @@ export default function BarraPrincipal() {
             <Routes>
                 <Route path="/productos" element={<CrudApi />} />
                 <Route path="/historico" element={<CrudApiHistorico />} />
-                <Route path="/" element={<Inicio token={token} />} />
+                <Route path="/" element={<Inicio token={token} username={username}/>} />
                 <Route path="/nuestrosproductos" element={<NuestrosProductos token={token} />} />
                 <Route path="/buscadorProductos" element={<BuscadorProductos token={token} />} />
                 <Route path="/adminbuscadorproductos" element={<BuscadorProductosAdministracion
@@ -153,7 +178,10 @@ export default function BarraPrincipal() {
                 <Route path="/mispedidos" element={<MisPedidos token={token} username={username} />} />
                 <Route path="/buscadorpedidos" element={<BuscadorPedidos token={token} username={username} />} />
                 <Route path="/buscadorpedidosusuario" element={<BuscadorPedidosUsuario token={token} username={username} />} />
-
+                <Route path="/registrartrabajador" element={<RegistroTrabajador token={token}/>} />
+                <Route path="/registrarhorario" element={<RegistroHorario token={token} username={username}/>} />
+                <Route path="/mishorarios" element={<MisHorarios token={token} username={username}/>} />
+                <Route path="/buscadorhorarios" element={<BuscadorHorariosAdmin token={token}/>} />
             </Routes>
 
         </>
