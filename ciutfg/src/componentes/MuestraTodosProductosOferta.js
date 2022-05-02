@@ -8,7 +8,6 @@ const MuestraTodosProductosOferta = ({ data, getAllProductsOferta, rateProduct, 
       }, [data]);
     return (
         <div>
-            <h3>Productos Oferta(Normal)</h3>
             {data.length > 0 ? (
                 data.map((el) => (
                     <MuestraProductoNormal

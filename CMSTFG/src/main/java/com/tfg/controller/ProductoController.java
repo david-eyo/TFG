@@ -9,17 +9,23 @@ import java.util.Map;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.tfg.entity.UploadedFile;
 import com.tfg.entity.User;
+import com.tfg.response.FileUploadResponse;
 import com.tfg.service.CustomUserDetails;
+import com.tfg.service.IFileUploadService;
 import com.tfg.service.IHistoricoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -37,6 +43,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tfg.entity.Historico_precios;
 import com.tfg.entity.Producto;
 import com.tfg.service.IProductoService;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/productos")
@@ -47,6 +55,9 @@ public class ProductoController {
 
     @Autowired
     private IHistoricoService historicoService;
+
+    @Autowired
+    private IFileUploadService fileUploadService;
 
     @GetMapping
     public ResponseEntity<List<Producto>> findAll(@RequestParam(required = false) Integer page,
@@ -329,6 +340,59 @@ public class ProductoController {
             responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
         }
 
+        return responseEntity;
+    }
+
+    @PostMapping(value= "/prueba")
+    public ResponseEntity<?> prueba(@RequestParam(required=false) MultipartFile file,@RequestParam String productostr) throws JsonProcessingException {
+
+        Map<String, Object> responseAsMap = new HashMap<String, Object>();
+        ResponseEntity<Map<String, Object>> responseEntity = null;
+        List<String> errores = null;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
+        User usuario =currentPrincipalName.getUser();
+
+        if ((usuario.getRol() != User.Rol.ROLE_ADMIN)){
+            responseAsMap.put("mensaje",
+                    "Sólo el administrador puede crear un producto" );
+            return responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+        }
+
+        try {
+            Producto producto = new ObjectMapper().readValue(productostr, Producto.class);
+
+            //Inserción de imágen del producto
+
+            if (file != null){
+                UploadedFile uploadedFile= fileUploadService.uploadToDb(file);
+                String downloadUri= "";
+                downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/imagenes/download/")
+                        .path(uploadedFile.getFileId())
+                        .toUriString();
+                producto.setImage(downloadUri);
+            }
+
+
+            Producto productoFromDB = productoService.saveProduct(producto);
+            Historico_precios historico = new Historico_precios(LocalDateTime.now(), producto, producto.getPrecio());
+            historicoService.save(historico);
+
+            if (productoFromDB != null) {
+                responseAsMap.put("producto", producto);
+                responseAsMap.put("mensaje", "el producto con id " + producto.getId() + " se ha creado con exito");
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.CREATED);
+            } else {
+                responseAsMap.put("mensaje", "el producto no se ha creado correctamente");
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+            }
+        } catch (DataAccessException e) {
+            responseAsMap.put("mensaje",
+                    "el producto no se ha creado correctamente: " + e.getMostSpecificCause().getMessage());
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.BAD_REQUEST);
+        }
         return responseEntity;
     }
 

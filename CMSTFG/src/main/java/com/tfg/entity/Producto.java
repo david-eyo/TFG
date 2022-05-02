@@ -2,6 +2,8 @@ package com.tfg.entity;
 
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -32,7 +34,7 @@ public class Producto {
 	private float precio;
 
 	@Lob
-	private Byte[] image;
+	private String image;
 	
 	@NotNull(message= "El campo oferta no puede ser nulo")
 	private boolean oferta;
@@ -79,11 +81,11 @@ public class Producto {
 		this.precio = precio;
 	}
 
-	public Byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(Byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
@@ -131,7 +133,7 @@ public class Producto {
 	public int hashCode() {
 	    final int prime = 31;
 	    int result = 1;
-	    result = prime * result + Arrays.hashCode(image);
+	    result = prime * result ;
 	    result = prime * result
 		    + Objects.hash(cantidad, id, nombre, nuestros_productos, oferta, precio);
 	    return result;
@@ -146,7 +148,7 @@ public class Producto {
 	    if (getClass() != obj.getClass())
 		return false;
 	    Producto other = (Producto) obj;
-	    return cantidad == other.cantidad  && Arrays.equals(image, other.image)
+	    return cantidad == other.cantidad
 		    && Objects.equals(nombre, other.nombre) && nuestros_productos == other.nuestros_productos
 		    && oferta == other.oferta && Float.floatToIntBits(precio) == Float.floatToIntBits(other.precio);
 	}

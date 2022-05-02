@@ -3,6 +3,8 @@ import MuestraTodosProductosOferta from '../componentes/MuestraTodosProductosOfe
 import { helpHttp } from "../helpers/helpHttp";
 import Loader from '../componentes/Loader';
 import Message from "../componentes/Message";
+import Pagination from "react-bootstrap/Pagination";
+import MyPagination from '../componentes/MyPagination';
 
 
 function Inicio({token, username}) {
@@ -11,8 +13,10 @@ function Inicio({token, username}) {
     const [dataToEdit, setDataToEdit] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(1);
     let api = helpHttp();
     let url = "http://localhost:5000/productos";
+
 
 
     const getAllProductsOferta = () => {
@@ -20,8 +24,9 @@ function Inicio({token, username}) {
         let options = {
             headers: { "content-type": "application/json" },
         };
+        var integer = ''+(page-1);
 
-        let urlOferta = "http://localhost:5000/productos?oferta=true";
+        let urlOferta = "http://localhost:5000/productos?page="+integer+"&size=10";
         api.get(urlOferta, options).then((res) => {
             if (!res.err) {
                 setDb3(res);
@@ -53,6 +58,9 @@ function Inicio({token, username}) {
         });
     };
 
+
+
+
     return (
         <div>
             <article className="grid-1-2">
@@ -72,8 +80,16 @@ function Inicio({token, username}) {
                     token={token}
                 />
             </article>
+
+            <MyPagination style={{marginBottom: '20rem'}} totPages={10} currentPage={page} pageClicked={(ele) => {setPage(ele)}}>
+
+            </MyPagination>
+
         </div>
     );
+
+
+
 }
 
 export default Inicio;
