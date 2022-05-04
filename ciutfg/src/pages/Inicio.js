@@ -81,7 +81,7 @@ function Inicio({token, username}) {
                 />
             </article>
 
-            <MyPagination style={{marginBottom: '20rem'}} totPages={10} currentPage={page} pageClicked={(ele) => {setPage(ele)}}>
+            <MyPagination totPages={10} currentPage={page} pageClicked={(ele) => {setPage(ele)}}>
 
             </MyPagination>
 

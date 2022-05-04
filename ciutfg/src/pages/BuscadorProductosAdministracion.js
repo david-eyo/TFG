@@ -16,28 +16,38 @@ function BuscadorProductosAdministracion({token}) {
   const [dataToEdit, setDataToEdit] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
   let api = helpHttp();
   let url = "http://localhost:5000/productos";
 
-  const createData = (data) => {
+  const createData = (data, file) => {
 
-    let options = {
-      body: data,
-      headers: { "content-type": "application/json",
+    
+    var productostr= JSON.stringify(data);
+    var prueba= new FormData();
+    prueba.set('productostr', productostr);
+    if (file){
+      prueba.set('file', file);
+    }
+    
+
+    const response =  fetch("http://localhost:5000/productos/prueba", {
+      method: 'POST',
+      headers: {
                 "Authorization": "Bearer "+token },
-    };
-
-    api.post(url, options).then((res) => {
-      //console.log(res);
-      if (!res.err) {
-        console.log(res);
-        setDb([...db, res]);
-      } else {
-        setError(res);
-      }
+      body: prueba
     });
+
+    if (!response.err) {
+      console.log(response);
+      setDb([...db, response]);
+    } else {
+      setError(response);
+    }
+
   };
+
+
+
 
   const findDataByName = (nombre) => {
 

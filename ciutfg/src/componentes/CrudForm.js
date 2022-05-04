@@ -16,6 +16,11 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
   const [form, setForm] = useState(initailForm);
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
+  const [image, setImage]=useState('')
+
+  const changeImagen = (e) =>{
+    setImage(e.target.files[0]);
+  }
 
   useEffect(() => {
     if (dataToEdit) {
@@ -33,7 +38,6 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
     });
 
   };
-  console.log(form);
   const handleChange1=e=> {
     setChecked1(e.target.checked);
     form.nuestros_productos=e.target.checked;
@@ -55,7 +59,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
     }
 
     if (form.id === null) {
-      createData(form);
+      createData(form, image);
     } else {
       updateData(form);
     }
@@ -127,6 +131,15 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
             placeholder="Oferta"
             onChange={handleChange2}
           />
+        </div>
+        <div>
+          <input
+            type="file"
+            name="file"
+            placeholder="Sube una imagen"
+            onChange={changeImagen}
+          />
+          
         </div>
         <br />
         <input type="submit" className="btn btn-success marginright" value="Enviar" />

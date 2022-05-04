@@ -11,6 +11,7 @@ const initailForm = {
   precio: "",
   cantidad: "",
   nuestros_productos: false,
+  image: "",
   oferta: false,
   id: null,
   valoracion: null,
@@ -22,13 +23,17 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit, tok
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [problemaTexto, setProblemaTexto] = useState('');
+  const [imagen, setImagen] = useState('');
 
-  let { nombre, precio, valoracion, numero_valoraciones } = el;
+  let { nombre, precio, image, valoracion, numero_valoraciones } = el;
   const estiloBoton = {
     marginBottom: '-4rem',
     marginLeft: '10rem',
     marginTop: '0rem'
   }
+
+
+  
 
   const estiloGrid = {
     marginTop: '-1rem'
@@ -42,8 +47,22 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit, tok
     fontSize: '38px',
   }
 
+  
+
+
+    const fetchImage = async () => {
+      const url = image.replace('8080', '5000');
+      const res = await fetch(url);
+      const imageBlob = await res.blob();
+      const imageObjectURL = URL.createObjectURL(imageBlob);
+      setImagen(imageObjectURL);
+    };
+  
+
+
   useEffect(() => {
     setForm(initailForm);
+    fetchImage();
   }, [dataToEdit]);
 
 
@@ -91,17 +110,18 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit, tok
       }
     }
 }
-
+  
 
   return (
     <div className="Tarjeta">
-      <Card style={{ width: '16rem', borderRadius: '20px', backgroundColor: 'rgb(157, 255, 161)' }}>
+      <Card className="estiloTarjeta">
         <div className="embed-responsive embed-responsive-16by9">
-          <Card.Img variant="top" alt="Foto de Producto" src='../imagenes/logo.png' />
+          <Card.Img variant="top" alt="Foto de Producto" src={imagen} style = {{padding: '1rem 1rem 0rem 1rem', borderRadius: '30px', borderStyle: '5px solid'}}/> 
+          
         </div>
         <Card.Body>
-          <Card.Title>{nombre}</Card.Title>
-          <Card.Text>{precio}€</Card.Text>
+          <Card.Title><b><h4>{nombre}</h4></b></Card.Title>
+          <Card.Text><b>{precio}€/kg</b></Card.Text>
           <div className="grid" style={estiloGrid}>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
             {token &&
@@ -109,7 +129,7 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit, tok
               <input style= {{width: '4rem', marginLeft: '10rem', marginBottom: '-2rem'}} type="number" Placeholder = "kgs"
               onChange={(e) => {setCantidad(e.target.value)}}></input>
 
-              <Button variant="primary" className="btn btn-warning" style={estiloBoton}
+              <Button variant="outline-success" style={estiloBoton}
               onClick={anadirCarrito}><i style={estiloCarrito} className="fa fa-cart-arrow-down" /></Button>
             </div>
             }

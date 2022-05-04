@@ -11,15 +11,12 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.tfg.entity.UploadedFile;
 import com.tfg.entity.User;
-import com.tfg.response.FileUploadResponse;
 import com.tfg.service.CustomUserDetails;
 import com.tfg.service.IFileUploadService;
 import com.tfg.service.IHistoricoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -366,13 +363,24 @@ public class ProductoController {
             //Inserción de imágen del producto
 
             if (file != null){
-                UploadedFile uploadedFile= fileUploadService.uploadToDb(file);
-                String downloadUri= "";
-                downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/imagenes/download/")
-                        .path(uploadedFile.getFileId())
-                        .toUriString();
-                producto.setImage(downloadUri);
+                String fileExtensions = ".jpg,.jpeg,.png";
+                String fileName = file.getOriginalFilename();
+                int lastIndex = fileName.lastIndexOf('.');
+                String substring = fileName.substring(lastIndex, fileName.length());
+
+                if (fileExtensions.contains(substring.toLowerCase())){
+                    UploadedFile uploadedFile= fileUploadService.uploadToDb(file);
+                    String downloadUri= "";
+                    downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                            .path("/imagenes/download/")
+                            .path(uploadedFile.getFileId())
+                            .toUriString();
+                    producto.setImage(downloadUri);
+                }else{
+                    responseAsMap.put("mensaje", "El formato de la foto no es el adecuado");
+                    responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.METHOD_NOT_ALLOWED);
+                }
+
             }
 
 
