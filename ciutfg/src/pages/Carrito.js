@@ -10,6 +10,7 @@ import {
   BrowserRouter as Router,
   Link
 } from "react-router-dom";
+import PayPal from "../componentes/PayPal";
 
 const initailForm = {
     cantidad: "",
@@ -79,10 +80,6 @@ const Carrito = ({token}) => {
       };
 
       const realizarPedido = () => {
-        let isPedido = window.confirm(
-          `¿Estás seguro de que quiere realizar este pedido? Se le cobrará: ${cantidad} €.`
-        );
-        if(isPedido){
           let endpoint = `http://localhost:5000/pedidos`;
     
           let options = {
@@ -96,9 +93,6 @@ const Carrito = ({token}) => {
               setError(res);
             }
           });
-        }else{
-          return;
-        }
       };
 
     const handleResp = async () => {
@@ -148,6 +142,7 @@ const Carrito = ({token}) => {
 
     
 
+    const [compra, setCompra] = useState(false);
 
     
 
@@ -187,11 +182,23 @@ const Carrito = ({token}) => {
             <br></br>
             <br></br>
 
-            <Link to="/">
-            <button style = {{float: 'right', marginRight: '5rem'}} className="btn btn-warning" onClick={() => realizarPedido()}>
-              Realizar compra<i style={{marginLeft: '1rem'}} className="fa fa-exchange"/>
-            </button>
-            </Link>
+            {compra ? (
+              <PayPal 
+              cantidad = {cantidad}
+              realizarPedido= {realizarPedido}
+              setError= {setError}
+              />
+            ) : (
+              <button style = {{float: 'right', marginRight: '5rem'}} className="btn btn-warning" onClick={() => setCompra(true)}>
+                Realizar compra<i style={{marginLeft: '1rem'}} className="fa fa-exchange"/>
+              </button>
+            )
+
+
+
+
+            }
+
             </article>
         </div>
     );

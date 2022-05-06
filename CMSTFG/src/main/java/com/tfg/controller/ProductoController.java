@@ -11,8 +11,7 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tfg.entity.UploadedFile;
-import com.tfg.entity.User;
+import com.tfg.entity.*;
 import com.tfg.service.CustomUserDetails;
 import com.tfg.service.IFileUploadService;
 import com.tfg.service.IHistoricoService;
@@ -37,8 +36,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tfg.entity.Historico_precios;
-import com.tfg.entity.Producto;
 import com.tfg.service.IProductoService;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -154,6 +151,10 @@ public class ProductoController {
         List<String> errores = null;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getPrincipal().equals("anonymousUser")){
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+            return responseEntity;
+        }
         CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
         User usuario =currentPrincipalName.getUser();
 
@@ -206,6 +207,10 @@ public class ProductoController {
         List<String> errores = null;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getPrincipal().equals("anonymousUser")){
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+            return responseEntity;
+        }
         CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
         User usuario =currentPrincipalName.getUser();
 
@@ -312,6 +317,10 @@ public class ProductoController {
         ResponseEntity<Map<String, Object>> responseEntity = null;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getPrincipal().equals("anonymousUser")){
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+            return responseEntity;
+        }
         CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
         User usuario =currentPrincipalName.getUser();
 
@@ -348,6 +357,10 @@ public class ProductoController {
         List<String> errores = null;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getPrincipal().equals("anonymousUser")){
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+            return responseEntity;
+        }
         CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
         User usuario =currentPrincipalName.getUser();
 

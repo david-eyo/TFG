@@ -41,10 +41,12 @@ function Inicio({token, username}) {
     };
 
     const rateProduct = (data) => {
+        console.log(data);
         let endpoint = `${url}/${data.id}`;
         let options = {
             body: data,
-            headers: { "content-type": "application/json" },
+            headers: { "content-type": "application/json",
+                       'Authorization': 'Bearer '+token },
         };
 
         api.put(endpoint, options).then((res) => {
@@ -71,6 +73,7 @@ function Inicio({token, username}) {
                         bgColor="#dc3545"
                     />
                 )}
+                
                 <MuestraTodosProductosOferta
                     data={db3}
                     getAllProductsOferta={getAllProductsOferta}

@@ -49,6 +49,10 @@ public class CarritoController {
 
         try{
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if(authentication.getPrincipal().equals("anonymousUser")){
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+                return responseEntity;
+            }
             CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
             User usuario =currentPrincipalName.getUser();
 
@@ -106,6 +110,10 @@ public class CarritoController {
         ResponseEntity<Map<String, Object>> responseEntity = null;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getPrincipal().equals("anonymousUser")){
+            responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+            return responseEntity;
+        }
         CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
         User usuario =currentPrincipalName.getUser();
 

@@ -191,6 +191,10 @@ public class TrabajoController {
 
         try{
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if(authentication.getPrincipal().equals("anonymousUser")){
+                responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.UNAUTHORIZED);
+                return responseEntity;
+            }
             CustomUserDetails currentPrincipalName = (CustomUserDetails) authentication.getPrincipal();
             User usuario =currentPrincipalName.getUser();
 
