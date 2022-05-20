@@ -5,6 +5,7 @@ import Loader from '../componentes/Loader';
 import Message from "../componentes/Message";
 import Pagination from "react-bootstrap/Pagination";
 import MyPagination from '../componentes/MyPagination';
+import MessageAdvertencia from '../componentes/MessageAdvertencia';
 
 
 function Inicio({token, username}) {
@@ -65,6 +66,7 @@ function Inicio({token, username}) {
 
     return (
         <div>
+
             <article className="grid-1-2">
                 {loading && <Loader />}
                 {error && (

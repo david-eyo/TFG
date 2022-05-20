@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import MessageAdvertencia from '../../componentes/MessageAdvertencia';
 import Loader from '../../componentes/Loader';
+import Message from '../../componentes/Message';
 
 
 

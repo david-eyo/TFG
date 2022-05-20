@@ -16,7 +16,8 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link
+    Link,
+    Navigate
 } from "react-router-dom";
 import Carrito from '../pages/Carrito';
 import CarritoAdmin from '../pages/CarritoAdmin';
@@ -36,15 +37,16 @@ export default function BarraPrincipal() {
     const [token, setToken] = useState('');
     const [rol, setRol] = useState('');
     const [username, setUsername] = useState('');
+    const [deslogueado, setDeslogueado] = useState(false);
 
     const logout = (e) => {
         setToken(null);
         setRol(null);
         setUsername(null);
+        setDeslogueado(true);       
     }
     return (
         <>
-
             <header className="bg-react">
                 <Navbar bg="green" expand="lg" variant='dark' style={{ paddingTop: '1rem', paddingBottom: '1rem' }}>
                     <Navbar.Brand href="#home" className="nombre_empresa" style={{ marginLeft: '2rem' }}>
@@ -134,32 +136,38 @@ export default function BarraPrincipal() {
                                 </NavDropdown>
                             }
                         </Nav>
+                        {token &&
+                            <Nav>
+                                        <Nav.Link as={Link} to="/miperfil" className={isActive =>
+                                            "nav-link" + (!isActive ? " unselected" : "")
+                                        } style={{ marginLeft: '2rem', fontSize: 'larger' }}><i style={{marginRight: '0.5rem'}} className="fa fa-user"/>{username}</Nav.Link>
+                                        <Nav.Link className={isActive =>
+                                            "nav-link" + (!isActive ? " unselected" : "")
+                                        } style={{ marginLeft: '2rem', fontSize: 'larger', marginRight: '3rem'}} onClick={e => logout()}><i style={{marginRight: '0.5rem'}} className="fa fa-sign-out"/> Logout</Nav.Link>
+                            </Nav>
+
+                        }
+                        {!token &&
+                            <Nav>
+                                    <Nav.Link as={Link} to="/login" className={isActive =>
+                                        "nav-link" + (!isActive ? " unselected" : "")
+                                    } style={{ marginRight: '2rem', fontSize: 'larger' }}><i style={{marginRight: '0.5rem'}} className="fa fa-sign-in"/> Login</Nav.Link>
+                            </Nav>
+                        }
                     </Navbar.Collapse>
-                    {token &&
-                    <Nav>
-                                <Nav.Link as={Link} to="/miperfil" className={isActive =>
-                                    "nav-link" + (!isActive ? " unselected" : "")
-                                } style={{ marginLeft: '2rem', fontSize: 'larger' }}><i style={{marginRight: '0.5rem'}} className="fa fa-user"/>{username}</Nav.Link>
-                                <Nav.Link className={isActive =>
-                                    "nav-link" + (!isActive ? " unselected" : "")
-                                } style={{ marginLeft: '2rem', fontSize: 'larger', marginRight: '3rem'}} onClick={e => logout()}><i style={{marginRight: '0.5rem'}} className="fa fa-sign-out"/> Logout</Nav.Link>
-                    </Nav>
-
-                    }
-
-                    {!token &&
-                        <Nav>
-                                <Nav.Link as={Link} to="/login" className={isActive =>
-                                    "nav-link" + (!isActive ? " unselected" : "")
-                                } style={{ marginRight: '2rem', fontSize: 'larger' }}><i style={{marginRight: '0.5rem'}} className="fa fa-sign-in"/> Login</Nav.Link>
-                        </Nav>
-                    }
                 </Navbar>
+                {deslogueado === true &&
+                    <div className = "deslogueo">
+                        <h1>Usuario deslogueado correctamente</h1>
+                        <button variant="light" onClick={() => setDeslogueado(false)}><i style={{marginRight: '0.5rem'}} className="fa fa-close"/>Cerrar</button>
+                    </div>
+                    
+                }
                 
             </header>
 
 
-
+ 
             <Routes>
                 <Route path="/productos" element={<CrudApi />} />
                 <Route path="/historico" element={<CrudApiHistorico />} />
@@ -169,7 +177,7 @@ export default function BarraPrincipal() {
                 <Route path="/adminbuscadorproductos" element={<BuscadorProductosAdministracion
                     token={token} />} />
                 <Route path="/adminhistorico" element={<CrudApiHistorico />} />
-                <Route path="/login" element={<Login token={token} setToken={setToken} setRol={setRol} setUsername= {setUsername} />} />
+                <Route path="/login" element={<Login token={token} setToken={setToken} setRol={setRol} setUsername= {setUsername}/>} />
                 <Route path="/reguser" element={<RegistroUsuarioNormal />} />
                 <Route path="/carrito" element={<Carrito token={token} />} />
                 <Route path="/buscacarritodeusuario" element={<CarritoAdmin token={token} />} />

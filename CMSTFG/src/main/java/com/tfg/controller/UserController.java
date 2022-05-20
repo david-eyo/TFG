@@ -142,7 +142,8 @@ public class UserController {
     }
 
     @PostMapping("/trabajador/add")
-    public ResponseEntity<Map<String, Object>> addTrabajador(@RequestBody Trabajador trabajador){
+    public ResponseEntity<Map<String, Object>> addTrabajador(@RequestBody Trabajador trabajador)
+    {
 
         Map<String, Object> responseAsMap = new HashMap<String, Object>();
         ResponseEntity<Map<String, Object>> responseEntity = null;
