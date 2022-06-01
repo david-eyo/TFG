@@ -1,0 +1,11 @@
+.observaciones{
+    background-color: white;
+    margin-right: 20%;
+    margin-left: 20%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 30px;
+    border-style: solid;
+    border-width: 5px;
+}

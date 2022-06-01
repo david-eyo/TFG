@@ -14,31 +14,10 @@ function CarritoAdmin({token}) {
   const [dataToEdit, setDataToEdit] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [formulario, setFormulario] = useState(false);
 
   let api = helpHttp();
   let url = "http://localhost:5000/carrito";
-
-
-  const findCarritoByUsername = (nombre) => {
-    let options = {
-      headers: { "content-type": "application/json",
-                "Authorization": "Bearer "+token },
-    };
-
-    let url2 = url + "?username=" + nombre;
-
-    api.get(url2, options).then((res) => {
-      if (!res.err) {
-        setDb2(res);
-        setError(null);
-      } else {
-        setDb2([])
-        setError(res);
-
-      }
-    });
-    return db2;
-  };
 
   const updateCarrito = (data) => {
     let endpoint = `${url}/${data.id}`;
@@ -96,15 +75,21 @@ function CarritoAdmin({token}) {
           bgColor="#dc3545"
         />
       )}
-      <CrudFormCarritoAdministracion
-        updateCarrito={updateCarrito}
-        dataToEdit={dataToEdit}
-        setDataToEdit={setDataToEdit}
-      />
+      {formulario === true &&
+        <CrudFormCarritoAdministracion
+          updateCarrito={updateCarrito}
+          dataToEdit={dataToEdit}
+          setDataToEdit={setDataToEdit}
+          setFormulario={setFormulario}
+        />
+      }
+
       <BuscadorCarritoUsuario
-        findCarritoByUsername={findCarritoByUsername}
+        token={token}
+        setError={setError}
         setDataToEdit={setDataToEdit}
         deleteData={deleteData}
+        setFormulario={setFormulario}
       />
     </div>
   );

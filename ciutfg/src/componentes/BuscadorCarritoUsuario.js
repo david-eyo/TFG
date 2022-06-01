@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Form, FormControl, Button } from 'react-bootstrap';
 import CrudTableRowCarrito from './CrudTableRowCarrito';
+import { helpHttp } from '../helpers/helpHttp';
 
 
 const style = {
@@ -13,21 +14,40 @@ const style = {
 
 
 
-export default function BuscadorCarritoUsuario({ findCarritoByUsername, setDataToEdit, deleteData}) {
+export default function BuscadorCarritoUsuario({ setDataToEdit, deleteData, token, setError, setFormulario}) {
     const [busqueda, setBusqueda] = useState("");
     const [data, setData] = useState([]);
-    const [data2, setData2] = useState([]);
+
+    let api = helpHttp();
+    let url = "http://localhost:5000/carrito";
+  
+  
+    const findCarritoByUsername = (nombre) => {
+      let options = {
+        headers: { "content-type": "application/json",
+                  "Authorization": "Bearer "+token },
+      };
+  
+      let url2 = url + "?username=" + nombre;
+  
+      api.get(url2, options).then((res) => {
+        if (!res.err) {
+          setData(res);
+          setError(null);
+        } else {
+          setData([])
+          setError(res);
+  
+        }
+      });
+    };
 
 
     const handleChange = e => {
-        setBusqueda(e.target.value);
-        var aux = e.target.value;
 
-        let prueba = findCarritoByUsername(e.target.value);
-        setData(findCarritoByUsername(e.target.value));
-        if (data != null) {
-            setData2(data);
-        }
+        setBusqueda(e.target.value);
+        findCarritoByUsername(e.target.value);
+
     }
 
     return (
@@ -55,12 +75,13 @@ export default function BuscadorCarritoUsuario({ findCarritoByUsername, setDataT
                     </tr>
                 </thead>
                 <tbody>
-                    {data2.length > 0 ? (
-                        data2.map((el) => (
+                    {data && data.length > 0 ? (
+                        data.map((el) => (
                             <CrudTableRowCarrito
                                 el={el}
                                 setDataToEdit={setDataToEdit}
                                 deleteData={deleteData}
+                                setFormulario={setFormulario}
                             />
                         ))
                     ) : (

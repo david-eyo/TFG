@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Form, FormControl, Button } from 'react-bootstrap';
 import CrudTableRowUsuario from './CrudTableRowUsuario';
+import { helpHttp } from '../helpers/helpHttp';
 
 
 const style = {
@@ -13,25 +14,49 @@ const style = {
 
 
 
-export default function BuscadorUsuario({ findUsuarioByUsername, setDataToEdit, deleteUsuario }) {
+export default function BuscadorUsuario({ findUsuarioByUsername, setDataToEdit, deleteUsuario, setError, token }) {
     const [busqueda, setBusqueda] = useState("");
     const [data, setData] = useState([]);
-    const [data2, setData2] = useState([]);
-    let prueba = [];
 
-
+   
     const handleChange = e => {
         setBusqueda(e.target.value);
 
-        setData(findUsuarioByUsername(e.target.value));
-        if (data.user == null) {
-            setData2([]);
-        }else {
-            setData2(data);
-        }
-    }
-    console.log(data2);
+        let respuesta=findUsuarioByUsername2(e.target.value)
+        setData(respuesta);
 
+    }
+
+    const buscaManual = (nombre) => {
+        
+        let respuesta=findUsuarioByUsername2(nombre)
+        setData(respuesta);
+    }
+
+    let api = helpHttp();
+    let url = "http://localhost:5000/secure/auth";
+
+    const findUsuarioByUsername2 = (nombre) => {
+        let options = {
+          headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer "+token },
+        };
+    
+        let url2 = url + "?username=" + nombre;
+
+        console.log(url2);
+    
+        api.get(url2, options).then((res) => {
+          
+          if (!res.err) {
+            setData(res);
+            setError(null);
+          } else {
+            setData([])
+            setError(res);
+          }
+        });
+      };
 
     
     return (
@@ -46,7 +71,7 @@ export default function BuscadorUsuario({ findUsuarioByUsername, setDataToEdit, 
                         value={busqueda}
                         onChange={handleChange}
                     />
-                    <Button variant="outline-success" onClick={() => findUsuarioByUsername(busqueda)}>Buscar</Button>
+                    <Button variant="outline-success" onClick={() => buscaManual(busqueda)}>Buscar</Button>
                 </Form>
             </div>
             <table className="table">
@@ -65,9 +90,9 @@ export default function BuscadorUsuario({ findUsuarioByUsername, setDataToEdit, 
                     </tr>
                 </thead>
                 <tbody>
-                    {data2.length ===undefined ? (                                                 
+                    {data && data.user ? (                                                 
                             <CrudTableRowUsuario
-                                el={data2.user}
+                                el={data.user}
                                 setDataToEdit={setDataToEdit}
                                 deleteUsuario={deleteUsuario}
                             />                       

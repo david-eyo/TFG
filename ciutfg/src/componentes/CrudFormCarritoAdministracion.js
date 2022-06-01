@@ -7,7 +7,7 @@ const initailForm = {
   productId: null,
 };
 
-const CrudFormCarritoAdministracion = ({ updateCarrito, dataToEdit, setDataToEdit }) => {
+const CrudFormCarritoAdministracion = ({ updateCarrito, dataToEdit, setDataToEdit, setFormulario}) => {
   const [form, setForm] = useState(initailForm);
 
   useEffect(() => {
@@ -41,6 +41,7 @@ const CrudFormCarritoAdministracion = ({ updateCarrito, dataToEdit, setDataToEdi
   const handleReset = (e) => {
     setForm(initailForm);
     setDataToEdit(null);
+    setFormulario(false);
   };
 
   return (

@@ -11,7 +11,7 @@ import Message from '../../componentes/Message';
 
 
 
-function Login({setToken, setRol, setUsername}) {
+function Login({setToken, setRol, setUsername, setDeslogueado, deslogueado}) {
 
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
@@ -86,6 +86,13 @@ function Login({setToken, setRol, setUsername}) {
 
     return (
         <div className='login'>
+
+            {deslogueado &&
+                <div className = "deslogueo">
+                <h3>Usuario deslogueado correctamente</h3>
+                <button className="btn btn-outline-info" onClick={() => setDeslogueado(false)}><i style={{marginRight: '0.5rem'}} className="fa fa-close"/>Cerrar</button>
+                </div>
+            }
             <h1>Iniciar Sesión</h1>
             <div style = {{marginLeft:'30%', marginRight: '30%', marginBottom: '1rem'}}>
 
@@ -95,6 +102,8 @@ function Login({setToken, setRol, setUsername}) {
             {log &&
                 <Navigate to="/" username={user}></Navigate>
             }
+
+
             
             <Form onSubmit={Submit}>
             {error && (

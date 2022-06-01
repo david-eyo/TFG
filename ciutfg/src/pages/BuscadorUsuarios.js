@@ -27,6 +27,7 @@ function BuscadorUsuarios({token}) {
 
     let url2 = url + "?username=" + nombre;
 
+    
     api.get(url2, options).then((res) => {
       if (!res.err) {
         setDb2(res);
@@ -86,7 +87,6 @@ function BuscadorUsuarios({token}) {
     }
   };
 
-  console.log(dataToEdit);
   return (
     <div>
       {loading && <Loader />}
@@ -100,6 +100,8 @@ function BuscadorUsuarios({token}) {
         findUsuarioByUsername={findUsuarioByUsername}
         setDataToEdit={setDataToEdit}
         deleteUsuario={deleteUsuario}
+        setError={setError}
+        token={token}
       />
       {dataToEdit && (
               <CrudFormUsuarioAdministracion

@@ -30,6 +30,7 @@ import RegistroTrabajador from '../pages/RegistroTrabajador';
 import RegistroHorario from '../pages/RegistroHorario';
 import MisHorarios from '../pages/MisHorarios';
 import BuscadorHorariosAdmin from '../pages/BuscadorHorariosAdmin';
+import Ofertas from '../pages/Ofertas';
 
 
 
@@ -64,6 +65,10 @@ export default function BarraPrincipal() {
                             <Nav.Link as={Link} to="/nuestrosproductos" className={isActive =>
                                 "nav-link" + (!isActive ? " unselected" : "")
                             } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Nuestros Productos</Nav.Link>
+
+                            <Nav.Link as={Link} to="/ofertas" className={isActive =>
+                                "nav-link" + (!isActive ? " unselected" : "")
+                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Ofertas</Nav.Link>
 
                             <Nav.Link as={Link} to="/buscadorproductos" className={isActive =>
                                 "nav-link" + (!isActive ? " unselected" : "")
@@ -141,9 +146,9 @@ export default function BarraPrincipal() {
                                         <Nav.Link as={Link} to="/miperfil" className={isActive =>
                                             "nav-link" + (!isActive ? " unselected" : "")
                                         } style={{ marginLeft: '2rem', fontSize: 'larger' }}><i style={{marginRight: '0.5rem'}} className="fa fa-user"/>{username}</Nav.Link>
-                                        <Nav.Link className={isActive =>
+                                        <Nav.Link as={Link} to="/login" className={isActive =>
                                             "nav-link" + (!isActive ? " unselected" : "")
-                                        } style={{ marginLeft: '2rem', fontSize: 'larger', marginRight: '3rem'}} onClick={e => logout()}><i style={{marginRight: '0.5rem'}} className="fa fa-sign-out"/> Logout</Nav.Link>
+                                        } style={{ marginLeft: '2rem', fontSize: 'larger', marginRight: '3rem'}}  onClick={e => logout()}><i style={{marginRight: '0.5rem'}} className="fa fa-sign-out"/> Logout</Nav.Link>
                             </Nav>
 
                         }
@@ -156,13 +161,7 @@ export default function BarraPrincipal() {
                         }
                     </Navbar.Collapse>
                 </Navbar>
-                {deslogueado === true &&
-                    <div className = "deslogueo">
-                        <h1>Usuario deslogueado correctamente</h1>
-                        <button variant="light" onClick={() => setDeslogueado(false)}><i style={{marginRight: '0.5rem'}} className="fa fa-close"/>Cerrar</button>
-                    </div>
-                    
-                }
+
                 
             </header>
 
@@ -173,11 +172,12 @@ export default function BarraPrincipal() {
                 <Route path="/historico" element={<CrudApiHistorico />} />
                 <Route path="/" element={<Inicio token={token} username={username}/>} />
                 <Route path="/nuestrosproductos" element={<NuestrosProductos token={token} />} />
+                <Route path="/ofertas" element={<Ofertas token={token} />} />
                 <Route path="/buscadorProductos" element={<BuscadorProductos token={token} />} />
                 <Route path="/adminbuscadorproductos" element={<BuscadorProductosAdministracion
                     token={token} />} />
                 <Route path="/adminhistorico" element={<CrudApiHistorico />} />
-                <Route path="/login" element={<Login token={token} setToken={setToken} setRol={setRol} setUsername= {setUsername}/>} />
+                <Route path="/login" element={<Login token={token} setToken={setToken} setRol={setRol} setUsername= {setUsername} deslogueado={deslogueado} setDeslogueado={setDeslogueado}/>} />
                 <Route path="/reguser" element={<RegistroUsuarioNormal />} />
                 <Route path="/carrito" element={<Carrito token={token} />} />
                 <Route path="/buscacarritodeusuario" element={<CarritoAdmin token={token} />} />

@@ -516,7 +516,7 @@ class CmstfgApplicationTests {
 		creaLineas();
 	}
 	
-	@Test
+	//@Test
 	@WithMockUser(username = "admin", roles = {"ADMIN"})
 	void testPuntuaProducto() {
 		List<Producto> productosDevueltos = crearYGuardarProductos();

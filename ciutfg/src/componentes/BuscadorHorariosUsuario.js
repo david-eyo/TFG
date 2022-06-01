@@ -3,6 +3,7 @@ import { helpHttp } from "../helpers/helpHttp";
 import { Form,  Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import CrudTableRowTrabajo from './CrudTableRowTrabajo';
+import "./ObservacionesTrabajo.css"
 
 
 
@@ -179,6 +180,11 @@ function BuscadorHorariosUsuario({token, username, setError}) {
                 </Form.Select>
                 <Button variant="success" onClick={() => findTrabajos()}>Buscar</Button>
              </div>
+             {observaciones &&
+             <div className="observaciones">
+                 <p><b>Observaciones: </b>{observaciones}</p>
+                 <Button variant="danger" onClick={() => setObservaciones(null)}>Cerrar observaciones</Button>
+             </div>}
              <table style ={{marginBottom: '5rem'}} className="table">
                 <thead>
                     <tr>
@@ -191,7 +197,7 @@ function BuscadorHorariosUsuario({token, username, setError}) {
                     <th>Tipo Trabajo</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody> 
                 {data.length > 0 ? (
                     data.map((el) => (
                     <CrudTableRowTrabajo                  

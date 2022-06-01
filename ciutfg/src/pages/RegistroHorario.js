@@ -13,21 +13,18 @@ function RegistroHorario({token, username}) {
     const [error2, setError2] = useState(null);
     const [nada, setNada]= useState('');
 
-    const onChangeLocalizacion = (res) => {
-        if(res === "--Seleccione localización"){
-            setLocalizacion('');
-        }else{
-            setLocalizacion(res);
-        }
-    }
 
-    const onChangeTipoTrabajo = (res) => {
-        if(res === "--Seleccione tipo trabajo"){
-            setTipo_trabajo('');
-        }else{
-            setTipo_trabajo(res);
-        }
-    }
+    
+
+
+
+
+
+
+
+
+
+    
 
     const onChangeObservaciones = (res) => {
         setObservaciones(res);
@@ -130,7 +127,7 @@ function RegistroHorario({token, username}) {
                 }
 
                 <Form onSubmit={Submit}>
-                    <Form.Select size="sm" onChange={e => onChangeLocalizacion(e.target.value)} style = {{marginBottom: '2rem', marginTop: '2rem'}}>
+                    <Form.Select size="sm" onChange={e => setLocalizacion(e.target.value)} style = {{marginBottom: '2rem', marginTop: '2rem'}}>
                                 <option>--Seleccione localización</option>
                                 <option>A BARCA</option>
                                 <option>CÁMARA</option>
@@ -138,7 +135,7 @@ function RegistroHorario({token, username}) {
                                 <option>OTRO...</option>
                     </Form.Select>
 
-                    <Form.Select size="sm" onChange={e => onChangeTipoTrabajo(e.target.value)} style = {{marginBottom: '2rem'}}>
+                    <Form.Select size="sm" onChange={e => setTipo_trabajo(e.target.value)} style = {{marginBottom: '2rem'}}>
                                 <option>--Seleccione tipo trabajo</option>
                                 <option>RECOLLER</option>
                                 <option>CLASIFICAR</option>
