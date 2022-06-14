@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './CrudForm.css';
 import './CrudTableRow.css';
+import {useTranslation} from "react-i18next";
 
 const initailForm = {
   nombre: "",
@@ -16,7 +17,8 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
   const [form, setForm] = useState(initailForm);
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
-  const [image, setImage]=useState('')
+  const [image, setImage]=useState('');
+  const [t, i18n] = useTranslation("global");
 
   const changeImagen = (e) =>{
     setImage(e.target.files[0]);
@@ -78,7 +80,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
       <form onSubmit={handleSubmit}>
         <br />
         <div>
-          <label htmlFor="exampleInputEmail1" className="input-label"><b>Nombre del producto:</b></label>
+          <label htmlFor="exampleInputEmail1" className="input-label" style={{width: '20%'}}><b>{t("CrudForm.Nombre del producto")}:</b></label>
           <input
             type="text"
             name="nombre"
@@ -90,7 +92,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label htmlFor="exampleInputEmail1" className="input-label"><b>Precio del producto:</b></label>
+          <label htmlFor="exampleInputEmail1" className="input-label" style={{width: '20%'}}><b>{t("CrudForm.Precio del producto")}:</b></label>
           <input
             type="number"
             name="precio"
@@ -103,7 +105,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label htmlFor="exampleInputEmail1" className="input-label"><b>Cantidad del producto:</b></label>
+          <label htmlFor="exampleInputEmail1" className="input-label" style={{width: '20%'}}><b>{t("CrudForm.Cantidad del producto")}:</b></label>
           <input
             type="number"
             name="cantidad"
@@ -114,7 +116,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label htmlFor="checkedNuesstrosProductos" className="etiqueta-check"><b>Nuestros productos:</b></label>
+          <label htmlFor="checkedNuesstrosProductos" className="etiqueta-check" style={{width: '20%'}}><b>{t("CrudForm.Nuestros productos")}:</b></label>
           <input
             type="checkbox"
             name="nuestros_productos"
@@ -124,7 +126,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         </div>
         <br />
         <div>
-          <label htmlFor="checkedOferta" className="etiqueta-check"><b>Oferta:</b></label>
+          <label htmlFor="checkedOferta" className="etiqueta-check" style={{width: '20%'}}><b>{t("CrudForm.Oferta")}:</b></label>
           <input
             type="checkbox"
             name="Oferta"
@@ -132,6 +134,8 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
             onChange={handleChange2}
           />
         </div>
+        <br></br>
+        <br></br>
         <div>
           <input
             type="file"

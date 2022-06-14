@@ -32,9 +32,12 @@ import MisHorarios from '../pages/MisHorarios';
 import BuscadorHorariosAdmin from '../pages/BuscadorHorariosAdmin';
 import Ofertas from '../pages/Ofertas';
 
+import {useTranslation} from "react-i18next"
 
 
 export default function BarraPrincipal() {
+    const [t, i18n] = useTranslation("global");
+
     const [token, setToken] = useState('');
     const [rol, setRol] = useState('');
     const [username, setUsername] = useState('');
@@ -60,19 +63,19 @@ export default function BarraPrincipal() {
 
                             <Nav.Link as={Link} to="/" className={isActive =>
                                 "nav-link" + (!isActive ? " unselected" : "")
-                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Inicio</Nav.Link>
+                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>{t("BarraPrincipal.Inicio")}</Nav.Link>
 
                             <Nav.Link as={Link} to="/nuestrosproductos" className={isActive =>
                                 "nav-link" + (!isActive ? " unselected" : "")
-                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Nuestros Productos</Nav.Link>
+                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>{t("BarraPrincipal.NP")}</Nav.Link>
 
                             <Nav.Link as={Link} to="/ofertas" className={isActive =>
                                 "nav-link" + (!isActive ? " unselected" : "")
-                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Ofertas</Nav.Link>
+                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>{t("BarraPrincipal.Ofertas")}</Nav.Link>
 
                             <Nav.Link as={Link} to="/buscadorproductos" className={isActive =>
                                 "nav-link" + (!isActive ? " unselected" : "")
-                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Buscar Productos</Nav.Link>
+                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>{t("BarraPrincipal.Buscar Productos")}</Nav.Link>
 
 
 
@@ -81,22 +84,22 @@ export default function BarraPrincipal() {
                              <NavDropdown title="Administración" id="navbarScrollingDropdown" style={{ marginLeft: '2rem', fontSize: 'larger' }}>
                                     <NavDropdown.Item as={Link} to="/adminbuscadorproductos" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } >Crear, buscar y editar Productos</NavDropdown.Item>
+                                    } >{t("BarraPrincipal.Crear, buscar y editar Productos")}</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="/adminhistorico" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } >Histórico Precios</NavDropdown.Item>
+                                    } >{t("BarraPrincipal.Histórico Precios")}</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="/buscausuario" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } >Buscar Usuario</NavDropdown.Item>
+                                    } >{t("BarraPrincipal.Buscar Usuario")}</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="/buscacarritodeusuario" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } >Buscar Carrito Usuario</NavDropdown.Item>
+                                    } >{t("BarraPrincipal.Buscar Carrito Usuario")}</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="/registrartrabajador" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } >Registrar trabajador</NavDropdown.Item>
+                                    } >{t("BarraPrincipal.Registrar trabajador")}</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="/buscadorhorarios" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } >Búsqueda de horarios</NavDropdown.Item>
+                                    } >{t("BarraPrincipal.Búsqueda de horarios")}</NavDropdown.Item>
 
                                     
                                 </NavDropdown>   
@@ -104,13 +107,13 @@ export default function BarraPrincipal() {
 
                             <Nav.Link as={Link} to="/adminhistorico" className={isActive =>
                                 "nav-link" + (!isActive ? " unselected" : "")
-                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Atención al Cliente</Nav.Link>
+                            } style={{ marginLeft: '2rem', fontSize: 'larger' }}>{t("BarraPrincipal.Atención al Cliente")}</Nav.Link>
 
                             {rol === "ROLE_USER" &&
 
                                 <Nav.Link as={Link} to="/carrito" className={isActive =>
                                     "nav-link" + (!isActive ? " unselected" : "")
-                                } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Carrito</Nav.Link>
+                                } style={{ marginLeft: '2rem', fontSize: 'larger' }}>{t("BarraPrincipal.Carrito")}</Nav.Link>
                             }
 
                             {rol === "ROLE_USER" &&
@@ -118,26 +121,26 @@ export default function BarraPrincipal() {
                             <NavDropdown title="Mis Pedidos" id="navbarScrollingDropdown" style={{ marginLeft: '2rem', fontSize: 'larger' }}>
                                 <NavDropdown.Item as={Link} to="/mispedidos" className={isActive =>
                                     "nav-link" + (!isActive ? " unselected" : "")
-                                } >Mis Pedidos</NavDropdown.Item>
+                                } >{t("BarraPrincipal.Mis Pedidos")}</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/buscadorpedidosusuario" className={isActive =>
                                     "nav-link" + (!isActive ? " unselected" : "")
-                                } >Buscar Pedidos Fechas</NavDropdown.Item>
+                                } >{t("BarraPrincipal.Buscar Pedidos Fechas")}</NavDropdown.Item>
                             </NavDropdown>
                             }
 
                             {rol === "ROLE_ADMIN" &&
                                 <Nav.Link as={Link} to="/buscadorpedidos" className={isActive =>
                                 "nav-link" + (!isActive ? " unselected" : "")
-                                } style={{ marginLeft: '2rem', fontSize: 'larger' }}>Pedidos</Nav.Link>
+                                } style={{ marginLeft: '2rem', fontSize: 'larger' }}>{t("BarraPrincipal.Pedidos")}</Nav.Link>
                             }
                             {rol === "ROLE_WORKER" &&
                                 <NavDropdown title="Horarios" id="navbarScrollingDropdown" style={{ marginLeft: '2rem', fontSize: 'larger' }}>
                                     <NavDropdown.Item as={Link} to="/registrarhorario" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } >Registrar Horarios</NavDropdown.Item>
+                                    } >{t("BarraPrincipal.Registrar Horarios")}</NavDropdown.Item>
                                     <NavDropdown.Item as={Link} to="/mishorarios" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } >Buscar en mis horarios</NavDropdown.Item>
+                                    } >{t("BarraPrincipal.Buscar en mis horarios")}</NavDropdown.Item>
                                 </NavDropdown>
                             }
                         </Nav>
@@ -156,7 +159,7 @@ export default function BarraPrincipal() {
                             <Nav>
                                     <Nav.Link as={Link} to="/login" className={isActive =>
                                         "nav-link" + (!isActive ? " unselected" : "")
-                                    } style={{ marginRight: '2rem', fontSize: 'larger' }}><i style={{marginRight: '0.5rem'}} className="fa fa-sign-in"/> Login</Nav.Link>
+                                    } style={{ marginRight: '2rem', fontSize: 'larger', textAlign: 'center' }}><i style={{marginRight: '0.5rem'}} className="fa fa-sign-in"/> Login</Nav.Link>
                             </Nav>
                         }
                     </Navbar.Collapse>

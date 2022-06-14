@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment';
 import MessageAdvertencia from '../componentes/MessageAdvertencia';
 import { Navigate} from 'react-router';
+import {useTranslation} from "react-i18next";
 
 function RegistroTrabajador(token) {
 
@@ -34,6 +35,7 @@ function RegistroTrabajador(token) {
     const [errorDni, setErrorDni] = useState(null);
     const [errorNss, setErrorNss] = useState(null);
     const [problemaTexto, setProblemaTexto] = useState ('');
+    const [t, i18n] = useTranslation("global");
 
 
 
@@ -232,10 +234,10 @@ function RegistroTrabajador(token) {
 
     return (
         <div className='login'>
-            <h1> Formulario de registro</h1>
+            <h1>{t("RegistroTrabajador.Formulario de registro")}</h1>
             <Form onSubmit={Submit}>
                 <Form.Group className="mb-3" controlId="formBasicUsername">
-                    <Form.Label>Nombre de usuario</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.Nombre de usuario")}</Form.Label>
                     {errorUsername && (
                         <MessageAdvertencia
                             msg={`El nombre de usuario debe tener como mínimo 1 caracter`}
@@ -248,7 +250,7 @@ function RegistroTrabajador(token) {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Contraseña</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.Contraseña")}</Form.Label>
                     {errorPassword && (
                     <MessageAdvertencia
                         msg={`La contraseña debe tener al menos, 2 caracteres`}
@@ -261,7 +263,7 @@ function RegistroTrabajador(token) {
 
 
                 <Form.Group className="mb-3" controlId="formBasicNombre">
-                    <Form.Label>Nombre</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.Nombre")}</Form.Label>
                     {errorNombre && (
                         <MessageAdvertencia
                             msg={`El nombre debe tener entre 2 y 40 caracteres`}
@@ -274,7 +276,7 @@ function RegistroTrabajador(token) {
 
 
                 <Form.Group className="mb-3" controlId="formBasicApellidos">
-                    <Form.Label>Apellidos</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.Apellidos")}</Form.Label>
                     {errorApellidos && (
                         <MessageAdvertencia
                             msg={`Los apellidos deben tener entre 2 y 100 caracteres `}
@@ -287,7 +289,7 @@ function RegistroTrabajador(token) {
 
 
                 <Form.Group className="mb-3" controlId="formBasicCiudad">
-                    <Form.Label>Ciudad</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.Ciudad")}</Form.Label>
                     {errorCiudad && (
                         <MessageAdvertencia
                             msg={`La ciudad debe tener entre 2 y 40 caracteres`}
@@ -300,7 +302,7 @@ function RegistroTrabajador(token) {
 
 
                 <Form.Group className="mb-3" controlId="formBasicDireccion">
-                    <Form.Label>Dirección</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.Dirección")}</Form.Label>
                     {errorDireccion && (
                         <MessageAdvertencia
                             msg={`Direccion debe tener entre 2 y 40 caracteres`}
@@ -313,7 +315,7 @@ function RegistroTrabajador(token) {
 
 
                 <Form.Group className="mb-3" controlId="formBasicCp">
-                    <Form.Label>CP</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.CP")}</Form.Label>
                     {errorCP && (
                         <MessageAdvertencia
                             msg={`El CP debe tener entre 4 y 6 dígitos`}
@@ -325,7 +327,7 @@ function RegistroTrabajador(token) {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.Email")}</Form.Label>
                     {errorEmail && (
                         <MessageAdvertencia
                             msg={`El email debe tener al menos 1 caracter`}
@@ -339,7 +341,7 @@ function RegistroTrabajador(token) {
 
 
                 <Form.Group className="mb-3" controlId="formBasicFechaNacimiento">
-                    <Form.Label>Fecha de nacimiento</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.Fecha de Nacimiento")}</Form.Label>
                     <DatePicker selected={fecha}
                         onChange={date => onChangeFechaNacimniento(date)}
                         dateFormat='yyyy-MM-dd'
@@ -348,7 +350,7 @@ function RegistroTrabajador(token) {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicTlf">
-                    <Form.Label>Teléfono</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.Teléfono")}</Form.Label>
                     {errorTlf && (
                         <MessageAdvertencia
                             msg={`El teléfono debe tener como mínimo 9 caracteres `}
@@ -360,7 +362,7 @@ function RegistroTrabajador(token) {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicDni">
-                    <Form.Label>DNI/NIF</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.DNI/NIF")}</Form.Label>
                     {errorDni && (
                         <MessageAdvertencia
                             msg={`El DNI/NIF debe tener 9 caracteres`}
@@ -368,12 +370,12 @@ function RegistroTrabajador(token) {
                         />
                     )}
 
-                    <Form.Control type="text" placeholder="Introduxca DNI/NIF"
+                    <Form.Control type="text" placeholder="Introduzca DNI/NIF"
                         onChange={e => onChangeDni(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicNss">
-                    <Form.Label>NSS</Form.Label>
+                    <Form.Label>{t("RegistroTrabajador.NSS")}</Form.Label>
                     {errorNss && (
                         <MessageAdvertencia
                             msg={`El Numero de la Seguridad Social debe tener 9 caracteres`}
@@ -393,7 +395,7 @@ function RegistroTrabajador(token) {
                 )}
 
                 <Button className="boton" variant="primary" type="submit">
-                    Registrarse
+                {t("RegistroTrabajador.Registrarse")}
                 </Button>
 
             </Form>

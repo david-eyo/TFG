@@ -7,6 +7,7 @@ import './BuscadorPedidosComp.css'
 import { helpHttp } from "../helpers/helpHttp";
 import CrudTableItemPedido from './CrudTableItemPedido';
 import CrudTableRowPedido from './CrudTableRowPedido';
+import {useTranslation} from "react-i18next";
 
 
 
@@ -25,6 +26,7 @@ export default function BuscadorPedidosUsuarioComp({ token, user, setError}) {
     const [estado, setEstado] = useState('');
 
     const [detalle, setDetalle] = useState();
+    const [t, i18n] = useTranslation("global");
 
 
     let api = helpHttp();
@@ -309,17 +311,17 @@ export default function BuscadorPedidosUsuarioComp({ token, user, setError}) {
     return (
         <div>
             <div className = "formulario" onSubmit={() => realizarBusquedaPedido()}>
-                    <h4><i>Formulario de Búsqueda de Pedidos</i></h4>
+                    <h4><i>{t("BuscadorPedidosUsuarioComp.Formulario de Búsqueda de Pedidos")}</i></h4>
                     <br></br>
                     <Form.Group className="mb-3" controlId="formBasicFechaNacimiento">
-                        <Form.Label style = {{width: '10rem'}}>Fecha Inicio</Form.Label>
+                        <Form.Label style = {{width: '10rem'}}>{t("BuscadorPedidosUsuarioComp.Fecha Inicio")}</Form.Label>
                         <DatePicker selected={fecha1}
                             onChange={date => onChangeFechaIni(date)}
                             dateFormat='yyyy-MM-dd'
                             scrollableMonthYearDropdown />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicFechaNacimiento">
-                        <Form.Label>Fecha Fin</Form.Label>
+                        <Form.Label>{t("BuscadorPedidosComp.Fecha Fin")}</Form.Label>
                         <DatePicker selected={fecha2}
                             placeholder="Nombre de usuario"
                             onChange={date => onChangeFechaFin(date)}
@@ -338,19 +340,19 @@ export default function BuscadorPedidosUsuarioComp({ token, user, setError}) {
 
                     <br></br>
                     <br></br>
-                    <Button variant="success" onClick={() => realizarBusquedaPedido()}>Buscar</Button>
-                    <Button style={{marginLeft: '1rem'}} variant="secondary" onClick={() => limpiarFormulario()}>Limpiar Formulario</Button>
+                    <Button variant="success" onClick={() => realizarBusquedaPedido()}>{t("BuscadorPedidosUsuarioComp.Buscar")}</Button>
+                    <Button style={{marginLeft: '1rem'}} variant="secondary" onClick={() => limpiarFormulario()}>{t("BuscadorPedidosUsuarioComp.Limpiar Formulario")}</Button>
                   </div>
 
             { detalle &&
               <div className="detalleProducto" style = {{marginBottom: '2rem'}}>
-                <h4 style ={{float: 'left'}}><i>Detalle del pedido</i></h4>
+                <h4 style ={{float: 'left'}}><i>{t("BuscadorPedidosUsuarioComp.Detalle del pedido")}</i></h4>
                   <br></br>
                   <br></br>
-                  <p><b>Id del pedido:</b> {detalle.id}</p>
-                  <p><b>Fecha del pedido:</b> {detalle.fechaPedido.substring(0,10)}</p>
-                  <p><b>Estado del pedido:</b> {detalle.estado}</p>
-                  <p><b>Nombre de usuario del comprador:</b> {detalle.usuario.username}</p>
+                  <p><b>{t("BuscadorPedidosUsuarioComp.Id del pedido:")}</b> {detalle.id}</p>
+                  <p><b>{t("BuscadorPedidosUsuarioComp.Fecha del pedido")}</b> {detalle.fechaPedido.substring(0,10)}</p>
+                  <p><b>{t("BuscadorPedidosUsuarioComp.Estado del pedido:")}</b> {detalle.estado}</p>
+                  <p><b>{t("BuscadorPedidosUsuarioComp.Nombre de usuario del comprador:")}</b> {detalle.usuario.username}</p>
 
                 <CrudTableItemPedido 
                   data={detalle.item_pedido}
@@ -358,7 +360,7 @@ export default function BuscadorPedidosUsuarioComp({ token, user, setError}) {
 
                 <br></br>
                 <br></br>
-                <Button variant="danger" onClick = { () => setDetalle()}>Quitar detalle total <i className="fa fa-close"/></Button>
+                <Button variant="danger" onClick = { () => setDetalle()}>{t("BuscadorPedidosUsuarioComp.Quitar detalle total")} <i className="fa fa-close"/></Button>
               </div>
             }
             
@@ -366,10 +368,10 @@ export default function BuscadorPedidosUsuarioComp({ token, user, setError}) {
             <table style ={{marginBottom: '5rem'}} className="table">
                 <thead>
                     <tr>
-                    <th>Id</th>
-                    <th>Estado</th>
-                    <th>Fecha</th>
-                    <th>Importe</th>
+                    <th>{t("BuscadorPedidosUsuarioComp.Id")}</th>
+                    <th>{t("BuscadorPedidosUsuarioComp.Estado")}</th>
+                    <th>{t("BuscadorPedidosUsuarioComp.Fecha")}</th>
+                    <th>{t("BuscadorPedidosUsuarioComp.Importe")}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -382,7 +384,7 @@ export default function BuscadorPedidosUsuarioComp({ token, user, setError}) {
                     ))
                   ) : (
                 <tr>
-                  <td colSpan="3">Sin pedidos realizados</td>
+                  <td colSpan="3">{t("BuscadorPedidosUsuarioComp.Sin pedidos realizados")}</td>
                 </tr>
               )}
               </tbody>

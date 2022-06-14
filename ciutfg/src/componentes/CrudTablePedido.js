@@ -1,19 +1,21 @@
 import {React} from "react";
 import CrudTableRowPedido from "./CrudTableRowPedido";
+import {useTranslation} from "react-i18next";
 
 
 
 const CrudTablePedido = ({ data, setDetalle }) => {
+  const [t, i18n] = useTranslation("global");
 
   return (
     <div>
       <table className="table" style={{marginBottom: '5rem'}}>
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Estado</th>
-            <th>Fecha</th>
-            <th>Gastado</th>
+            <th>{t("CrudTablePedido.Id")}</th>
+            <th>{t("CrudTablePedido.Estado")}</th>
+            <th>{t("CrudTablePedido.Fecha")}</th>
+            <th>{t("CrudTablePedido.Gastado")}</th>
           </tr>
         </thead>
         <tbody>
@@ -26,7 +28,7 @@ const CrudTablePedido = ({ data, setDetalle }) => {
             ))
           ) : (
             <tr>
-              <td colSpan="3">Sin pedidos realizados hasta ahora :(</td>
+              <td colSpan="3">{t("CrudTablePedido.Sin pedidos realizados hasta ahora :(")}</td>
             </tr>
           )}
         </tbody>

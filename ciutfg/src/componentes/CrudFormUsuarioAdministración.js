@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './CrudFormUsuarioAdministracion.css';
 import './CrudTableRow.css';
+import {useTranslation} from "react-i18next";
 
 const initailForm = {
     username: "",
@@ -16,6 +17,7 @@ const initailForm = {
 
 const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdit }) => {
     const [form, setForm] = useState(initailForm);
+    const [t, i18n] = useTranslation("global");
 
     useEffect(() => {
         if (dataToEdit) {
@@ -52,11 +54,11 @@ const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdi
 
     return (
         <div className="formulario">
-            <h3><b><i>Formulario de edición de usuario</i></b></h3>
+            <h3><b><i>{t("CrudFormUsuarioAdministracion.Formulario de edición de usuario")}</i></b></h3>
             <form onSubmit={handleSubmit}>
                 <br></br>
                 <div>
-                    <label htmlFor="nombre" className="input-label">Nombre:</label>
+                    <label htmlFor="nombre" className="input-label">{t("CrudFormUsuarioAdministracion.Nombre")}:</label>
                     <input
                         type="text"
                         name="nombre"
@@ -67,7 +69,7 @@ const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdi
                 </div>
                 <br></br>
                 <div>
-                    <label htmlFor="apellidos" className="input-label">Apellidos:</label>
+                    <label htmlFor="apellidos" className="input-label">{t("CrudFormUsuarioAdministracion.Apellidos")}:</label>
                     <input
                         type="text"
                         name="apellidos"
@@ -78,7 +80,7 @@ const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdi
                 <br></br>
 
                 <div>
-                    <label htmlFor="email" className="input-label">Email:</label>
+                    <label htmlFor="email" className="input-label">{t("CrudFormUsuarioAdministracion.Email")}:</label>
                     <input
                         type="text"
                         name="email"
@@ -88,7 +90,7 @@ const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdi
                     /></div>
                 <br></br>
                 <div>
-                    <label htmlFor="ciudad" className="input-label">Ciudad:</label>
+                    <label htmlFor="ciudad" className="input-label">{t("CrudFormUsuarioAdministracion.Ciudad")}:</label>
                     <input
                         type="text"
                         name="ciudad"
@@ -98,7 +100,7 @@ const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdi
                     /></div>
                 <br></br>
                 <div>
-                    <label htmlFor="cp" className="input-label">Cp:</label>
+                    <label htmlFor="cp" className="input-label">{t("CrudFormUsuarioAdministracion.Cp")}:</label>
                     <input
                         type="text"
                         name="cp"
@@ -108,7 +110,7 @@ const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdi
                     /></div>
                 <br></br>
                 <div>
-                    <label htmlFor="direccion" className="input-label">Direccion:</label>
+                    <label htmlFor="direccion" className="input-label">{t("CrudFormUsuarioAdministracion.Direccion")}:</label>
                     <input
                         type="text"
                         name="direccion"
@@ -119,7 +121,7 @@ const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdi
                 </div>
                 <br></br>
                 <div>
-                    <label htmlFor="tlf" className="input-label">Teléfono:</label>
+                    <label htmlFor="tlf" className="input-label">{t("CrudFormUsuarioAdministracion.Teléfono")}:</label>
                     <input
                         type="text"
                         name="tlf"
@@ -129,8 +131,8 @@ const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdi
                     />
                 </div>
                 <br></br>
-                <input type="submit" className="btn btn-success marginright" style={{ marginBottom: '5rem' }} value="Enviar" />
-                <input type="reset" className="btn btn-secondary" value="Limpiar" style={{ marginBottom: '5rem' }} onClick={handleReset} />
+                <input type="submit" className="btn btn-success marginright" style={{ marginBottom: '5rem' }} value={t("CrudFormUsuarioAdministracion.Enviar")} />
+                <input type="reset" className="btn btn-secondary" value={t("CrudFormUsuarioAdministracion.Limpiar")} style={{ marginBottom: '5rem' }} onClick={handleReset} />
             </form >
         </div >
     );

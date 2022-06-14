@@ -1,7 +1,7 @@
 .login {
     margin-top: 4rem;
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: 25%;
+    margin-right: 25%;
     margin-bottom: 5%;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -11,7 +11,9 @@
     border-width: 1px;
     border-color: rgb(9, 75, 9);
     border-radius: 1rem;
-    background-image: linear-gradient(#ff960d, #ffd28e)}
+    background-image: linear-gradient(#ff960d, #ffd28e);
+    text-align: left;
+}
 
 .entrada {
     display: inline-block;
@@ -20,4 +22,17 @@
 .boton{
     margin-left: 80%;
     margin-right: 2%;
+}
+
+.privacidad{
+    background-color: white;
+    margin-top: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    text-align: left;
+    border-radius: 30px;
+    border-style: solid;
+    border-width: 3px;
 }

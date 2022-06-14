@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment';
 import MessageAdvertencia from '../../componentes/MessageAdvertencia';
 import { Navigate} from 'react-router';
+import {useTranslation} from "react-i18next";
 
 function RegistroUsuarioNormal() {
 
@@ -31,6 +32,11 @@ function RegistroUsuarioNormal() {
     const [errorDireccion, setErrorDireccion] = useState(null);
     const [errorTlf, setErrorTlf] = useState(null);
     const [problemaTexto, setProblemaTexto] = useState ('');
+    const [privacidad, setPrivacidad] = useState(false);
+    const [activo, setActivo]= useState(false);
+    const [bien, setBien]= useState(false);
+
+    const [t, i18n] = useTranslation("global");
 
 
 
@@ -71,11 +77,9 @@ function RegistroUsuarioNormal() {
             }
         } else{
             setError('');
+            setBien(true);
             window.confirm("Usuario registrado correctamente");
-            return <Navigate push to={{
-                pathname: '/login',
-              }}
-              />
+
         }
         
 
@@ -198,103 +202,120 @@ function RegistroUsuarioNormal() {
         }
     }
 
+    const handleChange1=e=> {
+        setPrivacidad(e.target.checked);
+    };
+
+    const changeActivo=()=> {
+        if (activo){
+            setActivo(false);
+        }else{
+            setActivo(true);
+        }
+    };
+
+
 
     return (
+
         <div className='login'>
-            <h1> Formulario de registro</h1>
+            <h1> {t("RegistroUsuarioNormal.Formulario de registro")}</h1>
             <Form onSubmit={Submit}>
                 <Form.Group className="mb-3" controlId="formBasicUsername">
-                    <Form.Label>Nombre de usuario</Form.Label>
+                    <Form.Label style={{width: '50%', marginTop: '1rem'}}>{t("RegistroUsuarioNormal.Nombre de usuario")}</Form.Label>
                     {errorUsername && (
                         <MessageAdvertencia
                             msg={`El nombre de usuario debe tener como mínimo 1 caracter`}
                             bgColor="#ff9113"
                         />
                     )}
-                    <Form.Control type="text" placeholder="Introduzca usuario"
+                    <Form.Control type="text" placeholder="Introduzca nombre de usuario"
                         onChange={e => onChangeUsername(e.target.value)}
                     />
                 </Form.Group>
 
+                {bien &&
+                    <Navigate to="/login"></Navigate>
+                }
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Contraseña</Form.Label>
+                    <Form.Label>{t("RegistroUsuarioNormal.Contraseña")}</Form.Label>
                     {errorPassword && (
                     <MessageAdvertencia
                         msg={`La contraseña debe tener al menos, 2 caracteres`}
                         bgColor="#ff9113"
                     />
                 )}
-                    <Form.Control type="password" placeholder="Contraseña"
+                    <Form.Control type="password" placeholder="Introduzca Contraseña"
                         onChange={e => onChangePassword(e.target.value)} />
                 </Form.Group>
 
 
                 <Form.Group className="mb-3" controlId="formBasicNombre">
-                    <Form.Label>Nombre</Form.Label>
+                    <Form.Label>{t("RegistroUsuarioNormal.Nombre")}</Form.Label>
                     {errorNombre && (
                         <MessageAdvertencia
                             msg={`El nombre debe tener entre 2 y 40 caracteres`}
                             bgColor="#ff9113"
                         />
                     )}
-                    <Form.Control type="text" placeholder=""
+                    <Form.Control type="text" placeholder="Introduzca nombre de pila."
                         onChange={e => onChangeNombre(e.target.value)} />
                 </Form.Group>
 
 
                 <Form.Group className="mb-3" controlId="formBasicApellidos">
-                    <Form.Label>Apellidos</Form.Label>
+                    <Form.Label>{t("RegistroUsuarioNormal.Apellidos")}</Form.Label>
                     {errorApellidos && (
                         <MessageAdvertencia
                             msg={`Los apellidos deben tener entre 2 y 100 caracteres `}
                             bgColor="#ff9113"
                         />
                     )}
-                    <Form.Control type="text" placeholder=""
+                    <Form.Control type="text" placeholder="Introduzca apellidos."
                         onChange={e => onChangeApellidos(e.target.value)} />
                 </Form.Group>
 
 
                 <Form.Group className="mb-3" controlId="formBasicCiudad">
-                    <Form.Label>Ciudad</Form.Label>
+                    <Form.Label>{t("RegistroUsuarioNormal.Ciudad")}</Form.Label>
                     {errorCiudad && (
                         <MessageAdvertencia
                             msg={`La ciudad debe tener entre 2 y 40 caracteres`}
                             bgColor="#ff9113"
                         />
                     )}
-                    <Form.Control type="text" placeholder="p.e: Santiago de Compostela"
+                    <Form.Control type="text" placeholder="Introduzca ciudad de residencia"
                         onChange={e => onChangeCiudad(e.target.value)} />
                 </Form.Group>
 
 
                 <Form.Group className="mb-3" controlId="formBasicDireccion">
-                    <Form.Label>Dirección</Form.Label>
+                    <Form.Label>{t("RegistroUsuarioNormal.Dirección")}</Form.Label>
                     {errorDireccion && (
                         <MessageAdvertencia
                             msg={`Direccion debe tener entre 2 y 40 caracteres`}
                             bgColor="#ff9113"
                         />
                     )}
-                    <Form.Control type="text" placeholder="p.e: Calle Ejemplo, n1, 3ºB"
+                    <Form.Control type="text" placeholder="Introduzca calle, portal y piso de residencia"
                         onChange={e => onChangeDireccion(e.target.value)} />
                 </Form.Group>
 
 
                 <Form.Group className="mb-3" controlId="formBasicCp">
-                    <Form.Label>CP</Form.Label>
+                    <Form.Label>{t("RegistroUsuarioNormal.CP")}</Form.Label>
                     {errorCP && (
                         <MessageAdvertencia
                             msg={`El CP debe tener entre 4 y 6 dígitos`}
                             bgColor="#ff9113"
                         />
                     )}
-                    <Form.Control type="text" placeholder="p.e: 15000"
+                    <Form.Control type="text" placeholder="Introduzca código postal."
                         onChange={e => onChangeCp(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>{t("RegistroUsuarioNormal.Email")}</Form.Label>
                     {errorEmail && (
                         <MessageAdvertencia
                             msg={`El email debe tener al menos 1 caracter`}
@@ -302,13 +323,13 @@ function RegistroUsuarioNormal() {
                         />
                     )}
 
-                    <Form.Control type="email" placeholder="Introduzca usuario"
+                    <Form.Control type="email" placeholder="Introduzca email de usuario"
                         onChange={e => onChangeEmail(e.target.value)} />
                 </Form.Group>
 
 
                 <Form.Group className="mb-3" controlId="formBasicFechaNacimiento">
-                    <Form.Label>Fecha de nacimiento</Form.Label>
+                    <Form.Label>{t("RegistroUsuarioNormal.Fecha de Nacimiento")}</Form.Label>
                     <DatePicker selected={fecha}
                         onChange={date => onChangeFechaNacimniento(date)}
                         dateFormat='yyyy-MM-dd'
@@ -317,14 +338,14 @@ function RegistroUsuarioNormal() {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicTlf">
-                    <Form.Label>Teléfono</Form.Label>
+                    <Form.Label>{t("RegistroUsuarioNormal.Teléfono")}</Form.Label>
                     {errorTlf && (
                         <MessageAdvertencia
                             msg={`El teléfono debe tener como mínimo 9 caracteres `}
                             bgColor="#ff9113"
                         />
                     )}
-                    <Form.Control type="text" placeholder="p.e: 981981981"
+                    <Form.Control type="text" placeholder="Introduzca su teléfono personal."
                         onChange={e => onChangeTlf(e.target.value)} />
                 </Form.Group>
 
@@ -335,8 +356,76 @@ function RegistroUsuarioNormal() {
                     />
                 )}
 
-                <Button className="boton" variant="primary" type="submit">
-                    Registrarse
+                <div style ={{marginTop: '2rem'}}> 
+                    <input
+                        type="checkbox"
+                        name="Privacidad"
+                        placeholder="He leído y acepto los términos de privacidad"
+                        value={privacidad}
+                        onChange={handleChange1}
+                    />
+                    <label style={{ marginLeft: '0%', width: '50%'}} htmlFor="checkedOferta" className="etiqueta-check"><b>{t("RegistroUsuarioNormal.He leído y acepto la política de privacidad de la empresa.")}</b></label>
+                </div>
+                {!activo &&
+                    <div style={{ marginTop: '2rem', marginRight: '10%'}}>
+                        <Button className="boton" variant="info" onClick={changeActivo} >
+                        {t("RegistroUsuarioNormal.Leer Política de privacidad de la empresa")}
+                        </Button>
+                    </div>
+                }
+
+                {activo &&
+                    <div style={{ marginTop: '2rem', marginRight: '10%'}}>
+                        <Button className="boton" variant="danger" onClick={changeActivo} >
+                        {t("RegistroUsuarioNormal.Cerrar Política de privacidad de la empresa")}
+                        </Button>
+                    </div>
+                }
+
+
+                {activo && 
+                    <div className="privacidad">
+                        <p>
+                            <h4><b>{t("RegistroUsuarioNormal.POLÍTICA DE PRIVACIDAD")}</b></h4>
+                            {t("RegistroUsuarioNormal.Parte1")}
+                            <br></br>
+                            <br></br>
+                            <b>{t("RegistroUsuarioNormal.Parte2")}</b>
+                            <br></br>
+
+                            {t("RegistroUsuarioNormal.Parte3")}
+                            <br></br>
+                            <br></br>
+                            <b>{t("RegistroUsuarioNormal.Parte4")}</b>
+                            <br></br>
+
+                            {t("RegistroUsuarioNormal.Parte5")}
+                            {t("RegistroUsuarioNormal.Parte6")}                            
+                            <br></br>
+                            <br></br>
+                            <b>{t("RegistroUsuarioNormal.Parte7")}</b>
+                            <br></br>
+
+                            {t("RegistroUsuarioNormal.Parte8")}
+                            <br></br>
+                            <br></br>
+                            <b>{t("RegistroUsuarioNormal.Parte9")}</b>
+                            <br></br>
+
+                            {t("RegistroUsuarioNormal.PP10")}
+                            {t("RegistroUsuarioNormal.PP11")}
+                            {t("RegistroUsuarioNormal.PP12")}
+                        </p>
+                    </div>
+                }
+
+                
+
+
+                <br></br>
+
+                <Button className="boton" style={{ marginLeft: '0%'}} variant="primary" type="submit" disabled={!privacidad}>
+                    {t("RegistroUsuarioNormal.Registrarse aqui")}
                 </Button>
 
             </Form>

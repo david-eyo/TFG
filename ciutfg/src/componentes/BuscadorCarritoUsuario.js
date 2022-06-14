@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { Form, FormControl, Button } from 'react-bootstrap';
 import CrudTableRowCarrito from './CrudTableRowCarrito';
 import { helpHttp } from '../helpers/helpHttp';
+import {useTranslation} from "react-i18next";
 
 
 const style = {
@@ -17,6 +18,7 @@ const style = {
 export default function BuscadorCarritoUsuario({ setDataToEdit, deleteData, token, setError, setFormulario}) {
     const [busqueda, setBusqueda] = useState("");
     const [data, setData] = useState([]);
+    const [t, i18n] = useTranslation("global");
 
     let api = helpHttp();
     let url = "http://localhost:5000/carrito";
@@ -68,10 +70,10 @@ export default function BuscadorCarritoUsuario({ setDataToEdit, deleteData, toke
             <table className="table">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio</th>
+                        <th>{t("BuscadorCarritoUsuario.Id")}</th>
+                        <th>{t("BuscadorCarritoUsuario.Producto")}</th>
+                        <th>{t("BuscadorCarritoUsuario.Cantidad")}</th>
+                        <th>{t("BuscadorCarritoUsuario.Precio")}</th>
                     </tr>
                 </thead>
                 <tbody>

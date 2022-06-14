@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { Form, FormControl, Button } from 'react-bootstrap';
 import CrudTableRowUsuario from './CrudTableRowUsuario';
 import { helpHttp } from '../helpers/helpHttp';
-
+import {useTranslation} from "react-i18next";
 
 const style = {
     width: '25rem',
@@ -17,6 +17,7 @@ const style = {
 export default function BuscadorUsuario({ findUsuarioByUsername, setDataToEdit, deleteUsuario, setError, token }) {
     const [busqueda, setBusqueda] = useState("");
     const [data, setData] = useState([]);
+    const [t, i18n] = useTranslation("global");
 
    
     const handleChange = e => {
@@ -71,22 +72,22 @@ export default function BuscadorUsuario({ findUsuarioByUsername, setDataToEdit, 
                         value={busqueda}
                         onChange={handleChange}
                     />
-                    <Button variant="outline-success" onClick={() => buscaManual(busqueda)}>Buscar</Button>
+                    <Button variant="outline-success" onClick={() => buscaManual(busqueda)}>{t("BuscadorUsuario.Buscar")}</Button>
                 </Form>
             </div>
             <table className="table">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Username</th>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Email</th>
-                        <th>Ciudad</th>
-                        <th>Cp</th>
-                        <th>Direccion</th>
-                        <th>Fecha Nacimiento</th>
-                        <th>Tlf</th>
+                        <th>{t("BuscadorUsuario.Id")}</th>
+                        <th>{t("BuscadorUsuario.Username")}</th>
+                        <th>{t("BuscadorUsuario.Nombre")}</th>
+                        <th>{t("BuscadorUsuario.Apellidos")}</th>
+                        <th>{t("BuscadorUsuario.Email")}</th>
+                        <th>{t("BuscadorUsuario.Ciudad")}</th>
+                        <th>{t("BuscadorUsuario.Cp")}</th>
+                        <th>{t("BuscadorUsuario.Direccion")}</th>
+                        <th>{t("BuscadorUsuario.Fecha Nacimiento")}</th>
+                        <th>{t("BuscadorUsuario.Tlf")}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -98,7 +99,7 @@ export default function BuscadorUsuario({ findUsuarioByUsername, setDataToEdit, 
                             />                       
                     ) : (
                         <tr>
-                            <td colSpan="3">Sin datos</td>
+                            <td colSpan="3">{t("BuscadorUsuario.Sin datos")}</td>
                         </tr>
                     )}
                 </tbody>

@@ -4,6 +4,7 @@ import Message from '../componentes/Message';
 import Loader from '../componentes/Loader';
 import CrudTableItemPedido from '../componentes/CrudTableItemPedido';
 import { Button } from 'react-bootstrap';
+import {useTranslation} from "react-i18next";
 
 
 
@@ -12,6 +13,8 @@ function MisPedidos({token, username}) {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState('');
     const [db, setDb] = useState(null);
+
+    const [t, i18n] = useTranslation("global");
 
     const handleResp = async () => {
         setLoading(true);
@@ -52,23 +55,23 @@ function MisPedidos({token, username}) {
         <div>
             { detalle &&
               <div className="detalleProducto" style = {{marginBottom: '2rem', marginTop: '2rem'}}>
-                <h4 style ={{float: 'left'}}><i>Detalle del pedido</i></h4>
+                <h4 style ={{float: 'left'}}><i>{t("MisPedidos.Detalle del pedido")}</i></h4>
                   <br></br>
                   <br></br>
-                  <p><b>Id del pedido:</b> {detalle.id}</p>
-                  <p><b>Fecha del pedido:</b> {detalle.fechaPedido.substring(0,10)}</p>
-                  <p><b>Estado del pedido:</b> {detalle.estado}</p>
+                  <p><b>{t("MisPedidos.Id del pedido")}:</b> {detalle.id}</p>
+                  <p><b>{t("MisPedidos.Fecha del pedido")}:</b> {detalle.fechaPedido.substring(0,10)}</p>
+                  <p><b>{t("MisPedidos.Estado del pedido")}:</b> {detalle.estado}</p>
 
                 <CrudTableItemPedido 
                   data={detalle.item_pedido}
                 />
                 <br></br>
 
-                <Button variant="danger" onClick = { () => setDetalle()}>Quitar detalle total <i className="fa fa-close"/></Button>
+                <Button variant="danger" onClick = { () => setDetalle()}>{t("MisPedidos.Quitar detalle total ")}<i className="fa fa-close"/></Button>
               </div>
             }
             <br></br>
-            <h3 style={{float: 'left', marginLeft: '2rem'}}><i><b>Lista de Mis Pedidos</b></i></h3>
+            <h3 style={{float: 'left', marginLeft: '2rem'}}><i><b>{t("MisPedidos.Lista de Mis Pedidos")}</b></i></h3>
             <br></br>
             <br></br>
             {error && (

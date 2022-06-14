@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import Message from '../componentes/Message';
 import "../componentes/RegistroHorario.css"
+import {useTranslation} from "react-i18next";
 
 
 function RegistroHorario({token, username}) {
@@ -12,6 +13,7 @@ function RegistroHorario({token, username}) {
     const [error, setError] = useState(null);
     const [error2, setError2] = useState(null);
     const [nada, setNada]= useState('');
+    const [t, i18n] = useTranslation("global");
 
 
     
@@ -66,8 +68,6 @@ function RegistroHorario({token, username}) {
         }
     }
 
-    console.log(localizacion);
-
     const Submit2 = async (e) => {
 
         e.preventDefault();
@@ -118,7 +118,7 @@ function RegistroHorario({token, username}) {
     return (
         <div>
             <div className= "registro">
-                <h5><i>Marca aquí que ya has empezado tu jornada laboral!</i></h5>
+                <h5><i>{t("RegistroHorario.Marca aquí que ya has empezado tu jornada laboral!")}</i></h5>
                 {error &&
                     <Message
                             msg={`Error: ${error.statusText}`}
@@ -143,13 +143,13 @@ function RegistroHorario({token, username}) {
                     </Form.Select>
 
                     <Button className="boton" variant="primary" type="submit">
-                            Iniciar trabajo!
+                    {t("RegistroHorario.Iniciar trabajo!")}
                     </Button>
                 </Form>
             </div>
 
             <div className= "registro2">
-                <h5><i>Marca aquí que ya has finalizado tu jornada laboral!</i></h5>
+                <h5><i>{t("RegistroHorario.Marca aquí que ya has finalizado tu jornada laboral!")}</i></h5>
                 <Form onSubmit={Submit2}>
                     {error2 &&
                         <Message
@@ -158,13 +158,13 @@ function RegistroHorario({token, username}) {
                         />        
                     }
                     <Form.Group className="mb-3" controlId="formBasicApellidos">
-                        <Form.Label>Observaciones</Form.Label>
+                        <Form.Label>{t("RegistroHorario.Observaciones")}</Form.Label>
                         <Form.Control type="text" placeholder=""
                             onChange={e => onChangeObservaciones(e.target.value)} />
                     </Form.Group>
 
                     <Button className="boton" variant="primary" type="submit">
-                            Finalizar trabajo!
+                            {t("RegistroHorario.Finalizar trabajo!")}
                     </Button>
                 </Form>
             </div>

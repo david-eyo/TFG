@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './CrudForm.css';
 import './CrudTableRow.css';
+import {useTranslation} from "react-i18next";
+
 
 const initailForm = {
   cantidad: "",
@@ -9,6 +11,8 @@ const initailForm = {
 
 const CrudFormCarritoAdministracion = ({ updateCarrito, dataToEdit, setDataToEdit, setFormulario}) => {
   const [form, setForm] = useState(initailForm);
+  const [t, i18n] = useTranslation("global");
+
 
   useEffect(() => {
     if (dataToEdit) {
@@ -50,7 +54,7 @@ const CrudFormCarritoAdministracion = ({ updateCarrito, dataToEdit, setDataToEdi
       <form onSubmit={handleSubmit}>
         <br />
         <div>
-          <label htmlFor="cantidad" className="input-label">Cantidad:</label>
+          <label htmlFor="cantidad" className="input-label">{t("CrudFormCarritoAdministracion.Cantidad")}:</label>
           <input
             type="number"
             name="cantidad"
@@ -60,8 +64,8 @@ const CrudFormCarritoAdministracion = ({ updateCarrito, dataToEdit, setDataToEdi
           />
         </div>
         <br></br>
-        <input type="submit" className="btn btn-success marginright" value="Enviar" />
-        <input type="reset" className="btn btn-secondary" value="Limpiar" onClick={handleReset} />
+        <input type="submit" className="btn btn-success marginright" value={t("CrudFormCarritoAdministracion.Enviar")} />
+        <input type="reset" className="btn btn-secondary" value={t("CrudFormCarritoAdministracion.Limpiar")} onClick={handleReset} />
       </form>
     </div>
   );

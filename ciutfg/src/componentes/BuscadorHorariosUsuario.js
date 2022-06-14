@@ -4,6 +4,7 @@ import { Form,  Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import CrudTableRowTrabajo from './CrudTableRowTrabajo';
 import "./ObservacionesTrabajo.css"
+import {useTranslation} from "react-i18next";
 
 
 
@@ -18,6 +19,8 @@ function BuscadorHorariosUsuario({token, username, setError}) {
     const [localizacion, setLocalizacion] = useState('');
     const [tipo_trabajo, setTipo_trabajo] = useState('');
     const [observaciones, setObservaciones] = useState('');
+    const [t, i18n] = useTranslation("global");
+    
 
     let api = helpHttp();
     let url = "http://localhost:5000/trabajo";
@@ -152,14 +155,14 @@ function BuscadorHorariosUsuario({token, username, setError}) {
         <div>
             <div className = "formulario">
                 <Form.Group className="mb-3" controlId="formBasicFechaNacimiento">
-                    <Form.Label style = {{width: '10rem'}}>Fecha Inicio</Form.Label>
+                    <Form.Label style = {{width: '10rem'}}>{t("BuscadorHorariosUsuario.Fecha Inicio")}</Form.Label>
                     <DatePicker selected={fecha1}
                         onChange={date => onChangeFechaIni(date)}
                         dateFormat='yyyy-MM-dd'
                         scrollableMonthYearDropdown />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicFechaNacimiento">
-                    <Form.Label style = {{width: '10rem'}}>Fecha Fin</Form.Label>
+                    <Form.Label style = {{width: '10rem'}}>{t("BuscadorHorariosUsuario.Fecha Fin")}</Form.Label>
                     <DatePicker selected={fecha2}
                         onChange={date => onChangeFechaFin(date)}
                         dateFormat='yyyy-MM-dd'
@@ -178,23 +181,23 @@ function BuscadorHorariosUsuario({token, username, setError}) {
                             <option>CLASIFICAR</option>
                             <option>OTRO...</option>
                 </Form.Select>
-                <Button variant="success" onClick={() => findTrabajos()}>Buscar</Button>
+                <Button variant="success" onClick={() => findTrabajos()}>{t("BuscadorHorariosUsuario.Buscar")}</Button>
              </div>
              {observaciones &&
              <div className="observaciones">
                  <p><b>Observaciones: </b>{observaciones}</p>
-                 <Button variant="danger" onClick={() => setObservaciones(null)}>Cerrar observaciones</Button>
+                 <Button variant="danger" onClick={() => setObservaciones(null)}>{t("BuscadorHorariosUsuario.Cerrar observaciones")}</Button>
              </div>}
              <table style ={{marginBottom: '5rem'}} className="table">
                 <thead>
                     <tr>
-                    <th>Id</th>
-                    <th>Inicio Trabajo</th>
-                    <th>Hora de inicio</th>
-                    <th>Final Trabajo</th>
-                    <th>Hora de fin</th>
-                    <th>Localizacion</th>
-                    <th>Tipo Trabajo</th>
+                    <th>{t("BuscadorHorariosUsuario.Id")}</th>
+                    <th>{t("BuscadorHorariosUsuario.Inicio Trabajo")}</th>
+                    <th>{t("BuscadorHorariosUsuario.Hora de inicio")}</th>
+                    <th>{t("BuscadorHorariosUsuario.Final Trabajo")}</th>
+                    <th>{t("BuscadorHorariosUsuario.Hora de fin")}</th>
+                    <th>{t("BuscadorHorariosUsuario.Localizacion")}</th>
+                    <th>{t("BuscadorHorariosUsuario.Tipo Trabajo")}</th>
                     </tr>
                 </thead>
                 <tbody> 
@@ -207,7 +210,7 @@ function BuscadorHorariosUsuario({token, username, setError}) {
                     ))
                   ) : (
                 <tr>
-                  <td colSpan="3">Sin trabajos realizados</td>
+                  <td colSpan="3">{t("BuscadorHorariosUsuario.Sin trabajos realizados")}</td>
                 </tr>
               )}
               </tbody>

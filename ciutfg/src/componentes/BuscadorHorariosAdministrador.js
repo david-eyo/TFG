@@ -3,7 +3,8 @@ import { helpHttp } from "../helpers/helpHttp";
 import { Form,  Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import CrudTableRowTrabajo2 from './CrudTableRowTrabajo2';
-import "./BuscadorHorariosAdministrador.css"
+import "./BuscadorHorariosAdministrador.css";
+import {useTranslation} from "react-i18next";
 
 
 
@@ -22,6 +23,11 @@ function BuscadorHorariosAdministrador({token, setError}) {
     const [detalleUsuario, setDetalleUsuario] = useState(null);
     const [detalle, setDetalle] = useState(false);
     const [user, setUser] = useState(null);
+    const [minutos, setMinutos] = useState(0);
+    const [sueldo, setSueldo] = useState(0);
+    const [sueldomin, setSueldomin] = useState(0);
+    const [t, i18n] = useTranslation("global");
+    
 
     let api = helpHttp();
     let url = "http://localhost:5000/trabajo";
@@ -189,14 +195,14 @@ function BuscadorHorariosAdministrador({token, setError}) {
                         onChange={e => onChangeUsername(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicFechaNacimiento">
-                    <Form.Label style = {{width: '10rem'}}>Fecha Inicio</Form.Label>
+                    <Form.Label style = {{width: '10rem'}}>{t("BuscadorHorariosAdministrador.Fecha de Inicio")}</Form.Label>
                     <DatePicker selected={fecha1}
                         onChange={date => onChangeFechaIni(date)}
                         dateFormat='yyyy-MM-dd'
                         scrollableMonthYearDropdown />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicFechaNacimiento">
-                    <Form.Label style = {{width: '10rem'}}>Fecha Fin</Form.Label>
+                    <Form.Label style = {{width: '10rem'}}>{t("BuscadorHorariosAdministrador.Fecha de Fin")}</Form.Label>
                     <DatePicker selected={fecha2}
                         onChange={date => onChangeFechaFin(date)}
                         dateFormat='yyyy-MM-dd'
@@ -215,12 +221,12 @@ function BuscadorHorariosAdministrador({token, setError}) {
                             <option>CLASIFICAR</option>
                             <option>OTRO...</option>
                 </Form.Select>
-                <Button variant="success" onClick={() => findTrabajos()}>Buscar</Button>
+                <Button variant="success" onClick={() => findTrabajos()}>{t("BuscadorHorariosAdministrador.Buscar")}</Button>
              </div>
 
              {observaciones !== null &&
              <div className='detalleHorario'>
-                 <h5 style={{marginBottom: '1rem'}}><b>Observaciones:</b> {observaciones}</h5>
+                 <h5 style={{marginBottom: '1rem'}}><b>{t("BuscadorHorariosAdministrador.Observaciones:")}</b> {observaciones}</h5>
                  {detalle &&
                     <Button style ={{marginBottom: '1rem'}}variant="danger" onClick = { () => setDetalle(false)}>Quitar detalle del trabajador <i className="fa fa-close"/></Button>
                  }
@@ -229,34 +235,34 @@ function BuscadorHorariosAdministrador({token, setError}) {
                  }
                  {detalle && 
                     <div className= "detalleUsuario">
-                        <h4><i>Detalle de usuario</i></h4>
+                        <h4><i>{t("BuscadorHorariosAdministrador.Detalle de usuario")}</i></h4>
                         <br></br>
                         <div style = {{float: 'left'}}>
-                        <p><b>Id usuario:</b> {detalleUsuario.id}</p>
-                        <p><b>Nombre:</b> {detalleUsuario.nombre}</p>
-                        <p><b>Apellidos:</b> {detalleUsuario.apellidos}</p>
-                        <p><b>Direccion de envíos:</b> {detalleUsuario.direccion}, {detalleUsuario.ciudad}, {detalleUsuario.cp}.</p>
+                        <p><b>{t("BuscadorHorariosAdministrador.Id usuario:")}</b> {detalleUsuario.id}</p>
+                        <p><b>{t("BuscadorHorariosAdministrador.Nombre:")}</b> {detalleUsuario.nombre}</p>
+                        <p><b>{t("BuscadorHorariosAdministrador.Apellidos:")}</b> {detalleUsuario.apellidos}</p>
+                        <p><b>{t("BuscadorHorariosAdministrador.Direccion de envíos:")}</b> {detalleUsuario.direccion}, {detalleUsuario.ciudad}, {detalleUsuario.cp}.</p>
                         </div>
-                        <p><b>Email:</b> {detalleUsuario.email}</p>
-                        <p><b>Fecha de Nacimiento:</b> {detalleUsuario.fechaNacimiento.substring(0,10)}</p>
-                        <p><b>Teléfono: </b>{detalleUsuario.tlf}</p>                   
+                        <p><b>{t("BuscadorHorariosAdministrador.Email:")}</b> {detalleUsuario.email}</p>
+                        <p><b>{t("BuscadorHorariosAdministrador.Fecha de Nacimiento:")}</b> {detalleUsuario.fechaNacimiento.substring(0,10)}</p>
+                        <p><b>{t("BuscadorHorariosAdministrador.Teléfono")}: </b>{detalleUsuario.tlf}</p>                   
                     </div>
                 }
-                 <Button variant="danger" onClick={() => setObservaciones(null)}>Cerrar observaciones
+                 <Button variant="danger" onClick={() => setObservaciones(null)}>{t("BuscadorHorariosAdministrador.Cerrar observaciones")}
                  <i style={{marginLeft: '0.5rem'}} className="fa fa-close"/></Button>
              </div>
              }
              <table style ={{marginBottom: '5rem'}} className="table">
                 <thead>
                     <tr>
-                    <th>Id</th>
+                    <th>{t("BuscadorHorariosAdministrador.Id")}</th>
                     <th>Username</th>
-                    <th>Inicio Trabajo</th>
-                    <th>Hora de inicio</th>
-                    <th>Final Trabajo</th>
-                    <th>Hora de fin</th>
-                    <th>Localizacion</th>
-                    <th>Tipo Trabajo</th>
+                    <th>{t("BuscadorHorariosAdministrador.Inicio Trabajo")}</th>
+                    <th>{t("BuscadorHorariosAdministrador.Hora de inicio")}</th>
+                    <th>{t("BuscadorHorariosAdministrador.Final Trabajo")}</th>
+                    <th>{t("BuscadorHorariosAdministrador.Hora de fin")}</th>
+                    <th>{t("BuscadorHorariosAdministrador.Localizacion")}</th>
+                    <th>{t("BuscadorHorariosAdministrador.Tipo Trabajo")}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -266,15 +272,30 @@ function BuscadorHorariosAdministrador({token, setError}) {
                         el={el}
                         setObservaciones={setObservaciones}
                         setDetalleUsuario={setDetalleUsuario}
+                        setMinutos={setMinutos}
+                        minutos={minutos}
                     />
                     ))
                   ) : (
                 <tr>
-                  <td colSpan="3">Sin trabajos realizados</td>
+                  <td colSpan="3">{t("BuscadorHorariosAdministrador.Sin trabajos realizados")}</td>
                 </tr>
               )}
               </tbody>
             </table>
+            <div style={{width:'30%', borderStyle:'solid', borderWidth: '3px',
+                            paddingBlock: '4%',margin: '0 auto', paddingInline: '4%', borderRadius: '20px', marginBottom: '10rem'}}>
+                <h2 style ={{float:'left'}}><i>{t("BuscadorHorariosAdministrador.Calculadora de salarios")}</i></h2>
+                <br></br>
+                <br></br>
+                <br></br>
+                <Form.Group className="mb-3" controlId="formBasicPassword" onChange={e => setSueldomin(e.target.value)}>
+                    <Form.Label>{t("BuscadorHorariosAdministrador.Sueldo")}</Form.Label>
+                    <Form.Control type="number" placeholder="Sueldo por hora" />
+                </Form.Group>
+                <br></br>
+                <h3 style={{float:'right', marginRight: '2%'}}>{t("BuscadorHorariosAdministrador.Sueldo correspondiente:")} {minutos*(sueldomin/60)}€</h3>
+            </div>
 
 
         </div>

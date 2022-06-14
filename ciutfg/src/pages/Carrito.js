@@ -4,6 +4,7 @@ import CrudTableCarrito from "../componentes/CrudTableCarrito";
 import Loader from '../componentes/Loader';
 import { helpHttp } from "../helpers/helpHttp";
 import Message from "../componentes/Message";
+import {useTranslation} from "react-i18next";
 
 
 import {
@@ -27,6 +28,8 @@ const Carrito = ({token}) => {
     const [dataToEdit, setDataToEdit] = useState(null);
     const [db2, setDb2] = useState(null);
     const [cantidad, setCantidad] = useState(0);
+
+    const [t, i18n] = useTranslation("global");
 
 
     let api = helpHttp();
@@ -149,7 +152,7 @@ const Carrito = ({token}) => {
     return (
         <div>
           <br></br>
-          <h3 style={{float: 'left', marginLeft: '2rem'}}><b><i>Mi Carrito de la compra</i></b></h3>
+          <h3 style={{float: 'left', marginLeft: '2rem'}}><b><i>{t("Carrito.Mi Carrito de la compra")}</i></b></h3>
           <br></br>
           <br></br>
             <article className="grid-1-2">
@@ -177,7 +180,7 @@ const Carrito = ({token}) => {
             <br></br>
             <br></br>
 
-            <h4 style = {{float: 'right', marginRight: '5rem'}}><b>Total: </b>{cantidad}€</h4>
+            <h4 style = {{float: 'right', marginRight: '5rem'}}><b>{t("Carrito.Total: ")}</b>{cantidad}€</h4>
 
             <br></br>
             <br></br>
@@ -190,7 +193,7 @@ const Carrito = ({token}) => {
               />
             ) : (
               <button style = {{float: 'right', marginRight: '5rem'}} className="btn btn-warning" onClick={() => setCompra(true)}>
-                Realizar compra<i style={{marginLeft: '1rem'}} className="fa fa-exchange"/>
+                {t("Carrito.Realizar compra")}<i style={{marginLeft: '1rem'}} className="fa fa-exchange"/>
               </button>
             )
 

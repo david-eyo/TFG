@@ -1,9 +1,11 @@
 import {React, useState} from "react";
 import CrudTableRowItemPedido from "./CrudTableRowItemPedido";
+import {useTranslation} from "react-i18next";
 
 
 
 const CrudTableItemPedido = ({ data }) => {
+  const [t, i18n] = useTranslation("global");
 
     
   return (
@@ -11,10 +13,10 @@ const CrudTableItemPedido = ({ data }) => {
       <table className="table">
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
+            <th>{t("CrudTableItemPedido.Id")}</th>
+            <th>{t("CrudTableItemPedido.Producto")}</th>
+            <th>{t("CrudTableItemPedido.Cantidad")}</th>
+            <th>{t("CrudTableItemPedido.Precio")}</th>
           </tr>
         </thead>
         <tbody>
@@ -26,7 +28,7 @@ const CrudTableItemPedido = ({ data }) => {
             ))
           ) : (
             <tr>
-              <td colSpan="3">Sin artículos en el carrito de la compra</td>
+              <td colSpan="3">{t("CrudTableItemPedido.Sin artículos en el carrito de la compra")}</td>
             </tr>
           )}
         </tbody>

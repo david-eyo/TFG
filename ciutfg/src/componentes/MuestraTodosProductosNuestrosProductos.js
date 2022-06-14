@@ -1,8 +1,11 @@
 import {React, useEffect} from "react";
 import MuestraProductoNormal from "./MuestraProductoNormal";
+import {useTranslation} from "react-i18next";
 
 const MuestraTodosProductosNuestrosProductos = ({ data, getAllProductsNuestrosProductos, rateProduct, dataToEdit, setDataToEdit, token  }) => {
 
+    const [t, i18n] = useTranslation("global");
+    
     useEffect(() => {
         data=getAllProductsNuestrosProductos();
       }, [data]);
@@ -22,7 +25,7 @@ const MuestraTodosProductosNuestrosProductos = ({ data, getAllProductsNuestrosPr
                 ))
             ) : (
                 <tr>
-                    <td colSpan="3">Sin Productos</td>
+                    <td colSpan="3">{t("MuestraTodosProductosNuestrosProductos.Sin Productos")}</td>
                 </tr>
             )}
         </div>

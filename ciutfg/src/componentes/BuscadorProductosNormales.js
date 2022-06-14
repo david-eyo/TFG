@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import CrudTableRow2 from "./CrudTableRow2";
 import { Form, FormControl, Button } from 'react-bootstrap';
 import MuestraProductoNormal from './MuestraProductoNormal';
+import {useTranslation} from "react-i18next";
 
 
 const style = {
@@ -18,6 +19,7 @@ export default function BuscadorProductosNormales({ findDataByName, setDataToEdi
     const [busqueda, setBusqueda] = useState("");
     const [data, setData] = useState([]);
     const [data2, setData2] = useState([]);
+    const [t, i18n] = useTranslation("global");
 
 
     const handleChange = e => {
@@ -42,7 +44,7 @@ export default function BuscadorProductosNormales({ findDataByName, setDataToEdi
                         value={busqueda}
                         onChange={handleChange}
                     />
-                    <Button variant="outline-success" onClick={() => findDataByName(busqueda)}>Buscar</Button>
+                    <Button variant="outline-success" onClick={() => findDataByName(busqueda)}>{t("BuscadorProductos.Buscar")}</Button>
                 </Form>
             </div>
             {data2.length > 0 ? (
@@ -56,7 +58,7 @@ export default function BuscadorProductosNormales({ findDataByName, setDataToEdi
                 ))
             ) : (
                 <tr>
-                    <td colSpan="3">Producto no encontrado</td>
+                    <td colSpan="3">{t("BuscadorProductosNormales.Producto no encontrado")}</td>
                 </tr>
             )}
         </div>

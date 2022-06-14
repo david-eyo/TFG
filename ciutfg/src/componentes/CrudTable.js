@@ -1,22 +1,24 @@
 import React from "react";
 import CrudTableRow from "./CrudTableRow";
+import {useTranslation} from "react-i18next";
 
 const CrudTable = ({ data, setDataToEdit, deleteData }) => {
+  const [t, i18n] = useTranslation("global");
   return (
     <div>
       <br/><br/><br/><br/><hr></hr>
-      <h3>Productos(Administración)</h3>
+      <h3>{t("CrudTable.Productos(Administración)")}</h3>
       <table className="table">
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
-            <th>Nuestros productos</th>
-            <th>Oferta</th>
-            <th>Valoracion media</th>
-            <th>Cantidad valoraciones</th>
+            <th>{t("CrudTable.Id")}</th>
+            <th>{t("CrudTable.Nombre")}</th>
+            <th>{t("CrudTable.Precio")}</th>
+            <th>{t("CrudTable.Cantidad")}</th>
+            <th>{t("CrudTable.Nuestros productos")}</th>
+            <th>{t("CrudTable.Oferta")}</th>
+            <th>{t("CrudTable.Valoracion media")}</th>
+            <th>{t("CrudTable.Cantidad valoraciones")}</th>
           </tr>
         </thead>
         <tbody>
@@ -32,7 +34,7 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
             ))
           ) : (
             <tr>
-              <td colSpan="3">Sin datos</td>
+              <td colSpan="3">{t("CrudTable.Sin datos")}</td>
             </tr>
           )}
         </tbody>

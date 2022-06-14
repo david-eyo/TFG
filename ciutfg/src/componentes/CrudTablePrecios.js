@@ -1,7 +1,7 @@
 import {React, useState} from "react";
 import CrudTableRowPrecios from "./CrudTableRowPrecios";
 import {Form, FormControl, Button} from 'react-bootstrap';
-
+import {useTranslation} from "react-i18next";
 
 
 
@@ -14,6 +14,7 @@ const style = {
 
 const CrudTablePrecios = ({ findHistoricoPreciosByIdProducto, data }) => {
     const [busqueda, setBusqueda] = useState("");
+    const [t, i18n] = useTranslation("global");
 
 
     const handleChange=e=>{
@@ -25,7 +26,7 @@ const CrudTablePrecios = ({ findHistoricoPreciosByIdProducto, data }) => {
 
   return (
     <div>
-      <h3>Histórico de precios(Administración)</h3>
+      <h3>{t("CrudTablePrecios.Histórico de precios(Administración)")}</h3>
       <div style={style}>
                 <Form className="d-flex">
                     <FormControl
@@ -36,19 +37,19 @@ const CrudTablePrecios = ({ findHistoricoPreciosByIdProducto, data }) => {
                         value = {busqueda}
                         onChange={handleChange}
                     />
-                    <Button variant="outline-success" onClick={() => handleChange()}>Buscar</Button>
+                    <Button variant="outline-success" onClick={() => handleChange()}>{t("CrudTablePrecios.Buscar")}</Button>
                 </Form>
             </div>
       <table className="table">
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Fecha Inicio</th>
-            <th>Hora Inicio</th>
-            <th>Fecha Fin</th>
-            <th>Hora Fin</th>
-            <th>Nombre producto</th>
-            <th>Precio</th>
+            <th>{t("CrudTablePrecios.Id")}</th>
+            <th>{t("CrudTablePrecios.Fecha Inicio")}</th>
+            <th>{t("CrudTablePrecios.Hora Inicio")}</th>
+            <th>{t("CrudTablePrecios.Fecha Fin")}</th>
+            <th>{t("CrudTablePrecios.Hora Fin")}</th>
+            <th>{t("CrudTablePrecios.Nombre producto")}</th>
+            <th>{t("CrudTablePrecios.Precio")}</th>
           </tr>
         </thead>
         <tbody>
@@ -60,7 +61,7 @@ const CrudTablePrecios = ({ findHistoricoPreciosByIdProducto, data }) => {
             ))
           ) : (
             <tr>
-              <td colSpan="3">Sin datos</td>
+              <td colSpan="3">{t("CrudTablePrecios.Sin datos")}</td>
             </tr>
           )}
         </tbody>

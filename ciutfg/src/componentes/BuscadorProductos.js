@@ -2,6 +2,7 @@ import {React, useState} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css"
 import CrudTableRow2 from "./CrudTableRow2";
 import {Form, FormControl, Button} from 'react-bootstrap';
+import {useTranslation} from "react-i18next";
 
 
 const style = {
@@ -17,6 +18,7 @@ export default function BuscadorProductos({ findDataByName, setDataToEdit }) {
     const [busqueda, setBusqueda] = useState("");
     const [data, setData] = useState([]);
     const [data2, setData2] = useState([]);
+    const [t, i18n] = useTranslation("global");
 
 
     const handleChange=e=>{
@@ -32,7 +34,7 @@ export default function BuscadorProductos({ findDataByName, setDataToEdit }) {
     return (
         <div>
             <hr/>
-            <h3>Buscador productos(Administración)</h3>
+            <h3>{t("BuscadorProductos.Buscador productos(Administración)")}</h3>
             <div style={style}>
                 <Form className="d-flex">
                     <FormControl
@@ -43,19 +45,19 @@ export default function BuscadorProductos({ findDataByName, setDataToEdit }) {
                         value = {busqueda}
                         onChange={handleChange}
                     />
-                    <Button variant="outline-success" onClick={() => findDataByName(busqueda)}>Buscar</Button>
+                    <Button variant="outline-success" onClick={() => findDataByName(busqueda)}>{t("BuscadorProductos.Buscar")}</Button>
                 </Form>
             </div>
             <table className="table">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Nuestros productos</th>
-                        <th>Oferta</th>
-                        <th>Valoracion media</th>
-                        <th>Cantidad valoraciones</th>
+                        <th>{t("BuscadorProductos.Nombre")}</th>
+                        <th>{t("BuscadorProductos.Precio")}</th>
+                        <th>{t("BuscadorProductos.Cantidad")}</th>
+                        <th>{t("BuscadorProductos.Nuestros productos")}</th>
+                        <th>{t("BuscadorProductos.Oferta")}</th>
+                        <th>{t("BuscadorProductos.Valoracion media")}</th>
+                        <th>{t("BuscadorProductos.Cantidad valoraciones")}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,7 +72,7 @@ export default function BuscadorProductos({ findDataByName, setDataToEdit }) {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="3">Sin datos</td>
+                            <td colSpan="3">{t("BuscadorProductos.Sin datos")}</td>
                         </tr>
                     )}
                 </tbody>

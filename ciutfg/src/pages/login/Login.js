@@ -7,6 +7,7 @@ import {
 import MessageAdvertencia from '../../componentes/MessageAdvertencia';
 import Loader from '../../componentes/Loader';
 import Message from '../../componentes/Message';
+import {useTranslation} from "react-i18next";
 
 
 
@@ -20,6 +21,8 @@ function Login({setToken, setRol, setUsername, setDeslogueado, deslogueado}) {
     
     const [problemaTexto, setProblemaTexto] = useState ('');
     const [loading, setLoading] = useState(false);
+
+    const [t, i18n] = useTranslation("global");
  
 
     
@@ -86,14 +89,14 @@ function Login({setToken, setRol, setUsername, setDeslogueado, deslogueado}) {
 
     return (
         <div className='login'>
-
             {deslogueado &&
                 <div className = "deslogueo">
-                <h3>Usuario deslogueado correctamente</h3>
-                <button className="btn btn-outline-info" onClick={() => setDeslogueado(false)}><i style={{marginRight: '0.5rem'}} className="fa fa-close"/>Cerrar</button>
+                
+                <h3>{t("Login.Usuario deslogueado correctamente")}</h3>
+                <Button variant="info" onClick={() => setDeslogueado(false)}>{t("Login.Cerrar")}</Button>
                 </div>
             }
-            <h1>Iniciar Sesión</h1>
+            <h1>{t("Login.Iniciar Sesión")}</h1>
             <div style = {{marginLeft:'30%', marginRight: '30%', marginBottom: '1rem'}}>
 
             </div>
@@ -113,25 +116,27 @@ function Login({setToken, setRol, setUsername, setDeslogueado, deslogueado}) {
                 />
             )}
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Usuario</Form.Label>
+                    <Form.Label>{t("Login.Usuario")}</Form.Label>
                     <Form.Control type="text" placeholder="Introduzca usuario"
                         onChange={e => setUser(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Introduzca contraseña</Form.Label>
+                    <Form.Label style={{width:'50%'}}>{t("Login.Introduzca contraseña")}</Form.Label>
                     <Form.Control type="password" placeholder="Contraseña"
                         onChange={e => setPassword(e.target.value)} />
                 </Form.Group>
                 {loading && <Loader />}
 
-                
-                <Button className="boton" variant="primary" type="submit">
-                    Iniciar Sesión
-                </Button>
-                <br />
+                <div style={{marginRight:'10%', marginTop: '3rem'}}>
+                    <Button className="boton" variant="primary" type="submit" >
+                    {t("Login.Iniciar Sesión")}
+                    </Button>
+                    <br />
+                </div>
 
-                <Link to="/reguser">¿Todavía no se ha registrado? Pulse aquí</Link>
+
+                <Link to="/reguser">{t("Login.¿Todavía no se ha registrado? Pulse aquí")}</Link>
 
             </Form>
 

@@ -23,11 +23,13 @@
 }
 
 .deslogueo{
-    background-image:linear-gradient(to bottom,#ff0000 0,#ff9500 100%) !important;
+    background-image:linear-gradient(to bottom,#f44b4b 0,#f82e2e 100%) !important;
     margin-top: 1rem;
     margin-left: 10%;
     margin-right: 10%;
     border-radius: 30px;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    text-align: center;
+    color: black;
 }

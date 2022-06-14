@@ -4,6 +4,8 @@ import { Button } from 'react-bootstrap';
 import './MuestraProductoNormal.css';
 import ReactStars from 'react-rating-stars-component';
 import Message from "./Message";
+import { Navigate } from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 
 const initailForm = {
@@ -24,6 +26,8 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit, tok
   const [loading, setLoading] = useState(false);
   const [problemaTexto, setProblemaTexto] = useState('');
   const [imagen, setImagen] = useState('');
+  const [carrito, setCarrito] = useState(false);
+  const [t, i18n] = useTranslation("global");
 
   let { nombre, precio, image, valoracion, numero_valoraciones } = el;
   const estiloBoton = {
@@ -108,9 +112,17 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit, tok
       }else{
         setProblemaTexto("La cantidad requerida excede a la cantidad existente del producto");
       }
+  }
+
+
+    if(resp){
+      setCarrito(true);
     }
 }
+
+
   
+
 
   return (
     <div className="Tarjeta">
@@ -119,6 +131,10 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit, tok
           <Card.Img variant="top" alt="Foto de Producto" src={imagen} style = {{padding: '1rem 1rem 0rem 1rem', borderRadius: '30px', borderStyle: '5px solid'}}/> 
           
         </div>
+
+        {carrito &&
+                <Navigate to="/carrito"></Navigate>
+        }
         <Card.Body>
           <Card.Title><b><h4>{nombre}</h4></b></Card.Title>
           <Card.Text><b>{precio}€/kg</b></Card.Text>
@@ -142,12 +158,19 @@ const MuestraProductoNormal = ({ el, rateProduct, dataToEdit, setDataToEdit, tok
               <a style={estiloNumVal}>({numero_valoraciones})</a>
             </div>
           </div>
-          {error && (
+          {(error && error.status===409) && (
           <Message
-            msg={`Error: ${problemaTexto}`}
+            msg={`Error: El producto ya ha sido añadido al carrito con anterioridad`}
             bgColor="#dc3545"
           />
-        )}
+          )}
+          {(error && error.status!==409) && (
+          <Message
+            msg={`Error: Ha habido un problema al añadir el producto al carrito. Perdone las molestias :(`}
+            bgColor="#dc3545"
+          />
+          )}
+
         </Card.Body>
       </Card>
     </div>
