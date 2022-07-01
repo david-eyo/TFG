@@ -2,7 +2,7 @@ import React,{useState, useEffect} from "react";
 import './CrudTableRow.css';
 import {useTranslation} from "react-i18next";
 
-const CrudTableRowTrabajo2 = ({ el, setObservaciones, setDetalleUsuario, setMinutos, minutos }) => {
+const CrudTableRowTrabajo2 = ({ el, setObservaciones, setDetalleUsuario, minutos, setMinutos, minis, setMinis }) => {
 
   let {id,trabajador, inicioTrabajo, finalTrabajo, localizacion, tipo_trabajo, observaciones} = el;
 
@@ -15,22 +15,24 @@ const CrudTableRowTrabajo2 = ({ el, setObservaciones, setDetalleUsuario, setMinu
     setDetalleUsuario(trabajador);
 
 }
-  var minutosAux=0;
+
+
   if (finalTrabajo){
     var minutosAux=(parseInt(finalTrabajo.substring(11, 13))*60+parseInt(finalTrabajo.substring(14, 16)))-(parseInt(inicioTrabajo.substring(11, 13))*60+parseInt(inicioTrabajo.substring(14, 16)));
   }
+
   
-  if ( pasado ===false && minutosAux > 0){
+  
+  if ( pasado === false && minutosAux > 0){
     let auxiliar=minutos+minutosAux;
-    console.log(auxiliar);
     setMinutos(auxiliar);
+    minis.push(minutosAux);
     setPasado(true);
   }
   
 
   return (
     
-   
     <tr>    
       <td>{id}</td>
       <td>{trabajador.username}</td>

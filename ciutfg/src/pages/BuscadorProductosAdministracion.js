@@ -5,7 +5,9 @@ import CrudTable from "../componentes/CrudTable";
 import BuscadorProductos from '../componentes/BuscadorProductos';
 import Loader from "../componentes/Loader";
 import Message from "../componentes/Message";
-
+import {
+  Navigate
+} from "react-router-dom";
 
 
 function BuscadorProductosAdministracion({token}) {
@@ -15,7 +17,9 @@ function BuscadorProductosAdministracion({token}) {
 
   const [dataToEdit, setDataToEdit] = useState(null);
   const [error, setError] = useState(null);
+  const [error2, setError2] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [log, setLog] = useState(false);
   let api = helpHttp();
   let url = "http://localhost:5000/productos";
 
@@ -45,6 +49,39 @@ function BuscadorProductosAdministracion({token}) {
     }
 
   };
+
+  const createData2 = async (data, file) => {
+
+    var productostr= JSON.stringify(data);
+    var prueba= new FormData();
+    prueba.set('productostr', productostr);
+    if (file){
+      prueba.set('file', file);
+    }
+
+    await fetch("http://localhost:5000/productos/prueba", {
+        method: 'POST',
+        headers: {
+                    "Authorization": "Bearer "+token},
+                    body: prueba  
+    }
+   ).then((res) =>
+        res.ok
+            ? res.json()
+            : Promise.reject({
+                err: true,
+                status: res.status || "00",
+                statusText: res.statusText || "Ocurrió un error",
+            })
+    ).catch((err) => setError(err));
+    if (error){
+      console.log(error);
+    } else{
+        window.confirm("Producto guardado correctamente");
+    }
+    
+
+}
 
 
 
@@ -88,6 +125,59 @@ function BuscadorProductosAdministracion({token}) {
     });
   };
 
+  const updateData3 = (data) => {
+    let endpoint = `${url}/${data.id}`;
+    let options = {
+      body: data,
+      headers: { "content-type": "application/json",
+      "Authorization": "Bearer "+token},
+    };
+
+    api.put(endpoint, options).then((res) =>
+        res.json()
+        ).catch((err) => setError2(err));
+        if (error){
+          console.log(error);
+          setError2(error);
+        } else{
+          window.confirm("Producto actualizado correctamente");
+          let newData = db.map((el) => (el.id === data.id ? data : el));
+          setDb(newData);   
+          setLog(true); 
+          <Navigate to="/" ></Navigate>
+      }
+  };
+
+  const updateData2 = async (data) => {
+
+    let endpoint = `${url}/${data.id}`;
+    let options = {
+      method: 'PUT',
+      body: data,
+      headers: { "content-type": "application/json",
+      "Authorization": "Bearer "+token},
+    };
+    await fetch( endpoint, options
+   ).then((res) =>
+        res.ok
+            ? res.json()
+            : Promise.reject({
+                err: true,
+                status: res.status || "00",
+                statusText: res.statusText || "Ocurrió un error",
+            })
+    ).catch((err) => setError(err));
+    if (error){
+      console.log(error);
+    } else{
+      let newData = db.map((el) => (el.id === data.id ? data : el));
+      setDb(newData);
+      window.confirm("Producto guardado correctamente");
+    }
+    
+
+}
+
   const deleteData = (id) => {
     let isDelete = window.confirm(
       `¿Estás seguro de eliminar el registro con el id '${id}'?`
@@ -115,6 +205,8 @@ function BuscadorProductosAdministracion({token}) {
 
 
   return (
+
+
     <div>
       {loading && <Loader />}
       {error && (
@@ -124,8 +216,8 @@ function BuscadorProductosAdministracion({token}) {
         />
       )}
       <CrudForm
-        createData={createData}
-        updateData={updateData}
+        createData={createData2}
+        updateData={updateData3}
         dataToEdit={dataToEdit}
         setDataToEdit={setDataToEdit}
       />

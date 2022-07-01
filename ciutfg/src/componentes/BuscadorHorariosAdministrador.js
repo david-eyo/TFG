@@ -23,15 +23,17 @@ function BuscadorHorariosAdministrador({token, setError}) {
     const [detalleUsuario, setDetalleUsuario] = useState(null);
     const [detalle, setDetalle] = useState(false);
     const [user, setUser] = useState(null);
-    const [minutos, setMinutos] = useState(0);
     const [sueldo, setSueldo] = useState(0);
     const [sueldomin, setSueldomin] = useState(0);
     const [t, i18n] = useTranslation("global");
+    const [calculadora, setCalculadora]= useState(false);
+    const [minutos, setMinutos]= useState(0);
+    const [minis, setMinis]= useState([]);
+
     
 
     let api = helpHttp();
     let url = "http://localhost:5000/trabajo";
-
 
     const findTrabajos = () => {
         let options = {
@@ -40,15 +42,14 @@ function BuscadorHorariosAdministrador({token, setError}) {
         };
     
         let urlaux = url + "?username=" + username;
-
         if((fechaIni !== null && fechaIni !== '' && fechaIni !== undefined) && (fechaFin === null|| fechaFin ===undefined || fechaFin === '')){
-            console.log("Aqui");
             return;
         }
 
         let url2="";
 
-        
+        setMinis([]);
+
         if(username!==null && username !== "" && username !== undefined){
             if((fechaIni!==null && fechaIni !== "" && fechaIni !== undefined) && (localizacion===null || localizacion === "") && (tipo_trabajo===null || tipo_trabajo === "")){
 
@@ -66,7 +67,6 @@ function BuscadorHorariosAdministrador({token, setError}) {
     ;
                 url2= urlaux+"&fechaInicio="+fechaIni+"&fechaFin="+fechaFin+"&tipo_trabajo="+tipo_trabajo;
             }else if ((fechaIni === null || fechaIni === "") && (localizacion!==null && localizacion !== "") && (tipo_trabajo!==null && tipo_trabajo !== "")){
-                console.log(1);
     
                 url2= urlaux+"&tipo_trabajo="+tipo_trabajo+"&localizacion="+localizacion;
             }else if ((fechaIni !== null && fechaIni !== "") && (localizacion!==null && localizacion !== "") && (tipo_trabajo!==null && tipo_trabajo !== "")){
@@ -93,8 +93,6 @@ function BuscadorHorariosAdministrador({token, setError}) {
     ;
                 url2= url+"?fechaInicio="+fechaIni+"&fechaFin="+fechaFin+"&tipo_trabajo="+tipo_trabajo;
             }else if ((fechaIni === null || fechaIni === "") && (localizacion!==null && localizacion !== "") && (tipo_trabajo!==null && tipo_trabajo !== "")){
-                console.log(1);
-    
                 url2= url+"?tipo_trabajo="+tipo_trabajo+"&localizacion="+localizacion;
             }else if ((fechaIni !== null && fechaIni !== "") && (localizacion!==null && localizacion !== "") && (tipo_trabajo!==null && tipo_trabajo !== "")){
     
@@ -116,10 +114,12 @@ function BuscadorHorariosAdministrador({token, setError}) {
           }
         });
         return data;
+        
     };
 
     const onChangeFechaIni = (fecha1) => {
         let dia, mes, ano, resultado;
+        
         if (fecha1 !== null) {
             ano = fecha1.getFullYear();
             if (parseInt(fecha1.getDate()) < 10) {
@@ -185,6 +185,13 @@ function BuscadorHorariosAdministrador({token, setError}) {
         }
     }
 
+    var sum =0;
+
+    console.log(minis);
+    if(minis.length>0 && sueldomin){
+        sum = ((minis.reduce((partialSum, a) => partialSum + a, 0))/2);
+
+    }
 
     return(
         <div>
@@ -238,20 +245,42 @@ function BuscadorHorariosAdministrador({token, setError}) {
                         <h4><i>{t("BuscadorHorariosAdministrador.Detalle de usuario")}</i></h4>
                         <br></br>
                         <div style = {{float: 'left'}}>
-                        <p><b>{t("BuscadorHorariosAdministrador.Id usuario:")}</b> {detalleUsuario.id}</p>
-                        <p><b>{t("BuscadorHorariosAdministrador.Nombre:")}</b> {detalleUsuario.nombre}</p>
-                        <p><b>{t("BuscadorHorariosAdministrador.Apellidos:")}</b> {detalleUsuario.apellidos}</p>
-                        <p><b>{t("BuscadorHorariosAdministrador.Direccion de envíos:")}</b> {detalleUsuario.direccion}, {detalleUsuario.ciudad}, {detalleUsuario.cp}.</p>
+                        <p><b>Id:</b> {detalleUsuario.id}</p>
+                        <p><b>Nombre:</b> {detalleUsuario.nombre}</p>
+                        <p><b>Apellidos:</b> {detalleUsuario.apellidos}</p>
+                        <p><b>Dirección:"</b> {detalleUsuario.direccion}, {detalleUsuario.ciudad}, {detalleUsuario.cp}.</p>
                         </div>
-                        <p><b>{t("BuscadorHorariosAdministrador.Email:")}</b> {detalleUsuario.email}</p>
-                        <p><b>{t("BuscadorHorariosAdministrador.Fecha de Nacimiento:")}</b> {detalleUsuario.fechaNacimiento.substring(0,10)}</p>
-                        <p><b>{t("BuscadorHorariosAdministrador.Teléfono")}: </b>{detalleUsuario.tlf}</p>                   
+                        <p><b>Email:</b> {detalleUsuario.email}</p>
+                        <p><b>Fecha de Nacimiento:</b> {detalleUsuario.fechaNacimiento.substring(0,10)}</p>
+                        <p><b>Teléfono: </b>{detalleUsuario.tlf}</p>                   
                     </div>
                 }
                  <Button variant="danger" onClick={() => setObservaciones(null)}>{t("BuscadorHorariosAdministrador.Cerrar observaciones")}
                  <i style={{marginLeft: '0.5rem'}} className="fa fa-close"/></Button>
              </div>
              }
+            {!calculadora &&
+                <Button variant="success" style={{marginBottom: '10rem', marginTop: '0rem'}} onClick={() => setCalculadora(true)}>Abrir calculadora</Button>
+            }
+            {calculadora &&
+                
+                <div style={{width:'30%', borderStyle:'solid', borderWidth: '3px',
+                           paddingBlock: '2%',margin: '0 auto', paddingInline: '4%', borderRadius: '20px', marginBottom: '1rem'}}>
+               <Button variant="danger" style ={{float: 'right'}} onClick={() => setCalculadora(false)}>Cerrar</Button>
+               <br></br>
+               <h2 style ={{float:'left'}}><i>{t("BuscadorHorariosAdministrador.Calculadora de salarios")}</i></h2>
+               
+               <br></br>
+               <br></br>
+               <br></br>
+               <Form.Group className="mb-3" controlId="formBasicPassword" onChange={e => setSueldomin(e.target.value)}>
+                   <Form.Label>{t("BuscadorHorariosAdministrador.Sueldo")}</Form.Label>
+                   <Form.Control type="number" placeholder="Sueldo por hora" />
+               </Form.Group>
+               <br></br>
+               <h3 style={{float:'right', marginRight: '2%'}}>{t("BuscadorHorariosAdministrador.Sueldo correspondiente:")} {(sum*(sueldomin/60)).toFixed(2)}€</h3>
+           </div>
+           }
              <table style ={{marginBottom: '5rem'}} className="table">
                 <thead>
                     <tr>
@@ -268,12 +297,15 @@ function BuscadorHorariosAdministrador({token, setError}) {
                 <tbody>
                 {data.length > 0 ? (
                     data.map((el) => (
-                    <CrudTableRowTrabajo2                  
+                    <CrudTableRowTrabajo2 
+                        key={el.id}
                         el={el}
                         setObservaciones={setObservaciones}
                         setDetalleUsuario={setDetalleUsuario}
-                        setMinutos={setMinutos}
                         minutos={minutos}
+                        setMinutos={setMinutos}
+                        minis ={minis}
+                        setMinis={setMinis}
                     />
                     ))
                   ) : (
@@ -283,19 +315,9 @@ function BuscadorHorariosAdministrador({token, setError}) {
               )}
               </tbody>
             </table>
-            <div style={{width:'30%', borderStyle:'solid', borderWidth: '3px',
-                            paddingBlock: '4%',margin: '0 auto', paddingInline: '4%', borderRadius: '20px', marginBottom: '10rem'}}>
-                <h2 style ={{float:'left'}}><i>{t("BuscadorHorariosAdministrador.Calculadora de salarios")}</i></h2>
-                <br></br>
-                <br></br>
-                <br></br>
-                <Form.Group className="mb-3" controlId="formBasicPassword" onChange={e => setSueldomin(e.target.value)}>
-                    <Form.Label>{t("BuscadorHorariosAdministrador.Sueldo")}</Form.Label>
-                    <Form.Control type="number" placeholder="Sueldo por hora" />
-                </Form.Group>
-                <br></br>
-                <h3 style={{float:'right', marginRight: '2%'}}>{t("BuscadorHorariosAdministrador.Sueldo correspondiente:")} {minutos*(sueldomin/60)}€</h3>
-            </div>
+
+
+
 
 
         </div>

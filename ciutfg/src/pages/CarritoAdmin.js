@@ -14,7 +14,6 @@ function CarritoAdmin({token}) {
   const [dataToEdit, setDataToEdit] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [formulario, setFormulario] = useState(false);
 
   let api = helpHttp();
   let url = "http://localhost:5000/carrito";
@@ -75,21 +74,13 @@ function CarritoAdmin({token}) {
           bgColor="#dc3545"
         />
       )}
-      {formulario === true &&
-        <CrudFormCarritoAdministracion
-          updateCarrito={updateCarrito}
-          dataToEdit={dataToEdit}
-          setDataToEdit={setDataToEdit}
-          setFormulario={setFormulario}
-        />
-      }
+
 
       <BuscadorCarritoUsuario
         token={token}
         setError={setError}
+        dataToEdit={dataToEdit}
         setDataToEdit={setDataToEdit}
-        deleteData={deleteData}
-        setFormulario={setFormulario}
       />
     </div>
   );

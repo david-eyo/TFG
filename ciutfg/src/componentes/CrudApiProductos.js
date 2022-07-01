@@ -18,6 +18,8 @@ const CrudApi = () => {
   const [dataToEdit, setDataToEdit] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [add, setAdd] = useState(false);
+
 
   let api = helpHttp();
   let url = "http://localhost:5000/productos";
@@ -50,8 +52,11 @@ const CrudApi = () => {
       //console.log(res);
       if (!res.err) {
         setDb([...db, res]);
+        console.log('llega');
+        setAdd(true);
       } else {
         setError(res);
+        console.log('llega2');
       }
     });
   };
@@ -183,12 +188,16 @@ const CrudApi = () => {
     <div>
       <article className="grid-1-2">
         {loading && <Loader />}
+        {add &&
+          <h1>Producto añadido correctamente</h1>
+        }
         <CrudForm
           createData={createData}
           updateData={updateData}
           dataToEdit={dataToEdit}
           setDataToEdit={setDataToEdit}
         />
+
         {db && (
           <CrudTable
             data={db}

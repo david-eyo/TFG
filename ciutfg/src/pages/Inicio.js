@@ -27,7 +27,7 @@ function Inicio({token, username}) {
         };
         var integer = ''+(page-1);
 
-        let urlOferta = "http://localhost:5000/productos?page="+integer+"&size=10";
+        let urlOferta = "http://localhost:5000/productos?page="+integer+"&size=5";
         api.get(urlOferta, options).then((res) => {
             if (!res.err) {
                 setDb3(res);

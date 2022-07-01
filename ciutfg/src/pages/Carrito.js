@@ -50,8 +50,8 @@ const Carrito = ({token}) => {
           api.del(endpoint, options).then((res) => {
             //console.log(res);
             if (!res.err) {
-              let newData = db2.filter((el) => el.id !== id);
-              setDb2(newData);
+              let newData = db.filter((el) => el.id !== id);
+              setDb(newData);
             } else {
               setError(res);
             }
@@ -73,8 +73,39 @@ const Carrito = ({token}) => {
         api.put(endpoint, options).then((res) => {
           //console.log(res);
           if (!res.err) {
-            let newData = db2.map((el) => (el.id === data.id ? data : el));
-            setDb2(newData);
+            let newData = db.map((el) => (el.id === data.id ? data : el));
+            setDb(newData);
+            handleResp();
+          } else {
+            setError(res);
+          }
+        });
+        
+      };
+
+
+      const updateCarrito2 = (data2) => {
+        let endpoint = `${url}/${data2.id}`;
+    
+        let options = {
+          body: data2,
+          headers: { "content-type": "application/json",
+          "Authorization": "Bearer "+token},
+        };
+    
+        api.put(endpoint, options).then((res) => {
+          //console.log(res);
+          if (!res.err) {
+            let newData = db.map((el) => (el.id === db.id ? db : el));
+            console.log(newData);
+            setDb(newData);
+            handleResp();
+            let aux=0;
+            for (var i = 0; i < db.length; i++) {         
+              aux= (db[i].cantidad*db[i].productos.precio)+aux; 
+            }
+            setCantidad(aux); 
+            console.log(cantidad);
           } else {
             setError(res);
           }
@@ -165,7 +196,7 @@ const Carrito = ({token}) => {
                 {loading && <Loader />}
                 {dataToEdit && 
                                 <CrudFormCarritoAdministracion
-                                updateCarrito={updateCarrito}
+                                updateCarrito={updateCarrito2}
                                 dataToEdit={dataToEdit}
                                 setDataToEdit={setDataToEdit}
                                  />

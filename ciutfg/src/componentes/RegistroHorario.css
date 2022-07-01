@@ -22,6 +22,16 @@
     border-radius: 50px;
 }
 
+.horarios{
+    background-image: linear-gradient(#aef800, #d0faa8);
+    padding-bottom: 0.5rem;
+    margin-top: 1rem;
+    border-radius: 10px;
+    margin-right: 10%;
+    margin-left: 10%;
+    padding-top: 0.5rem;
+}
+
 @media (max-width: 1200px) {
     .registro{
         background-image: linear-gradient(#ffb14b, #ffd28e);

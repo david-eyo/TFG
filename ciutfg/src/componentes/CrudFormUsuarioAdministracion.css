@@ -10,17 +10,18 @@
     margin-right: 1rem;
 }
 
-.formulario{
+.formulario2{
     background-image: linear-gradient(to bottom,#2cf4ea ,#008080  ) !important;
     padding-top: 2rem;
     padding-left: 6rem;
     padding-right: 6rem;
     margin-left: 3rem;
-    margin-right: 3rem;
     padding-bottom: 2rem;
     margin-bottom: 10rem;
     border-radius: 50px;
+    margin-top: -10rem;
 }
+
 
 label{
     display: inline-block;

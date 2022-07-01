@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Form, FormControl, Button } from 'react-bootstrap';
 import CrudTableRowCarrito from './CrudTableRowCarrito';
+import CrudFormCarritoAdministracion from "../componentes/CrudFormCarritoAdministracion";
 import { helpHttp } from '../helpers/helpHttp';
 import {useTranslation} from "react-i18next";
 
@@ -15,13 +16,16 @@ const style = {
 
 
 
-export default function BuscadorCarritoUsuario({ setDataToEdit, deleteData, token, setError, setFormulario}) {
+export default function BuscadorCarritoUsuario({ dataToEdit, setDataToEdit, token, setError}) {
     const [busqueda, setBusqueda] = useState("");
     const [data, setData] = useState([]);
     const [t, i18n] = useTranslation("global");
+    const [formulario, setFormulario] = useState(false);
 
     let api = helpHttp();
     let url = "http://localhost:5000/carrito";
+
+
   
   
     const findCarritoByUsername = (nombre) => {
@@ -44,6 +48,55 @@ export default function BuscadorCarritoUsuario({ setDataToEdit, deleteData, toke
       });
     };
 
+    const deleteData = (id) => {
+        let isDelete = window.confirm(
+          `¿Estás seguro de eliminar el producto del carrito con el id '${id}'?`
+        );
+    
+        if (isDelete) {
+          let endpoint = `${url}/${id}`;
+          let options = {
+            headers: { "content-type": "application/json",
+                        "Authorization": "Bearer "+token},
+          };
+    
+          api.del(endpoint, options).then((res) => {
+            //console.log(res);
+            if (!res.err) {
+              let newData = data.filter((el) => el.id !== id);
+              setData(newData);
+            } else {
+              setError(res);
+            }
+          });
+        } else {
+          return;
+        }
+      };
+
+      const updateCarrito = (data2) => {
+        let endpoint = `${url}/${data2.id}`;
+    
+        let options = {
+          body: data2,
+          headers: { "content-type": "application/json",
+          "Authorization": "Bearer "+token},
+        };
+    
+        api.put(endpoint, options).then((res) => {
+          //console.log(res);
+          if (!res.err) {
+            let newData = data.map((el) => (el.id === data.id ? data : el));
+            console.log(newData);
+            setData(newData);
+            findCarritoByUsername(busqueda);
+          } else {
+            setError(res);
+          }
+        });
+        
+      };
+
 
     const handleChange = e => {
 
@@ -54,6 +107,14 @@ export default function BuscadorCarritoUsuario({ setDataToEdit, deleteData, toke
 
     return (
         <div>
+        {formulario === true &&
+            <CrudFormCarritoAdministracion
+            updateCarrito={updateCarrito}
+            dataToEdit={dataToEdit}
+            setDataToEdit={setDataToEdit}
+            setFormulario={setFormulario}
+            />
+        }
             <div style={style}>
                 <Form className="d-flex">
                     <FormControl

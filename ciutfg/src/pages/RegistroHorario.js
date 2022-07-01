@@ -3,6 +3,11 @@ import { Form, Button } from 'react-bootstrap';
 import Message from '../componentes/Message';
 import "../componentes/RegistroHorario.css"
 import {useTranslation} from "react-i18next";
+import { setSelectionRange } from '@testing-library/user-event/dist/utils';
+
+import {
+    Link, Navigate
+} from "react-router-dom";
 
 
 function RegistroHorario({token, username}) {
@@ -14,7 +19,8 @@ function RegistroHorario({token, username}) {
     const [error2, setError2] = useState(null);
     const [nada, setNada]= useState('');
     const [t, i18n] = useTranslation("global");
-
+    const [navi, setNavi]=useState(false);
+    const [reg, setReg]=useState(false);
 
     
 
@@ -33,7 +39,7 @@ function RegistroHorario({token, username}) {
     }
 
 
-
+    
     const errorAux = (err, status, statusText) => { return { err: err, status: status, statusText: statusText } }
 
     const Submit = async (e) => {
@@ -41,7 +47,7 @@ function RegistroHorario({token, username}) {
         e.preventDefault();
 
         if(localizacion !== '' && tipo_trabajo !== '' && localizacion !== undefined && tipo_trabajo !== undefined){
-            await fetch('http://localhost:5000/trabajo', {
+            let resp=await fetch('http://localhost:5000/trabajo', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json',
                             'Authorization': 'Bearer '+token },
@@ -62,6 +68,9 @@ function RegistroHorario({token, username}) {
             if (error2){
                 setError2(null);
             }
+            if(resp){
+                setReg(true);
+            }
         }else{
             const erro= errorAux(true, 420, "No se han cubierto todos los campos de inicio de jornada adecuadamente");
             setError(erro);
@@ -72,7 +81,7 @@ function RegistroHorario({token, username}) {
 
         e.preventDefault();
 
-        await fetch('http://localhost:5000/trabajo', {
+        let resp=await fetch('http://localhost:5000/trabajo', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json',
                         'Authorization': 'Bearer '+token },
@@ -80,23 +89,23 @@ function RegistroHorario({token, username}) {
                 username,
                 observaciones
             })
-        }).then((res) =>{ 
-                      
+        }).then((res) =>                    
             res.ok
-            ? res.json()
+            ?res.json()
             : Promise.reject({
                 err: true,
                 status: res.status || "00",
                 statusText: res.statusText || "Ocurrió un error",
             })
-
-
-        },
-         
         ).catch((err) => setError2(err));
 
         if(error){
             setError(null);
+        }
+
+        if (resp){
+            setNavi(true);
+            
         }
         
     }
@@ -114,9 +123,21 @@ function RegistroHorario({token, username}) {
         }
     }
 
-
+    
     return (
         <div>
+            {navi &&
+                <div className='horarios'>
+                    <h4>Horario finalizado correctamente</h4> 
+                    <Button className="boton" variant="danger" type="submit" onClick={() => setNavi(false)}>Cerrar notificación</Button>
+                </div>
+            }
+            {reg &&
+                <div className='horarios'>
+                    <h4>Horario iniciado correctamente</h4> 
+                    <Button className="boton" variant="danger" type="submit" onClick={() => setReg(false)}>Cerrar notificación</Button>
+                </div>
+            }
             <div className= "registro">
                 <h5><i>{t("RegistroHorario.Marca aquí que ya has empezado tu jornada laboral!")}</i></h5>
                 {error &&

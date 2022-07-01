@@ -20,7 +20,7 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
             <th>{t("CrudTable.Valoracion media")}</th>
             <th>{t("CrudTable.Cantidad valoraciones")}</th>
           </tr>
-        </thead>
+        </thead> 
         <tbody>
           {data.length > 0 ? (
             data.map((el) => (

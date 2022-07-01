@@ -13,7 +13,7 @@ const initailForm = {
 
 };
 
-const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
+const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit}) => {
   const [form, setForm] = useState(initailForm);
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
@@ -23,6 +23,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
   const changeImagen = (e) =>{
     setImage(e.target.files[0]);
   }
+
 
   useEffect(() => {
     if (dataToEdit) {

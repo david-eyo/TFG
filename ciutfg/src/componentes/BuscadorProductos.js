@@ -51,6 +51,7 @@ export default function BuscadorProductos({ findDataByName, setDataToEdit }) {
             <table className="table">
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>{t("BuscadorProductos.Nombre")}</th>
                         <th>{t("BuscadorProductos.Precio")}</th>
                         <th>{t("BuscadorProductos.Cantidad")}</th>

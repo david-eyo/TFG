@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import './CrudFormUsuarioAdministracion.css';
-import './CrudTableRow.css';
 import {useTranslation} from "react-i18next";
 
 const initailForm = {
@@ -53,7 +52,7 @@ const CrudFormUsuarioAdministracion = ({ updateUsuario, dataToEdit, setDataToEdi
     };
 
     return (
-        <div className="formulario">
+        <div className="formulario2">
             <h3><b><i>{t("CrudFormUsuarioAdministracion.Formulario de edición de usuario")}</i></b></h3>
             <form onSubmit={handleSubmit}>
                 <br></br>

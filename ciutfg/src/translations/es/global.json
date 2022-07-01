@@ -48,7 +48,7 @@
 		"Sin trabajos realizados":"Sin trabajos realizados",
 		"Calculadora de salarios":"Calculadora de salarios",
 		"Sueldo":"Sueldo",
-		"Sueldo correspondiente":"Sueldo correspondiente" 
+		"Sueldo correspondiente":"Sueldo correspondiente"
 	},
 	"BuscadorHorariosUsuario":{
 		"Fecha Inicio":"Fecha Inicio",
@@ -116,6 +116,7 @@
 	"BuscadorProductos":{
 		"Buscador productos(Administración)":"Buscador productos(Administración)",
 		"Buscar":"Buscar",
+		"Id":"Id",
 		"Nombre":"Nombre",
 		"Precio":"Precio",
 		"Cantidad":"Cantidad",
